@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="https://v40.pingendo.com/assets/4.0.0/default/theme.css" type="text/css">
+  <style>
+      #myInput {
+    width: 90%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+}
+
+#table {
+    border-collapse: collapse; /* Collapse borders */
+    width: 100%; /* Full-width */
+    border: 1px solid #ddd; /* Add a grey border */
+    font-size: 18px; /* Increase font-size */
+}
+
+#table th, #table td {
+    text-align: left; /* Left-align text */
+    padding: 12px; /* Add padding */
+}
+
+#table tr {
+    /* Add a bottom border to all table rows */
+    border-bottom: 1px solid #ddd;
+}
+
+#table tr.header, #table tr:hover {
+    /* Add a grey background color to the table header and on hover */
+    background-color: #f1f1f1;
+}
+  </style>
+
+
+
+  <script src="js/Cookies.js"></script>
+
+  <script>
+    function pad(n, width, z) {
+      z = z || '0';
+      n = n + '';
+      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
+
+    function listProperties(propertyArray) {
+
+          console.log("listing prop")
+                    var tbl     = document.getElementById("table");
+                    var tblBody = document.createElement("tbody");
+
+
+                     var row = document.createElement("tr");
+                        var cell = document.createElement("th");
+                        cell.onclick= function(){sortTable(0);} ;
+                        var cellText = document.createTextNode("ID");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+                        var cell = document.createElement("th");
+                        cell.onclick = function(){sortTable(1);};
+                        var cellText = document.createTextNode("Name");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+                        var cell = document.createElement("th");
+                        var cellText = document.createTextNode("Address");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                         tblBody.appendChild(row);
+
+                         var cell = document.createElement("th");
+                        cell.onclick = function(){sortTable(3);};
+                        var cellText = document.createTextNode("City");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                         tblBody.appendChild(row);
+
+                         var cell = document.createElement("th");
+                        var cellText = document.createTextNode("Zip");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                         tblBody.appendChild(row);
+
+                         var cell = document.createElement("th");
+                        var cellText = document.createTextNode("Size");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                         tblBody.appendChild(row);
+
+                         var cell = document.createElement("th");
+                        cell.onclick = function(){sortTable(6);};
+                        var cellText = document.createTextNode("Type");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                         tblBody.appendChild(row);
+
+                         var cell = document.createElement("th");
+                        var cellText = document.createTextNode("Public");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                         tblBody.appendChild(row);
+
+                         var cell = document.createElement("th");
+                        var cellText = document.createTextNode("Commercial");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                         tblBody.appendChild(row);
+
+                         var cell = document.createElement("th");
+                        var cellText = document.createTextNode("isValid");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                         tblBody.appendChild(row);
+
+                         var cell = document.createElement("th");
+                        cell.onclick = function(){sortTable(10);};
+                        var cellText = document.createTextNode("Visits");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                         tblBody.appendChild(row);
+
+                         var cell = document.createElement("th");
+                        cell.onclick = function(){sortTable(11);};
+                        var cellText = document.createTextNode("Average Rating");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                         tblBody.appendChild(row);
+
+                         var cell = document.createElement("th");
+                        var cellText = document.createTextNode("Manage Property");
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                         tblBody.appendChild(row);
+
+                    for (var j = 0; j <= propertyArray.length-1; j++) {
+
+                        var row = document.createElement("tr");
+                        var cell = document.createElement("td");
+                        ID = propertyArray[j].ID
+                        var cellText = document.createTextNode(pad(propertyArray[j].ID, 5));
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode(propertyArray[j].Name);
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+                        ///////////////Address Manipulation
+
+                        var full = propertyArray[j].Address;
+                        full = full.split(" ");
+                        var address = "";
+                        for(var i = 0; i < full.length - 2; i++){
+                            address = address + full[i] + " "
+                        }
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode(address);
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode(full[full.length - 2]);
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode(full[full.length - 1]);
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+
+
+                        //////////////////
+
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode(propertyArray[j].Size);
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode(propertyArray[j].PType);
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+                        /////////////
+
+                        var cell = document.createElement("td");
+                        var public = propertyArray[j].IsPublic;
+                        var cellText = null;
+                        if(public === 1){
+                            cellText = document.createTextNode("True");
+                            }
+                        else {
+                            cellText = document.createTextNode("False");
+                        }
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+                        /////////////////
+                         var cell = document.createElement("td");
+                        var public = propertyArray[j].IsCommercial;
+                        var cellText = null;
+                        if(public === 1){
+                            cellText = document.createTextNode("True");
+                            }
+                        else {
+                            cellText = document.createTextNode("False");
+                        }
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+                        /////////////////
+
+                          var cell = document.createElement("td");
+                        var approve = propertyArray[j].ApprovedBy;
+                        var cellText = null;
+                        if(approve !== null){
+                            cellText = document.createTextNode("True");
+                            }
+                        else {
+                            cellText = document.createTextNode("False");
+                        }
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                        /////////////
+
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode(propertyArray[j].Count);
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+                        //////////
+
+                        var cell = document.createElement("td");
+                        var rating = 0;
+                        if(propertyArray[j].Avg === null){
+                            rating = "N/A"
+                        } else{
+                            rating =propertyArray[j].Avg;
+                        }
+                        var cellText = document.createTextNode(rating);
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+
+
+                         var cell = document.createElement("td");
+                         var link = document.createElement("a");
+                        var cellText = document.createTextNode("Manage");
+                        link.appendChild(cellText);
+                        link.href = "manageproperty.html?id=" + ID
+                        cell.appendChild(link);
+                        row.appendChild(cell);
+
+                        tblBody.appendChild(row);
+                }
+
+
+        // append the <tbody> inside the <table>
+        tbl.appendChild(tblBody);
+
+        tbl.setAttribute("border", "2");
+
+                        //////////////////
+
+          console.log("Built property list");
+      }
+
+
+      function getProperties(email, ownerType) {
+            let payload = {
+                "email": email,
+                "type": ownerType
+            }
+
+            var propertyArray;
+
+                console.log(payload);
+
+                var xhr = new XMLHttpRequest();
+                    xhr.onload = () => {
+                        var data = xhr.responseText;
+
+                        propertyArray = JSON.parse(data);
+
+                        console.log(data)
+
+
+
+                        if (data != "0") {
+                            //window.location.replace("webapp/loginhome.html");
+                            console.log("Completed");
+                            listProperties(propertyArray);
+                        }
+                    }
+
+                xhr.open("POST", "http://localhost:3000/properties", true);
+                xhr.setRequestHeader("Content-Type", 'application/json');
+                xhr.send(JSON.stringify(payload));
+
+
+      }
+      window.onload = function() {
+          console.log("Cookies" + document.cookie);
+          var email = Cookies.get("email");
+          var type = Cookies.get("type");
+
+          if (type == "Owner") {
+              type = "ownerProps";
+          }
+
+          getProperties(email,type);
+      }
+
+
+    function sortTable(n) {
+        console.log("sorting")
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("table");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.getElementsByTagName("tr");
+            for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("td")[n];
+            y = rows[i + 1].getElementsByTagName("td")[n];
+            if (dir == "asc") {
+                if(n == 5 || n== 10 || n == 11){ // if sorting should be in integer
+                    if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
+                    shouldSwitch= true;
+                    break;
+                }
+                } else {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch= true;
+                    break;
+                }
+                
+            }
+        } else if (dir == "desc")  {
+                if(n == 5 || n== 10 || n == 11){ // if sorting should be in integer
+                    if (parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
+                    shouldSwitch= true;
+                    break;
+                    }
+                } else {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch= true;
+                    break;
+                }
+                
+            }
+        } 
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++;
+        } else {
+        if (switchcount == 0 && dir == "asc") {
+            dir = "desc";
+            switching = true;
+        }
+        }
+        }
+    }
+
+    function searchFunc() {
+  // Declare variables
+    var n = 1;
+    var type = document.getElementById("searchby");
+    var value = type.value;
+
+    if(value == "Name"){
+        
+        document.getElementById("lowbound").disabled ="true";
+        document.getElementById("highbound").disabled = "true";
+        n = 1;
+    } else if(value == "City"){
+        
+        document.getElementById("lowbound").disabled ="true";
+        document.getElementById("highbound").disabled = "true";
+        n = 3
+    }  else if(value == "Type"){
+        document.getElementById("lowbound").disabled =true;
+        document.getElementById("highbound").disabled = true;
+        n = 6
+    } else if (value == "Visits"){
+        console.log("in visit")
+        var low = document.getElementById("lowbound");
+        low.disabled = false;
+        var high = document.getElementById("highbound");
+        high.disabled = false
+        n= 10
+    }else if(value == "Rating"){
+        
+        document.getElementById("lowbound").disabled =false;
+        document.getElementById("highbound").disabled = false;
+        n=11
+    }
+    
+  var low = document.getElementById("lowbound").value;
+  var high  = document.getElementById("highbound").value
+ 
+
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("table");
+  tr = table.getElementsByTagName("tr");
+  var low = document.getElementById("lowbound").value;
+  var high  = document.getElementById("highbound").value
+
+  // Loop through all table rows, and hide those who don't match the search query
+  if(n == 10 || n== 11){
+           if(document.getElementById("lowbound").value=="" || document.getElementById("highbound").value ==""){
+        low = 0;
+    }
+     if(document.getElementById("highbound").value ==""){
+        high = 999;
+    }
+        for (i = 0; i < tr.length; i++) {
+            
+            td = tr[i].getElementsByTagName("td")[n];
+            
+            if (td ) {
+                console.log(td.innerHTML)
+                if (parseFloat(td.innerHTML)>=low && parseFloat(td.innerHTML) <=high && td.innerHTML !="N/A") {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+         }
+        }
+    }
+  } else{
+      console.log("where i should be")
+        for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[n];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+  }
+
+
+
+
+}
+
+        function logout(){
+            Cookies.clear("email");
+            Cookies.clear("type");
+            console.log("Going back to log in page")
+            window.location.href = "../login.html"
+            }
+
+  </script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md bg-primary navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fa d-inline fa-lg fa-cloud"></i>
+        <b>Atlanta Farm Orchard Garden Database</b>
+      </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation"> </button>
+      <div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
+        <form class="btn navbar-btn ml-2 text-white fa d-inline btn-primary">
+          <a class="btn navbar-btn ml-2 text-white btn-secondary" onclick="logout()"> <i class="fa d-inline fa-lg fa-user-circle-o"></i> Log out</a>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <div class="py-5">
+    <div class="container">
+      <div>
+        <div style="font-size: 50px"> Welcome Back!</div>
+        <br>
+        <br>
+        <div class="row">
+          <div class="form-group ">
+            <font size="5px">Your Properties: </font> &nbsp; </div>
+        </div>
+          <div>
+            <select id="searchby" onchange ="searchFunc()">
+                    <option value="Name">Name</option>
+                    <option value="City">City</option>
+                    <option value="Type">Type</option>
+                    <option value="Visits">Visits</option>
+                    <option value="Rating">Rating</option>
+                  </select>
+          </div>
+          <div><input id="lowbound" onkeyup ="searchFunc()"disabled = "true"placeholder="Lower Bound"></input><input id="highbound" onkeyup ="searchFunc()" disabled="true"placeholder="Higher Bound"></input></div>
+          <div><i style="font-size:24px" class="fa">&#xf002;</i><input type="text" id="myInput" onkeyup="searchFunc()" placeholder="Search ...">
+
+
+          </div>
+        <table id="table"></table>
+      </div>
+        <br><br>
+      <div class="row">
+          
+        <div class="col-md-12">
+          <a class="btn btn-primary" href="viewotherprop.html">View other properties </a>
+        &nbsp&nbsp
+          <a class="btn btn-primary" href="addNewProperty.html">Add new properties </a>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </div>
+
+</body>
+
+</html>
