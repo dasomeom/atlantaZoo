@@ -1,0 +1,226 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="../../../../favicon.ico">
+    <title>Atlanta Zoo</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+</head>
+<html>
+<style media="screen">
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #e6e6e6;
+}
+
+.form-unconfirmed {
+    width: 100%;
+    padding: 50px;
+    margin: 0 auto;
+}
+
+.form-unconfirmed .checkbox {
+    font-weight: 400;
+}
+
+.form-unconfirmed .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:
+	focus {
+    z-index: 2;
+}
+
+
+/*    	#subtitle {
+    		margin-left: 100px;
+    		margin-top: 50px;
+    	}*/
+
+#title {
+    margin-top: -50px;
+}
+
+#dropdownMenuButton {
+    margin-top: 10px;
+}
+
+th>.dropdown-toggle {
+    background-color: transparent;
+}
+
+th>.dropdown-toggle:focus,
+th>.dropdown-toggle:active {
+    outline: none !important;
+    box-shadow: none;
+}
+
+.table tbody tr.highlight td {
+    background-color: #ddd;
+}
+
+.hiddenField {
+    display: none;
+}
+</style>
+
+<body>
+    <div class="form-unconfirmed">
+        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Exhibits</b></h1>
+        <div class="d-flex justify-content-between">
+        	<div class="d-flex justify-content-between flex-direction: flex-column"> <h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
+	      	</div>
+	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">	
+	      	<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-bottom: 20px;"> </div>
+
+	    </div>  
+
+		<div class="row">
+        	<div class="col-lg-9"> <input type="text" class="form-control" id="searchText" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
+	      	</div>
+	      	<div class="col-lg-1"> 
+	      		<p>Number of Animals:</p>
+	      	</div>
+
+	      	<div class="col-sm-1"><p>MIN</p>
+	        <select class="1-100" style="width: 70px; height: 35px;"></select> </div>
+	        <div class="col-sm-1"><p>MAX</p>
+			<select class="1-100" style="width: 70px; height: 35px;"></select>
+	      	</div>
+
+	    </div>  
+			
+		<div class="row">
+	      	<div class="col-lg-1"> 
+	      		<h4 class="h4 mb-2 font-weight-normal">Size</h4>
+	      	</div>
+
+	      	<div class="col-sm-1"><p>MIN</p>
+	        <select class="1-100" style="width: 70px; height: 35px;"></select> </div>
+	        <div class="col-sm-1"><p>MAX</p>
+			<select class="1-100" style="width: 70px; height: 35px;"></select>
+	      	</div>
+			<div class="col-lg-7"></div>
+	      	<div class="dropdown">  
+	      	  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px;">
+	      	    Water Feature
+	      	  </button>
+	      	  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	      	  	<button id="yes" class="dropdown-item" type="button">YES</button>
+	      	  	<button id="no" class="dropdown-item" type="button">NO</button>
+	      	  </div>
+
+
+	      	</div>
+	      	<div class="d-flex justify-content-between">
+  		      	<div class="d-flex justify-content-between flex-direction: flex-column">
+
+  		      	</div>
+
+  		      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+  				</div>
+
+	      	</div>
+
+	      	<table class="table table-bordered table-hover">
+	            <thead class="thead-light">
+	                <tr>
+	                	<!-- onclick="sort(document.getElementById('sortName').value) -->
+	                  <th scope="col">Name<button id="sortName" class="btn dropdown-toggle float-right" type="button" ></button></th>
+	                  <th scope="col">Size<button id="sortType" class="btn dropdown-toggle float-right" type="button"></button></th>
+	                  <th scope="col">Number of Animals<button id="sortAvgRating" class="btn dropdown-toggle float-right" type="button"></button></th>
+	                  <th scope="col">Water<button id="sortVisits" class="btn dropdown-toggle float-right" type="button"></button></th>
+	                
+	                </tr>
+	            </thead>
+	              <tr>
+	                <td scope="row">Pacific</td>
+	                <td>850</td>
+	                <td>30</td>
+	                <td>Yes</td>
+	              </tr>
+	              <tr>
+	                <td scope="row">Jungle</td>
+	                <td>600</td>
+	                <td>5</td>
+	                <td>No</td>
+	              </tr>
+	           
+	            </tbody>
+	        </table>
+	          				<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+  					<a id="logout" class="btn btn-light" href = "/"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Logout</a>
+  				</div>
+        </div>
+
+    </body>
+</html>
+
+<script type="text/javascript">
+	$(function(){
+    var $select = $(".1-100");
+    for (i=1;i<=10000;i++){
+        $select.append($('<option></option>').val(i).html(i))
+    }
+	});
+
+	$('.dropdown-item').click(function() {
+		$('#dropdownMenuButton').text('Water Feature: ' + $(this).text());
+	});
+
+	$('th>.dropdown-toggle').on('click', onClick);
+
+	$("tbody tr").click(function() {
+		$(this).addClass('highlight').siblings().removeClass('highlight');
+		var cells = this.cells; //cells collection
+		var id = cells[8].innerHTML;
+		console.log(id);
+		$('#idSelector').val(id);
+		// $(this).addClass('bg-info').siblings().removeClass('bg-info');
+	});
+
+	function onClick(e) {
+		var th = $(e.target).parent();
+		var col = th.text();
+		var table = $(th).parents('table').eq(0);
+    	var rows = table.find('tr:gt(0)').toArray().sort(compare($(th).index()));
+    	this.asc = !this.asc;
+		if (!this.asc) {
+			rows = rows.reverse();
+		}
+    	for (var i = 0; i < rows.length; i++) {
+    		table.append(rows[i]);
+    	}
+	}
+
+	function compare(index) {
+	    return function(a, b) {
+	        var valA = getCellValue(a, index); 
+	        var valB = getCellValue(b, index);
+	        return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB);
+	    }
+	}
+
+	function getCellValue(row, index){ 
+		return $(row).children('td').eq(index).text(); 
+	}
+
+</script>
