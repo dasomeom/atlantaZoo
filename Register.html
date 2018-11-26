@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Atlanta Zoo</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+
+<html>
+    <style>
+        html,
+        body {
+          height: 100%;
+        }
+
+        body {
+          display: -ms-flexbox;
+          display: -webkit-box;
+          display: flex;
+          -ms-flex-align: center;
+          -ms-flex-pack: center;
+          -webkit-box-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          justify-content: center;
+          padding-top: 40px;
+          padding-bottom: 40px;
+          background-color: #e6e6e6;
+        }
+
+        .form-signin {
+          width: 100%;
+          max-width: 320px;
+          padding: 15px;
+          margin: 0 auto;
+        }
+        .form-signin .checkbox {
+          font-weight: 400;
+        }
+        .form-signin .form-control {
+          position: relative;
+          box-sizing: border-box;
+          height: auto;
+          padding: 10px;
+          font-size: 16px;
+        }
+
+        .form-signin .form-control:focus {
+          z-index: 2;
+        }
+        .form-signin input[type="email"] {
+          margin-bottom: -1px;
+          border-bottom-right-radius: 1;
+          border-bottom-left-radius: 1;
+        } 
+        .form-signin input[type="username"] {
+          margin-bottom: -1px;
+          border-bottom-right-radius: 1;
+          border-bottom-left-radius: 1;
+        }
+
+        .form-signin input[type="password"] {
+          margin-bottom: -1px;
+          border-top-left-radius: 1;
+          border-top-right-radius: 1;
+        }
+        .form-signin input[type="password2"] {
+          margin-bottom: 10px;
+          border-top-left-radius: 1;
+          border-top-right-radius: 1;
+        }
+
+    </style>
+
+    <body class = "text-center">
+        <form  class = "form-signin">
+            <h1 class="h4 mb-3 font-weight-normal">Atlanta Zoo</h1>
+
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+
+            <label for = "inputUsername" class = "sr-only">Username</label>
+            <input type="username" id="inputUsername" class="form-control" placeholder="Username" required>
+
+            <label for="inputPassword1" class="sr-only">Password</label>
+            <input type="password" id="inputPassword1" class="form-control" placeholder="Password" required>
+
+            <label for="inputPassword2" class="sr-only">Password2</label>
+            <input type="password2" id="inputPassword2" class="form-control" placeholder="Confirm password" required>
+
+
+            <button class="btn btn-lg btn-secondary btn-block" type = "submit">Register Visitor</button>
+            <button class="btn btn-lg btn-secondary btn-block" type = "submit">Register Staff</button>
+            <a class="btn btn-lg btn-light btn-block" href = "/">Cancel</a>
+        </form>
+    </body>
+</html>
+
