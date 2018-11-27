@@ -115,7 +115,7 @@ body {
             <div class="d-flex justify-content-between flex-direction: flex-column">
 
 
-    <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
             <div class="form-group">
                 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                     <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
@@ -123,15 +123,14 @@ body {
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
                 </div>
-
+            </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker1').datetimepicker();
+                    });
+                </script>
+            </div>
         </div>
-            <script type="text/javascript">
-                $(function () {
-                    $('#datetimepicker1').datetimepicker();
-                });
-            </script>
-        </div>
-    </div>
             <div class="d-flex justify-content-between flex-direction: flex-column-reverse">    
             <input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-bottom: 20px;"> 
             </div>

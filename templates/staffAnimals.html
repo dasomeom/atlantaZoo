@@ -49,19 +49,14 @@ body {
     z-index: 2;
 }
 
-
-/*    	#subtitle {
-    		margin-left: 100px;
-    		margin-top: 50px;
-    	}*/
-
 #title {
     margin-top: -50px;
 }
 
-#dropdownMenuButton {
+#dropdownMenuButton, #dropdownMenuButton2 {
     margin-top: 10px;
 }
+
 
 th>.dropdown-toggle {
     background-color: transparent;
@@ -84,29 +79,31 @@ th>.dropdown-toggle:active {
 
 <body>
     <div class="form-unconfirmed">
-        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Exhibits</b></h1>
+        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Animals</b></h1>
 
         <div class="d-flex justify-content-between">
         	<div class="d-flex justify-content-between flex-direction: flex-column"> 
         		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
 	      	</div>
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">	
-	      	<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-bottom: 20px;"> 
+	      	<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;"> 
 	      	</div>
 	    </div>  
 
 		<div class="d-flex justify-content-between">
         	<div class="d-flex justify-content-between flex-direction: flex-column"> 
-        		<input type="text" class="form-control" id="searchText" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
+        		<input type="text" class="form-control" id="searchName" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px; margin-bottom: 5px;">
 	      	</div>
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
 	      		<div class="dropdown">  
-	      	  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px;">
-	      	    Water Feature
+	      	  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
+	      	    Exhibit
 	      	  </button>
-	      	  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-	      	  	<button id="yes" class="dropdown-item" type="button">YES</button>
-	      	  	<button id="no" class="dropdown-item" type="button">NO</button>
+	      	  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+	      	  	<button id="pacific" class="dropdown-item" type="button">Pacific</button>
+	      	  	<button id="jungle" class="dropdown-item" type="button">Jungle</button>
+	      	  	<button id="sahara" class="dropdown-item" type="button">Sahara</button>
+	      	  	<button id="birds" class="dropdown-item" type="button">Birds</button>
 	      	  	</div>
 	      	</div>
 	    </div> 
@@ -115,23 +112,21 @@ th>.dropdown-toggle:active {
 
 		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
 	      	<div class="d-flex justify-content-between flex-direction: flex-column"> 
-	      		<h4 class="h4 mb-2 font-weight-normal">Size</h4>
+	      		<input type="text" class="form-control" id="searchSpecies" placeholder="Species" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
 	      	</div>
-	      	<div class="col-lg-1"><p>MIN</p>
-	        <select class="1-100" style="width: 70px; height: 35px;"></select> 
-	    	</div>
-	        <div class="col-lg-1"><p>MAX</p>
-			<select class="1-100" style="width: 70px; height: 35px;"></select>
-	      	</div>
-	      	<div class="col-lg-5"></div>
-			<div class="col-lg-2">
-	      	<p>Number of Animals:</p>
-	      	</div>
-	      	<div class="col-lg-1"><p>MIN</p>
-	        <select class="1-100" style="width: 70px; height: 35px;"></select> 
-	    	</div>
-	        <div class="col-lg-1"><p>MAX</p>
-			<select class="1-100" style="width: 70px; height: 35px;"></select>
+			<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
+				<div class="dropdown">  
+	      	  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
+	      	    Type
+	      	  </button>
+	      	  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	      	  	<button id="amphibian" class="dropdown-item" type="button">Amphibian</button>
+	      	  	<button id="anthropod" class="dropdown-item" type="button">Anthropod</button>
+	      	  	<button id="bird" class="dropdown-item" type="button">Bird</button>
+	      	  	<button id="mammal" class="dropdown-item" type="button">Mammal</button>
+	      	  	<button id="reptile" class="dropdown-item" type="button">Reptile</button>
+	      	  	</div>
+	      	  	</div>
 	      	</div>
 		</div>
 
@@ -140,23 +135,26 @@ th>.dropdown-toggle:active {
 	                <tr>
 	                	<!-- onclick="sort(document.getElementById('sortName').value) -->
 	                  <th scope="col">Name<button id="sortName" class="btn dropdown-toggle float-right" type="button" ></button></th>
-	                  <th scope="col">Size<button id="sortType" class="btn dropdown-toggle float-right" type="button"></button></th>
-	                  <th scope="col">Number of Animals<button id="sortAvgRating" class="btn dropdown-toggle float-right" type="button"></button></th>
-	                  <th scope="col">Water<button id="sortVisits" class="btn dropdown-toggle float-right" type="button"></button></th>
+	                  <th scope="col">Species<button id="sortSpecies" class="btn dropdown-toggle float-right" type="button"></button></th>
+	                  <th scope="col">Exhibit<button id="sortExhibit" class="btn dropdown-toggle float-right" type="button"></button></th>
+	                  <th scope="col">Age<button id="sortAge" class="btn dropdown-toggle float-right" type="button"></button></th>
+	                  <th scope="col">Type<button id="sortType" class="btn dropdown-toggle float-right" type="button"></button></th>
 	                
 	                </tr>
 	            </thead>
 	              <tr>
-	                <td scope="row">Pacific</td>
-	                <td>850</td>
-	                <td>30</td>
-	                <td>Yes</td>
+	                <td scope="row">Nemo</td>
+	                <td>Clownfish</td>
+	                <td>Pacific</td>
+	                <td>1</td>
+	                <td>Fish</td>
 	              </tr>
 	              <tr>
 	                <td scope="row">Jungle</td>
-	                <td>600</td>
-	                <td>5</td>
-	                <td>No</td>
+	                <td>Goldfish</td>
+	                <td>Pacific</td>
+	                <td>2</td>
+	                <td>Fish</td>
 	              </tr>
 	           
 	            </tbody>
@@ -182,10 +180,30 @@ th>.dropdown-toggle:active {
 	});
 
 	$('.dropdown-item').click(function() {
-		$('#dropdownMenuButton').text('Water Feature: ' + $(this).text());
+		var str = this.id;
+		if (str == 'jungle') {
+			$('#dropdownMenuButton1').text('Exhibit: Jungle');
+		} else if (str == 'sahara') {
+			$('#dropdownMenuButton1').text('Exhibit: Sahara');
+		} else if (str == 'birds') {
+			$('#dropdownMenuButton1').text('Exhibit: Birds');
+		} else if (str == 'pacific') {
+			$('#dropdownMenuButton1').text('Exhibit: Pacific');
+		} else if (str == 'amphibian') {
+			$('#dropdownMenuButton2').text('Type: Amphibian');
+		} else if (str == 'anthropod') {
+			$('#dropdownMenuButton2').text('Type: Anthropod');
+		} else if (str == 'bird') {
+			$('#dropdownMenuButton2').text('Type: Bird');
+		} else if (str == 'mammal') {
+			$('#dropdownMenuButton2').text('Type: Mammal');
+		} else if (str == 'reptile') {
+			$('#dropdownMenuButton2').text('Type: Reptile');
+		}
+		
 	});
-
 	$('th>.dropdown-toggle').on('click', onClick);
+
 
 	$("tbody tr").click(function() {
 		$(this).addClass('highlight').siblings().removeClass('highlight');
