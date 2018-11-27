@@ -85,62 +85,57 @@ th>.dropdown-toggle:active {
 <body>
     <div class="form-unconfirmed">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Exhibits</b></h1>
+
         <div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column"> <h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
+        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
+        		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
 	      	</div>
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">	
-	      	<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-bottom: 20px;"> </div>
-
+	      	<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-bottom: 20px;"> 
+	      	</div>
 	    </div>  
 
-		<div class="row">
-        	<div class="col-lg-9"> <input type="text" class="form-control" id="searchText" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
+		<div class="d-flex justify-content-between">
+        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
+        		<input type="text" class="form-control" id="searchText" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
 	      	</div>
-	      	<div class="col-lg-1"> 
-	      		<p>Number of Animals:</p>
-	      	</div>
-
-	      	<div class="col-sm-1"><p>MIN</p>
-	        <select class="1-100" style="width: 70px; height: 35px;"></select> </div>
-	        <div class="col-sm-1"><p>MAX</p>
-			<select class="1-100" style="width: 70px; height: 35px;"></select>
-	      	</div>
-
-	    </div>  
-			
-		<div class="row">
-	      	<div class="col-lg-1"> 
-	      		<h4 class="h4 mb-2 font-weight-normal">Size</h4>
-	      	</div>
-
-	      	<div class="col-sm-1"><p>MIN</p>
-	        <select class="1-100" style="width: 70px; height: 35px;"></select> </div>
-	        <div class="col-sm-1"><p>MAX</p>
-			<select class="1-100" style="width: 70px; height: 35px;"></select>
-	      	</div>
-			<div class="col-lg-7"></div>
-	      	<div class="dropdown">  
+	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
+	      		<div class="dropdown">  
 	      	  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px;">
 	      	    Water Feature
 	      	  </button>
-	      	  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	      	  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 	      	  	<button id="yes" class="dropdown-item" type="button">YES</button>
 	      	  	<button id="no" class="dropdown-item" type="button">NO</button>
-	      	  </div>
-
-
+	      	  	</div>
 	      	</div>
-	      	<div class="d-flex justify-content-between">
-  		      	<div class="d-flex justify-content-between flex-direction: flex-column">
+	    </div> 
+    </div>
 
-  		      	</div>
 
-  		      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-  				</div>
-
+		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
+	      	<div class="d-flex justify-content-between flex-direction: flex-column"> 
+	      		<h4 class="h4 mb-2 font-weight-normal">Size</h4>
 	      	</div>
+	      	<div class="col-lg-1"><p>MIN</p>
+	        <select class="1-100" style="width: 70px; height: 35px;"></select> 
+	    	</div>
+	        <div class="col-lg-1"><p>MAX</p>
+			<select class="1-100" style="width: 70px; height: 35px;"></select>
+	      	</div>
+	      	<div class="col-lg-5"></div>
+			<div class="col-lg-2">
+	      	<p>Number of Animals:</p>
+	      	</div>
+	      	<div class="col-lg-1"><p>MIN</p>
+	        <select class="1-100" style="width: 70px; height: 35px;"></select> 
+	    	</div>
+	        <div class="col-lg-1"><p>MAX</p>
+			<select class="1-100" style="width: 70px; height: 35px;"></select>
+	      	</div>
+		</div>
 
-	      	<table class="table table-bordered table-hover">
+		<table class="table table-bordered table-hover">
 	            <thead class="thead-light">
 	                <tr>
 	                	<!-- onclick="sort(document.getElementById('sortName').value) -->
@@ -166,10 +161,11 @@ th>.dropdown-toggle:active {
 	           
 	            </tbody>
 	        </table>
-	          				<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-  					<a id="logout" class="btn btn-light" href = "/"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Logout</a>
-  				</div>
-        </div>
+	<div class="d-flex justify-content-between">
+	    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+  			<a id="logout" class="btn btn-light" href="./Login.html"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Logout</a>
+  		</div>
+  	</div>	
 
     </body>
 </html>
