@@ -61,28 +61,30 @@
     </style>
 
     <body>
-        <form  class = "form-adminhome">
-            <h1 class="h4 mb-3 font-weight-normal">Atlanta Zoo</h1>
+        <div>
             <p>Administrator page</p>
-
-            <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">View visitors
-            </a>
-            <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">View staff
-            </a>
-            <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">View shows
-            </a>
-            <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">View animals
-            </a>
-            <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">Add animals
-            </a>
-            <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">Add show
-            </a>
-
-            <form class="form-adminhome" action="{{ url_for('logout') }}" method="POST">
+            <form class="form-adminhome" action="{{ url_for('adminHome') }}" method="POST">
+                <input type="submit" class="btn btn-lg btn-light btn-block" name="viewVis" value="View Visitors">
+            </form>
+            <form class="form-adminhome" action="{{ url_for('adminHome') }}" method="POST">
+                <input type="submit" class="btn btn-lg btn-light btn-block" name="viewStaff" value="View Staff">
+            </form>
+            <form class="form-adminhome" action="{{ url_for('adminHome') }}" method="POST">
+                <input type="submit" class="btn btn-lg btn-light btn-block" name="viewShow" value="View Shows">
+            </form>
+             <form class="form-adminhome" action="{{ url_for('adminHome') }}" method="POST">
+                <input type="submit" class="btn btn-lg btn-light btn-block" name="viewAni" value="View Animals">
+            </form>
+             <form class="form-adminhome" action="{{ url_for('adminHome') }}" method="POST">
+                <input type="submit" class="btn btn-lg btn-light btn-block" name="addAni" value="Add Animals">
+            </form>
+            <form class="form-adminhome" action="{{ url_for('adminHome') }}" method="POST">
+                <input type="submit" class="btn btn-lg btn-light btn-block" name="addShow" value="Add Show">
+            </form>
+            <form class="form-adminhome" action="{{ url_for('adminHome') }}" method="POST">
                 <input type="submit" class="btn btn-lg btn-light btn-block" name="logOut" value="Log Out">
             </form>
-            
-        </form>
+        </div>
     </body>
 </html>
 

@@ -31,7 +31,8 @@ def login():
         elif validated == 1:
             return render_template('staffhome.html')
         elif validated == 2:
-            return render_template('adminhome.html')
+            print 'haha'
+            return redirect(url_for('adminHome'))
         else:
             return render_template('badLogin.html')
     else:
@@ -127,13 +128,19 @@ def RegisterUser(list, db_name):
         cursor.close()
         return move_to_login
 
+@app.route('/adminhome', methods=['GET', 'POST'])
+def adminHome():
+    print request.form
+    if request.method == 'POST' and 'logOut' in request.form:
+        return redirect(url_for('logout'))
+    return render_template('adminhome.html')
+
+
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    print session
     session.pop('username', None)
     session.clear()
-    print session
-    return redirect(url_for('index'))
+    return render_template('logout.html')
 
 if __name__ == '__main__':
     app.run()
