@@ -2,13 +2,17 @@
 --verify valid credentials
 SELECT *
 FROM ADMINS, VISITORS, STAFF
+<<<<<<< HEAD
 WHERE Email = email AND Password = $password;
+=======
+WHERE Email = $email AND Password = $password;
+>>>>>>> 8706c9fc9e1b89bff995f3c0d184578d6a1005ce
 
 /* New visitor registration */
 --verify registration is valid
 SELECT *
 FROM VISITORS, STAFF
-WHERE Username = $username OR Email = $email;
+WHERE Email = $email OR Email = $email;
 --insert new visitor account
 INSERT INTO VISITORS
 VALUES ($username, $password, $email, 'VISITOR');

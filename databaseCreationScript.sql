@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS EXHIBIT (
 Size INT NOT NULL,
 Water_Feature TINYINT(1) NOT NULL,
 Name VARCHAR(20),
+numAnimals INT,
 PRIMARY KEY(Name));
 # Comment to grading TA
 # For Water_Feature, value of zero is false, Non­zero values are considered true
