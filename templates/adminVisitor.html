@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="favicon.ico"">
     <title>Atlanta Zoo</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -79,6 +79,7 @@ body {
 </style>
 
 <body>
+
     <form class="form-unconfirmed" method="POST">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><strong>View Visitor</strong></h1>
             <table class="table table-bordered table-hover" id="visTb">
@@ -99,37 +100,35 @@ body {
                 </tbody>
             </table>
         <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column"> 
-        </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-            <label for="animalName" class="sr-only">Search</label>
-                <input id="animalName" class="form-control inline-input" placeholder="search" required autofocus> 
-        </div>
-    </div>         
-    <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column"> 
-            <div class="dropdown">  
+            <div class="d-flex justify-content-between flex-direction: flex-column"> 
+            </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
+                <div class="dropdown">  
               <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-                Username
+                Option
               </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <button id="pacific" class="dropdown-item" type="button"></button>
-
+                <button id="jungle" class="dropdown-item" type="button">Username</button>
+                <button id="sahara" class="dropdown-item" type="button">Email</button>
                 </div>
-            </div>    
-        </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-            <div class="dropdown">  
-              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-                Email
-              </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                <button id="pacific" class="dropdown-item" type="button"></button>
-
-                </div>
-            </div>    
-        </div>
-    </div>             
+            </div>
+        </div> 
+        </div>    
+     <div class="form-group" style="display:inline;">
+          <div class="input-group"> 
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-chevron-down"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#"></a></li>
+                <li><a href="#">Username</a></li>
+                <li><a href="#">Email</a></li>
+              </ul>
+            </div>
+            <input type="text" class="form-control" placeholder="What are searching for?">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span> </span>
+          </div>
+        </div>       
     <div class="d-flex justify-content-between">
         <div class="d-flex justify-content-between flex-direction: flex-column">
             <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>

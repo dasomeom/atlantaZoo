@@ -17,6 +17,7 @@ mysql.init_app(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    print 'haha'
     return redirect(url_for('login'))
 
 

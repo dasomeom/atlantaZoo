@@ -129,6 +129,7 @@ th>.dropdown-toggle:active {
 	      	    Exhibit
 	      	  </button>
 	      	  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <button id="yes" class="dropdown-item" type="button">Any</button>
 	      	  	<button id="yes" class="dropdown-item" type="button">Pacific</button>
 	      	  	<button id="no" class="dropdown-item" type="button">Jungle</button>
 	      	  	<button id="no" class="dropdown-item" type="button">Sahara</button>
@@ -189,7 +190,7 @@ th>.dropdown-toggle:active {
 	});
 
 	$('.dropdown-item').click(function() {
-		$('#dropdownMenuButton').text('Water Feature: ' + $(this).text());
+		$('#dropdownMenuButton').text('Exhibit: ' + $(this).text());
 	});
 
 	$('th>.dropdown-toggle').on('click', onClick);
