@@ -8,7 +8,7 @@ WHERE Email = $email AND Password = $password;
 --verify registration is valid
 SELECT *
 FROM VISITORS, STAFF
-WHERE Email = $email OR Email = $email;
+WHERE Username = $username OR Email = $email;
 --insert new visitor account
 INSERT INTO VISITORS
 VALUES ($username, $password, $email, 'VISITOR');

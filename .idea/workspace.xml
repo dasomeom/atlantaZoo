@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="dd0440c5-a3f5-4ba6-96d4-330e242bf083" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sourcecode.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sourcecode.sql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,23 +41,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+=======
       <file pinned="false" current-in-tab="true">
+>>>>>>> 8706c9fc9e1b89bff995f3c0d184578d6a1005ce
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="59" column="126" selection-start-line="59" selection-start-column="126" selection-end-line="59" selection-end-column="126" />
+            <state relative-caret-position="224">
+              <caret line="48" column="82" lean-forward="true" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="82" />
               <folding>
                 <element signature="e#0#76#0" expanded="true" />
+                <element signature="e#1442#2341#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sourcecode.sql" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sourcecode.sql" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sourcecode.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="10" column="45" lean-forward="true" selection-start-line="10" selection-start-column="45" selection-end-line="10" selection-end-column="45" />
+            <state relative-caret-position="228">
+              <caret line="12" column="20" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -79,6 +83,7 @@
         <option value="$PROJECT_DIR$/templates/Register.html" />
         <option value="$PROJECT_DIR$/templates/Login.html" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/sourcecode.sql" />
       </list>
     </option>
   </component>
@@ -176,13 +181,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10520833" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.10520833" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32943678" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32943678" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32943678" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -223,6 +229,7 @@
           <caret line="37" column="5" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
           <folding>
             <element signature="e#0#76#0" expanded="true" />
+            <element signature="e#1442#2341#0" />
           </folding>
         </state>
       </provider>
@@ -247,6 +254,7 @@
           <caret line="49" column="31" lean-forward="true" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
           <folding>
             <element signature="e#0#76#0" expanded="true" />
+            <element signature="e#1442#2341#0" />
           </folding>
         </state>
       </provider>
@@ -271,6 +279,7 @@
           <caret line="25" column="14" lean-forward="true" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
           <folding>
             <element signature="e#0#76#0" expanded="true" />
+            <element signature="e#1442#2341#0" />
           </folding>
         </state>
       </provider>
@@ -281,6 +290,7 @@
           <caret line="12" column="44" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
           <folding>
             <element signature="e#0#76#0" expanded="true" />
+            <element signature="e#1442#2341#0" />
           </folding>
         </state>
       </provider>
@@ -291,6 +301,7 @@
           <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
           <folding>
             <element signature="e#0#76#0" expanded="true" />
+            <element signature="e#1442#2341#0" />
           </folding>
         </state>
       </provider>
@@ -301,6 +312,7 @@
           <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
           <folding>
             <element signature="e#0#76#0" expanded="true" />
+            <element signature="e#1442#2341#0" />
           </folding>
         </state>
       </provider>
@@ -325,6 +337,7 @@
           <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
           <folding>
             <element signature="e#0#76#0" expanded="true" />
+            <element signature="e#1442#2341#0" />
           </folding>
         </state>
       </provider>
@@ -335,6 +348,7 @@
           <caret line="12" column="44" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
           <folding>
             <element signature="e#0#76#0" expanded="true" />
+            <element signature="e#1442#2341#0" />
           </folding>
         </state>
       </provider>
@@ -345,6 +359,7 @@
           <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
           <folding>
             <element signature="e#0#76#0" expanded="true" />
+            <element signature="e#1442#2341#0" />
           </folding>
         </state>
       </provider>
@@ -355,6 +370,7 @@
           <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
           <folding>
             <element signature="e#0#76#0" expanded="true" />
+            <element signature="e#1442#2341#0" />
           </folding>
         </state>
       </provider>
@@ -392,13 +408,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sourcecode.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="45" lean-forward="true" selection-start-line="10" selection-start-column="45" selection-end-line="10" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/Login.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="403">
@@ -408,11 +417,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="59" column="126" selection-start-line="59" selection-start-column="126" selection-end-line="59" selection-end-column="126" />
+        <state relative-caret-position="224">
+          <caret line="48" column="82" lean-forward="true" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="82" />
           <folding>
             <element signature="e#0#76#0" expanded="true" />
+            <element signature="e#1442#2341#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sourcecode.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="20" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
         </state>
       </provider>
     </entry>

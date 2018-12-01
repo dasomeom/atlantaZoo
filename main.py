@@ -58,7 +58,7 @@ def loginHelper(list):
             else:
                 exception_password = ['adminpassword']
             if check_password_hash(password, input_password) or (password in exception_password and password == input_password):
-                if db == 'visitors': # TODO: pass username
+                if db == 'visitors':
                     return 0
                 elif db == 'staff':
                     return 1
