@@ -31,7 +31,6 @@ def login():
         elif validated == 1:
             return render_template('staffhome.html')
         elif validated == 2:
-            print 'haha'
             return redirect(url_for('adminHome'))
         else:
             return render_template('badLogin.html')
@@ -69,6 +68,9 @@ def loginHelper(list):
     return -1
 
 
+"""
+Register page starts here
+"""
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -128,18 +130,76 @@ def RegisterUser(list, db_name):
         cursor.close()
         return move_to_login
 
+
+"""
+Admin page starts here
+"""
 @app.route('/adminhome', methods=['GET', 'POST'])
 def adminHome():
-    print request.form
-    if request.method == 'POST' and 'logOut' in request.form:
-        return redirect(url_for('logout'))
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    admin_name = session['username']
+    cursor.execute("SELECT Username FROM admins WHERE Username = %s", (admin_name))
+    isAdmin = len(cursor.fetchone()) > 0
+    cursor.close()
+    if not isAdmin:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        if 'viewVis' in request.form:
+            return redirect(url_for('adminViewVisitors'))
+        if 'viewStaff' in request.form:
+            return redirect(url_for('adminViewStaffs'))
+        if 'viewShow' in request.form:
+            return redirect(url_for('adminViewShows'))
+        if 'viewAni' in request.form:
+            return redirect(url_for('adminViewAnimals'))
+        if 'addAni' in request.form:
+            return redirect(url_for('adminAddAnimals'))
+        if 'addShow' in request.form:
+            return redirect(url_for('adminAddShow'))
+        if 'logOut' in request.form:
+            return redirect(url_for('logout'))
     return render_template('adminhome.html')
 
+@app.route('/adminviewvisitors', methods=['GET', 'POST'])
+def adminViewVisitors():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Username, Email FROM visitors")
+    data = cursor.fetchall()
+    if request.method == 'POST' and 'back' in request.form:
+        cursor.close()
+        return redirect(url_for('adminHome'))
+
+    cursor.close()
+    return render_template('adminVisitor.html', data=data)
+
+@app.route('/adminviewstaffs', methods=['GET', 'POST'])
+def adminViewStaffs():
+    return render_template('adminStaff.html')
+
+@app.route('/adminviewshows', methods=['GET', 'POST'])
+def adminViewShows():
+    return render_template('adminShow.html')
+
+@app.route('/adminviewanimals', methods=['GET', 'POST'])
+def adminViewAnimals():
+    return render_template('adminAnimal.html')
+
+@app.route('/adminaddanimals', methods=['GET', 'POST'])
+def adminAddAnimals():
+    return render_template('addAnimal.html')
+
+@app.route('/adminaddshow', methods=['GET', 'POST'])
+def adminAddShow():
+    return render_template('addShow.html')
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('username', None)
     session.clear()
+    if request.method == 'POST' and 'toLog' in request.form:
+        return redirect(url_for('login'))
     return render_template('logout.html')
 
 if __name__ == '__main__':
