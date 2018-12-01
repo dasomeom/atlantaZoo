@@ -57,6 +57,7 @@ def loginHelper(list):
                 exception_password = ['adminpassword']
             if check_password_hash(password, input_password) or (password in exception_password and password == input_password):
                 session['username'] = username
+                session['coin'] = True
                 if db == 'visitors':
                     return 0
                 elif db == 'staff':
@@ -161,22 +162,87 @@ def adminHome():
             return redirect(url_for('logout'))
     return render_template('adminhome.html')
 
+#TODO: Search option
 @app.route('/adminviewvisitors', methods=['GET', 'POST'])
 def adminViewVisitors():
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute("SELECT Username, Email FROM visitors")
     data = cursor.fetchall()
-    if request.method == 'POST' and 'back' in request.form:
-        cursor.close()
-        return redirect(url_for('adminHome'))
-
+    if request.method == 'POST':
+        if 'sortName' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Username, Email FROM visitors ORDER BY Username")
+            elif not session['coin']:
+                cursor.execute("SELECT Username, Email FROM visitors ORDER BY Username DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminVisitor.html', data=data)
+        elif 'sortEmail' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Username, Email FROM visitors ORDER BY Email")
+            elif not session['coin']:
+                cursor.execute("SELECT Username, Email FROM visitors ORDER BY Email DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminVisitor.html', data=data)
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('adminHome'))
+        elif 'delete' in request.form:
+            vis_name = str(request.form['delete'])
+            print vis_name
+            cursor.execute("DELETE FROM visitors WHERE Username = %s", (vis_name))
+            conn.commit()
+            cursor.execute("SELECT Username, Email FROM visitors")
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminVisitor.html', data=data)
     cursor.close()
     return render_template('adminVisitor.html', data=data)
 
+#TODO: Search option
 @app.route('/adminviewstaffs', methods=['GET', 'POST'])
 def adminViewStaffs():
-    return render_template('adminStaff.html')
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Username, Email FROM staff")
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'sortName' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Username, Email FROM staff ORDER BY Username")
+            elif not session['coin']:
+                cursor.execute("SELECT Username, Email FROM staff ORDER BY Username DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminStaff.html', data=data)
+        elif 'sortEmail' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Username, Email FROM staff ORDER BY Email")
+            elif not session['coin']:
+                cursor.execute("SELECT Username, Email FROM staff ORDER BY Email DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminStaff.html', data=data)
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('adminHome'))
+        elif 'delete' in request.form:
+            stf_name = str(request.form['delete'])
+            print stf_name
+            cursor.execute("DELETE FROM staff WHERE Username = %s", (stf_name))
+            conn.commit()
+            cursor.execute("SELECT Username, Email FROM staff")
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminStaff.html', data=data)
+    cursor.close()
+    return render_template('adminStaff.html', data=data)
 
 @app.route('/adminviewshows', methods=['GET', 'POST'])
 def adminViewShows():

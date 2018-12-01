@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="favicon.ico"">
+
 
     <title>Atlanta Zoo</title>
 
@@ -60,7 +61,7 @@
           z-index: 2;
         }
         .form-signin input[type="email"] {
-          margin-bottom: 15px;
+          margin-bottom: 10px;
           border-bottom-right-radius: 1;
           border-bottom-left-radius: 1;
         }
@@ -88,10 +89,10 @@
                     <input type="submit" class="btn btn-lg btn-secondary btn-block" value="Login" name="login" style = "margin-top:15px; margin-bottom:-10px">
                 </fieldset>
             </form>
-            <form class = "form-signin" action="{{ url_for('register') }}" method="POST" style = "margin-top:-5px">
+            <form class = "form-signin" action="{{ url_for('register') }}" method="POST" style = "margin-top:-13px">
                 <input type="submit" class="btn btn-lg btn-secondary btn-block" value="Register" name="renderReg">
             </form>
-            <form class="form-signin" action="{{ url_for('login') }}" method="POST" style = "margin-top:-10px">
+            <form class="form-signin" action="{{ url_for('login') }}" method="POST" style = "margin-top:-18px">
                 <input type="submit" class="btn btn-lg btn-light btn-block" value="Cancel" name="cancelLog">
             </form>
         </div>
