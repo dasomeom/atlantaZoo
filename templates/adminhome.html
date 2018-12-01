@@ -34,6 +34,10 @@
           background-color: #e6e6e6;
         }
 
+        div {
+            width: 100%
+        }
+
         .form-adminhome {
           width: 100%;
           max-width: 320px;
@@ -73,8 +77,10 @@
             </a>
             <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">Add show
             </a>
-            <a class="btn btn-lg btn-light btn-block" href="./Login.html">Log Out
-            </a>
+
+            <form class="form-adminhome" action="{{ url_for('logout') }}" method="POST">
+                <input type="submit" class="btn btn-lg btn-light btn-block" name="logOut" value="Log Out">
+            </form>
             
         </form>
     </body>

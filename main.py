@@ -1,6 +1,5 @@
-from flask import Flask, request, render_template, redirect, url_for, flash
+from flask import Flask, request, render_template, redirect, url_for, flash, session
 from flaskext.mysql import MySQL
-from wtforms import Form, StringField, PasswordField, validators
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -13,7 +12,6 @@ app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
 app.config['MYSQL_DATABASE_DB'] = 'atlzoo'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
-
 
 
 
@@ -58,6 +56,7 @@ def loginHelper(list):
             else:
                 exception_password = ['adminpassword']
             if check_password_hash(password, input_password) or (password in exception_password and password == input_password):
+                session['username'] = username
                 if db == 'visitors':
                     return 0
                 elif db == 'staff':
@@ -128,6 +127,13 @@ def RegisterUser(list, db_name):
         cursor.close()
         return move_to_login
 
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    print session
+    session.pop('username', None)
+    session.clear()
+    print session
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run()
