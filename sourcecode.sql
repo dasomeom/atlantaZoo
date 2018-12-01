@@ -2,7 +2,7 @@
 --verify valid credentials
 SELECT *
 FROM ADMINS, VISITORS, STAFF
-WHERE Username = $username AND Password = $password;
+WHERE Email = email AND Password = $password;
 
 /* New visitor registration */
 --verify registration is valid
