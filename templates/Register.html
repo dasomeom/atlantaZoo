@@ -4,10 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="../../../../favicon.ico">
-
+    <link rel="icon" href="favicon.ico"">
     <title>Atlanta Zoo</title>
-
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -18,9 +16,7 @@
         html,
         body {
           height: 100%;
-        }
-
-        body {
+          width: 400px
           display: -ms-flexbox;
           display: -webkit-box;
           display: flex;
@@ -30,20 +26,15 @@
           align-items: center;
           -webkit-box-pack: center;
           justify-content: center;
-          padding-top: 40px;
-          padding-bottom: 40px;
+          padding-top: 30px;
+          padding-bottom: 30px;
           background-color: #e6e6e6;
-        }
-
-        div {
-            width: 100%
         }
 
         .form-register {
           width: 100%;
-          max-width: 320px;
-          padding: 15px;
-          margin: 0 auto;
+          width: 320px;
+          padding: 10px;
         }
         .form-register .checkbox {
           font-weight: 400;
@@ -59,34 +50,15 @@
         .form-register .form-control:focus {
           z-index: 2;
         }
-        .form-register input[type="email"] {
-          margin-bottom: -1px;
-          border-bottom-right-radius: 1;
-          border-bottom-left-radius: 1;
-        } 
-        .form-register input[type="username"] {
-          margin-bottom: -1px;
-          border-bottom-right-radius: 1;
-          border-bottom-left-radius: 1;
-        }
 
-        .form-register input[type="password"] {
-          margin-bottom: -1px;
-          border-top-left-radius: 1;
-          border-top-right-radius: 1;
-        }
-        .form-register input[type="password2"] {
-          margin-bottom: 10px;
-          border-top-left-radius: 1;
-          border-top-right-radius: 1;
-        }
 
     </style>
 
     <body class = "text-center">
         <div>
+          <h1 class="h1 mb-3 font-weight-normal"><b>Atlanta Zoo</b></h1>
             <form  class = "form-register" method="POST" action="{{ url_for('register') }}">
-                <h1 class="h4 mb-3 font-weight-normal">Atlanta Zoo</h1>
+              
                 <div>
                     {% block content %}
                     <div class="container">
@@ -101,20 +73,28 @@
                     {% endblock %}
                 </div>
                 <fieldset>
+                  <div class="form-group">
                     <label for="inputEmail" class="sr-only">Email address</label>
                     <input id="inputEmail" class="form-control" value="" name="email" placeholder="Email Address" required autofocus>
-
+                  </div>
+                  <div class="form-group">
                     <label for = "inputUsername" class = "sr-only">Username</label>
                     <input id="inputUsername" class="form-control" value="" name="username" placeholder="Username" required>
-
+                  </div>  
+                  <div class="form-group">
                     <label for="inputPassword1" class="sr-only">Password</label>
                     <input type="password" id="inputPassword1" class="form-control" value="" name="password" placeholder="Password" minlength="8" required>
-
+                  </div>
+                  <div class="form-group">
                     <label for="inputPassword2" class="sr-only">Password2</label>
                     <input type="password" id="inputPassword2" class="form-control" value="" name="password2" placeholder="Confirm Password" minlength="8" required>
-
+                  </div>  
+                  <div class="form-group" style="margin-top=10px">
                     <input type="submit" class="btn btn-lg btn-secondary btn-block" value="Register Visitor" name="regVis">
+                  </div>  
+                  <div class="form-group">  
                     <input type="submit" class="btn btn-lg btn-secondary btn-block" value="Register Staff" name="regStf">
+                  </div>  
                 </fieldset>
             </form>
             <form class = "form-register" action="{{ url_for('register') }}" method="POST">

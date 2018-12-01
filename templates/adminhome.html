@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="favicon.ico"">
 
     <title>Atlanta Zoo</title>
 
@@ -41,7 +41,7 @@
         .form-adminhome {
           width: 100%;
           max-width: 320px;
-          padding: 15px;
+          padding: 5px;
           margin: 0 auto;
         }
         .form-adminhome .checkbox {
@@ -61,8 +61,10 @@
     </style>
 
     <body>
-        <div>
-            <p>Administrator page</p>
+        <div><form class="form-adminhome" action="{{ url_for('adminHome') }}" method="POST">
+                <H2>Administrator Home</H2>
+            </form>
+            
             <form class="form-adminhome" action="{{ url_for('adminHome') }}" method="POST">
                 <input type="submit" class="btn btn-md btn-secondary btn-block" name="viewVis" value="View Visitors">
             </form>

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
+
 <html>
 <style media="screen">
 html,
@@ -54,6 +55,11 @@ body {
     z-index: 2;
 }
 
+.selected {
+    background-color: #D3D3D3;
+    color: #696969;
+}
+
 #title {
     margin-top: -50px;
 }
@@ -73,45 +79,73 @@ body {
 </style>
 
 <body>
-    <form class="form-unconfirmed">
+    <form class="form-unconfirmed" method="POST">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><strong>View Visitor</strong></h1>
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" id="visTb">
                 <thead class="thead-light">
                     <tr>
                         <!-- onclick="sort(document.getElementById('sortName').value) -->
-                      <th scope="col">Name<button id="username" class="btn dropdown-toggle float-right" type="button" ></button></th>
-                      <th scope="col">Email<button id="email" class="btn dropdown-toggle float-right" type="button"></button></th>
+                        <th scope="col">Username<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Email<button name="sortEmail" class="btn dropdown-toggle float-right"></button></th>
                     </tr>
                 </thead>
-                  <tr>
-                    <td scope="row">Susan</td>
-                    <td>susan@email.com</td>
-                  </tr>
-                  <tr>
-                    <td scope="row">Ellen</td>
-                    <td>ellen@mail.com</td>
-                  </tr>
-                  <tr>
-                    <td scope="row"></td>
-                    <td></td>
-                  </tr>               
+                <tbody>
+                {% for item in data %}
+                <tr>
+                    <td scope="row">{{item[0]}}</td>
+                    <td>{{item[1]}}</td>
+                </tr>
+                {% endfor %}
                 </tbody>
             </table>
+        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between flex-direction: flex-column"> 
+        </div>
+        <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
+            <label for="animalName" class="sr-only">Search</label>
+                <input id="animalName" class="form-control inline-input" placeholder="search" required autofocus> 
+        </div>
+    </div>         
+    <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between flex-direction: flex-column"> 
+            <div class="dropdown">  
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
+                Username
+              </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <button id="pacific" class="dropdown-item" type="button"></button>
+
+                </div>
+            </div>    
+        </div>
+        <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
+            <div class="dropdown">  
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
+                Email
+              </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                <button id="pacific" class="dropdown-item" type="button"></button>
+
+                </div>
+            </div>    
+        </div>
+    </div>             
     <div class="d-flex justify-content-between">
         <div class="d-flex justify-content-between flex-direction: flex-column">
-            <a id="logout" class="btn btn-secondary" href="./Login.html"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Back</a>
+            <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
         </div>
         <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-            <button type="button" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;">Delete Visitor</button>
+            <button type="submit" id="delBut" value="" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;" name="delete">Delete Visitor</button>
         </div>
-    </div>  
-
+    </div>
     </form>
+    <script type="text/javascript">
+        $("#visTb tr").click(function(){
+            $(this).addClass('selected').siblings().removeClass('selected');
+            document.getElementById('delBut').value = $(this).find('td:first').text()
+        });
+    </script>
 </body>
 
 </html>
-<script type="text/javascript">
-$('.dropdown-item').click(function() {
-    $('#dropdownMenuButton').text('Search by: ' + $(this).text());
-});
-</script>
+
