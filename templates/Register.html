@@ -35,6 +35,10 @@
           background-color: #e6e6e6;
         }
 
+        div {
+            width: 100%
+        }
+
         .form-register {
           width: 100%;
           max-width: 320px;
@@ -80,42 +84,43 @@
     </style>
 
     <body class = "text-center">
+        <div>
+            <form  class = "form-register" method="POST" action="{{ url_for('register') }}">
+                <h1 class="h4 mb-3 font-weight-normal">Atlanta Zoo</h1>
+                <div>
+                    {% block content %}
+                    <div class="container">
+                        {% for message in get_flashed_messages() %}
+                        <div class="alerter alert-warning">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
 
-        <form  class = "form-register" method="POST" action="{{ url_for('register') }}">
-            <h1 class="h4 mb-3 font-weight-normal">Atlanta Zoo</h1>
-            <div>
-                {% block content %}
-                <div class="container">
-                    {% for message in get_flashed_messages() %}
-                    <div class="alerter alert-warning">
-                        {{ message }}
+                        {% block page_content %}{% endblock %}
                     </div>
-                    {% endfor %}
-
-                    {% block page_content %}{% endblock %}
+                    {% endblock %}
                 </div>
-                {% endblock %}
-            </div>
-            <fieldset>
-                <label for="inputEmail" class="sr-only">Email address</label>
-                <input id="inputEmail" class="form-control" value="" name="email" placeholder="Email Address" required autofocus>
+                <fieldset>
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input id="inputEmail" class="form-control" value="" name="email" placeholder="Email Address" required autofocus>
 
-                <label for = "inputUsername" class = "sr-only">Username</label>
-                <input id="inputUsername" class="form-control" value="" name="username" placeholder="Username" required>
+                    <label for = "inputUsername" class = "sr-only">Username</label>
+                    <input id="inputUsername" class="form-control" value="" name="username" placeholder="Username" required>
 
-                <label for="inputPassword1" class="sr-only">Password</label>
-                <input type="password" id="inputPassword1" class="form-control" value="" name="password" placeholder="Password" minlength="8" required>
+                    <label for="inputPassword1" class="sr-only">Password</label>
+                    <input type="password" id="inputPassword1" class="form-control" value="" name="password" placeholder="Password" minlength="8" required>
 
-                <label for="inputPassword2" class="sr-only">Password2</label>
-                <input type="password" id="inputPassword2" class="form-control" value="" name="password2" placeholder="Confirm Password" minlength="8" required>
+                    <label for="inputPassword2" class="sr-only">Password2</label>
+                    <input type="password" id="inputPassword2" class="form-control" value="" name="password2" placeholder="Confirm Password" minlength="8" required>
 
-                <input type="submit" class="btn btn-lg btn-secondary btn-block" value="Register Visitor" name="regVis">
-                <input type="submit" class="btn btn-lg btn-secondary btn-block" value="Register Staff" name="regStf">
-            </fieldset>
-        </form>
-        <form action="{{ url_for('register') }}" method="POST">
-            <button name="cancelReg" class="btn btn-lg btn-light btn-block" type="submit">Cancel</button>
-        </form>
+                    <input type="submit" class="btn btn-lg btn-secondary btn-block" value="Register Visitor" name="regVis">
+                    <input type="submit" class="btn btn-lg btn-secondary btn-block" value="Register Staff" name="regStf">
+                </fieldset>
+            </form>
+            <form class = "form-register" action="{{ url_for('register') }}" method="POST">
+                <button name="cancelReg" class="btn btn-lg btn-light btn-block" type="submit">Cancel</button>
+            </form>
+        </div>
     </body>
 </html>
 
