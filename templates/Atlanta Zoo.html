@@ -1,0 +1,171 @@
+
+<!-- saved from url=(0076)file:///C:/Users/Gomtaeng/Desktop/CS4400/cs4400/templates/adminVisitor.html# -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="file:///C:/Users/Gomtaeng/Desktop/CS4400/cs4400/templates/favicon.ico" "="">
+    <title>Atlanta Zoo</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="./Atlanta Zoo_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="./Atlanta Zoo_files/jquery.min.js.download"></script>
+    <script src="./Atlanta Zoo_files/jquery-3.3.1.slim.min.js.download" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="./Atlanta Zoo_files/popper.min.js.download" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="./Atlanta Zoo_files/bootstrap.min.js.download" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- datetime CSS -->
+    <script type="text/javascript" src="./Atlanta Zoo_files/moment.min.js.download"></script>
+    <script type="text/javascript" src="./Atlanta Zoo_files/tempusdominus-bootstrap-4.min.js.download"></script>
+    <link rel="stylesheet" href="./Atlanta Zoo_files/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="./Atlanta Zoo_files/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="./Atlanta Zoo_files/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="./Atlanta Zoo_files/bootstrap.min(1).css" rel="stylesheet">
+<style media="screen">
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #e6e6e6;
+}
+
+.form-unconfirmed {
+    width: 100%;
+    padding: 50px;
+    margin: 1 auto;
+}
+
+.form-unconfirmed .checkbox {
+    font-weight: 400;
+}
+
+.form-unconfirmed .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.selected {
+    background-color: #D3D3D3;
+    color: #696969;
+}
+
+#title {
+    margin-top: -50px;
+}
+
+.vertical-container {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+}
+</style></head>
+
+
+
+
+<body>
+
+    <form class="form-unconfirmed" method="POST">
+        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><strong>View Visitor</strong></h1>
+            
+                {% for item in data %}
+                
+                {% endfor %}
+                <table class="table table-bordered table-hover" id="visTb">
+                <thead class="thead-light">
+                    <tr>
+                        <!-- onclick="sort(document.getElementById('sortName').value) -->
+                        <th scope="col">Username<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Email<button name="sortEmail" class="btn dropdown-toggle float-right"></button></th>
+                    </tr>
+                </thead>
+                <tbody><tr>
+                    <td scope="row">{{item[0]}}</td>
+                    <td>{{item[1]}}</td>
+                </tr></tbody>
+            </table>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between flex-direction: flex-column"> 
+            </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
+                <div class="dropdown">  
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
+                Option
+              </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <button id="pacific" class="dropdown-item" type="button"></button>
+                <button id="jungle" class="dropdown-item" type="button">Username</button>
+                <button id="sahara" class="dropdown-item" type="button">Email</button>
+                </div>
+            </div>
+        </div> 
+        </div>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between flex-direction: flex-column"> 
+            </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
+
+
+                <div class="dropdown">  
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 50px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
+                Option
+                </button>
+                <ul class="dropdown-menu">
+                <li><a href="file:///C:/Users/Gomtaeng/Desktop/CS4400/cs4400/templates/adminVisitor.html#">Username</a></li>
+                <li><a href="file:///C:/Users/Gomtaeng/Desktop/CS4400/cs4400/templates/adminVisitor.html#">Email</a></li>
+              </ul>
+            </div>
+        </div>
+
+        <div class="form-group" style="display:inline;">
+          <div class="input-group"> 
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="width: 200px; height: 44px; "><span class="glyphicon glyphicon-chevron-down"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="file:///C:/Users/Gomtaeng/Desktop/CS4400/cs4400/templates/adminVisitor.html#">Username</a></li>
+                <li><a href="file:///C:/Users/Gomtaeng/Desktop/CS4400/cs4400/templates/adminVisitor.html#">Email</a></li>
+              </ul>
+            </div>
+            <input type="text" class="form-control" placeholder="What are searching for?">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span> </span>
+          </div>
+        </div>
+
+    <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between flex-direction: flex-column">
+            <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+        </div>
+        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+            <button type="submit" id="delBut" value="" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;" name="delete">Delete Visitor</button>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        $("#visTb tr").click(function(){
+            $(this).addClass('selected').siblings().removeClass('selected');
+            document.getElementById('delBut').value = $(this).find('td:first').text()
+        });
+    </script>
+
+
+
+
+</div></form></body></html>
