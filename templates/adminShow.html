@@ -77,50 +77,53 @@ th>.dropdown-toggle:active {
 <body>
     <div class="form-unconfirmed">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Shows</b></h1>
-        <div class="d-flex justify-content-between"style="margin-bottom: 20px;">
-        	<div class="d-flex justify-content-between flex-direction: flex-column">
-        		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
-	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                <form action="{{ url_for('adminViewShows') }}" method="POST">
-                    <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;" name="search">Search</button>
-                </form>
-            </div>
-	    </div>
-		<div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column">
-        		<input type="text" class="form-control" id="searchName" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 10px; margin-bottom: 5px;">
-	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                <form action="{{ url_for('adminViewShows') }}" method="POST">
-                    <div class="form-group">
-                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
-                        </div>
+        <form action="{{ url_for('adminViewShows') }}" method="POST">
+            <fieldset>
+                <div class="d-flex justify-content-between"style="margin-bottom: 20px;">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
                     </div>
-                </form>
-	      	</div>
-        </div>
-        <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
-	      	<div class="d-flex justify-content-between flex-direction: flex-column">
-                <form action="{{ url_for('adminViewShows') }}" method="POST">
-                    <select Exhibit="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
-                        <option value="pacific">Pacific</option>
-                        <option value="Email">Jungle</option>
-                        <option value="Email">Sahara</option>
-                        <option value="Email">Birds</option>
-                    </select>
-                </form>
-            </div>
-		    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                <form action="{{ url_for('adminViewShows') }}" method="POST">
-			        <button type="submit" id="delBut" name="delete" class="btn btn-sm btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; ">Remove Show</button>
-                </form>
-            </div>
-        </div>
+                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                        <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;" name="search">Search</button>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <input type="text" class="form-control" name="searchname" value="" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 10px; margin-bottom: 5px;">
+                    </div>
+                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                        <form action="{{ url_for('adminViewShows') }}" method="POST">
+                            <div class="form-group">
+                                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                    <input type="text" name="datetime" value="" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <select name="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                            <option value="any">Any Type</option>
+                            <option value="pacific">Pacific</option>
+                            <option value="jungle">Jungle</option>
+                            <option value="sahara">Sahara</option>
+                            <option value="birds">Birds</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                        <form action="{{ url_for('adminViewShows') }}" method="POST">
+                            <button type="submit" id="delBut" name="delete" class="btn btn-sm btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; ">Remove Show</button>
+                        </form>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
         <form action="{{ url_for('adminViewShows') }}" method="POST">
             <table id="visTb" class="table table-bordered table-hover">
                 <thead class="thead-light">
@@ -142,16 +145,16 @@ th>.dropdown-toggle:active {
             </table>
         </form>
         <div class="d-flex justify-content-between">
-                <div class="d-flex justify-content-between flex-direction: flex-column">
-                    <form action="{{ url_for('adminViewShows') }}" method="POST">
-                        <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
-                    </form>
-                </div>
-                <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                    <form action="{{ url_for('adminViewShows') }}" method="POST">
-                        <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
-                    </form>
-                </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column">
+                <form action="{{ url_for('adminViewShows') }}" method="POST">
+                    <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+                </form>
+            </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <form action="{{ url_for('adminViewShows') }}" method="POST">
+                    <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
+                </form>
+            </div>
         </div>
     </div>
 </body>
