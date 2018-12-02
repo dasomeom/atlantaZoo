@@ -97,13 +97,11 @@
                         </div>
                         <div class="col-lg-6">
                             <div class=" line-spacing left-">
-                            <select name="aniexh" class="form-control inline-input">
-                                <option value="birds">Birds</option>
-                                <option value="jungle">Jungle</option>
-                                <option value="mountainous">Mountainous</option>
-                                <option value="pacific">Pacific</option>
-                                <option value="sahara">Sahara</option>
-                            </select>
+                                <select name="aniexh" class="form-control inline-input">
+                                    {% for x in data %}
+                                        <option value="{{ x[0] }}">{{ x[0] }}</option>
+                                    {% endfor %}
+                                </select>
                           </div>
                         </div>
                     </div>
@@ -115,12 +113,12 @@
                         <div class="col-lg-6">
                             <div class=" line-spacing left-">
                             <select name="anitype" class="form-control inline-input">
-                                <option value="amp">Amphibian</option>
-                                <option value="bird">Bird</option>
-                                <option value="fish">Fish</option>
-                                <option value="inv">Invertebrate</option>
-                                <option value="mammal">Mammal</option>
-                                <option value="rep">Reptile</option>
+                                <option value="Amphibian">Amphibian</option>
+                                <option value="Bird">Bird</option>
+                                <option value="Fish">Fish</option>
+                                <option value="Invertebrate">Invertebrate</option>
+                                <option value="Mammal">Mammal</option>
+                                <option value="Reptile">Reptile</option>
                             </select>
                           </div>
                         </div>
@@ -151,7 +149,9 @@
             </form>
             <div class="col-md-4 center-block" style="margin-bottom: 20px;">
               <div class="col-md-4 center-block">
-                <button type="submit" name="cancel" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;">Cancel</button>
+                  <form action="{{ url_for('adminAddAnimals') }}" method="POST">
+                    <button type="submit" name="cancel" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;">Cancel</button>
+                  </form>
               </div>  
             </div>
         </div>

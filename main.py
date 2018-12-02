@@ -481,14 +481,60 @@ def adminViewAnimals():
 
 @app.route('/adminaddanimals', methods=['GET', 'POST'])
 def adminAddAnimals():
-    print request.form
-    if request.method == 'POST' and 'addani' in request.form:
-        print request.form
-    return render_template('addAnimal.html')
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name FROM exhibit")
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'addani' in request.form:
+            name = request.form['aniname']
+            exh = request.form['aniexh']
+            anitype = request.form['anitype']
+            spec = request.form['anispec']
+            age = int(request.form['aniage'])
+            cursor.execute("SELECT Name, Species FROM animal WHERE Name = %s AND Species = %s", (name, spec))
+            notHave = cursor.fetchone() == None
+            if notHave:
+                cursor.execute("INSERT INTO animal (Age, Type, Species, Name, Exhibit) VALUES(%s, %s, %s, %s, %s)", (age, anitype, spec, name, exh))
+                conn.commit()
+                cursor.close()
+            return redirect(url_for('adminAddAnimals'))
+        elif 'cancel' in request.form:
+            cursor.close()
+            return redirect(url_for('adminHome'))
+    cursor.close()
+    return render_template('addAnimal.html', data=data)
 
 @app.route('/adminaddshow', methods=['GET', 'POST'])
 def adminAddShow():
-    return render_template('addShow.html')
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Username FROM staff")
+    stafdata = cursor.fetchall()
+    cursor.execute("SELECT Name FROM exhibit")
+    exhdata = cursor.fetchall()
+    if request.method == 'POST':
+        if 'addshow' in request.form:
+            print request.form
+            name = request.form['showname']
+            aniexh = request.form['aniexh']
+            staff = request.form['staff']
+            date = request.form['date']
+            show_datetime = datetime.datetime.strptime(date, '%d/%m/%Y %I:%M %p')
+            show_datetime = show_datetime.strftime('%Y-%m-%d %H:%M:%S')
+            cursor.execute("SELECT Name, Date_and_time FROM shows WHERE Name = %s AND Date_and_time = %s", (name, show_datetime))
+            notHave = cursor.fetchone() == None
+            if notHave:
+                cursor.execute("INSERT INTO shows (Name, Date_and_time, Located_at, Host) VALUES(%s, %s, %s, %s)",
+                               (name, show_datetime, aniexh, staff))
+                conn.commit()
+                cursor.close()
+            return redirect(url_for('adminAddAnimals'))
+        elif 'cancel' in request.form:
+            cursor.close()
+            return redirect(url_for('adminHome'))
+    cursor.close()
+    return render_template('addShow.html', exhdata=exhdata, stafdata=stafdata)
 
 
 
