@@ -1110,6 +1110,16 @@ def searchAnimals():
             data = cursor.fetchall()
             cursor.close()
             return render_template('searchAnimals.html', data=data)
+        elif 'detail' in request.form:
+            ani_row = request.form['detail']
+            if ani_row == '':
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal")
+                data = cursor.fetchall()
+                cursor.close()
+                return render_template('searchAnimals.html', data=data)
+            else:
+                session['detanimal'] = ani_row
+                return redirect(url_for('animalDetail'))
         elif 'back' in request.form:
             cursor.close()
             return redirect(url_for('visitorHome'))
