@@ -1,7 +1,7 @@
 <head xmlns="http://www.w3.org/1999/html">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="favicon.ico"">
+    <link rel="icon" href="favicon.ico">
     <title>Atlanta Zoo</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -63,7 +63,7 @@ body {
     <div class = "form-unconfirmed">
         <form class="form-unconfirmed" action="{{ url_for('adminViewStaffs') }}" method="POST">
             <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><strong>View Staff</strong></h1>
-            <table class="table table-bordered table-hover" id="visTb">
+            <table class="table table-bordered table-hover" id="stfTb">
                 <thead class="thead-light">
                     <tr>
                       <th scope="col">Username<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
@@ -112,7 +112,7 @@ body {
 </body>
 </html>
 <script type="text/javascript">
-    $("#visTb tr").click(function(){
+    $("#stfTb tr").click(function(){
         $(this).addClass('selected').siblings().removeClass('selected');
             document.getElementById('delBut').value = $(this).find('td:first').text()
     });

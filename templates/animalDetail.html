@@ -1,147 +1,134 @@
 <!DOCTYPE html>
-
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="../../../../favicon.ico">
-
+    <link rel="icon" href="favicon.ico">
     <title>Atlanta Zoo</title>
-
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 </head>
-</head>
-
 <html>
-  <body>
+<style>
+  .hidden {
+    display: none
+  }
 
+  .last {
+    margin-bottom: 60px !important;
 
-    <form>
-      <div class="center-h-container">
-        <h1 class="font-weight-normal"> <b>Animal Detail </b></h1>
-      </div>
-      <div class="form-group row">
-        <label class="row-label col-lg-3 col-form-label"><b>Name: </b></label>
-        <div class="col-lg-9">
-          <label class="form-control-plaintext"> Nemo </label>
+  }
+  /* .col-form-label{
+    padding: 0;
+    height: 20px;
+  } */
+
+  .col-form-label {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .form-control-plaintext {
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 80%;
+    padding-left: 20px;
+    border: 0;
+  }
+  .row-label{
+    /* padding-right: 25px: */
+  }
+  .form-group {
+    margin: 2;
+  }
+
+  .vertical-container{
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  body {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #e6e6e6;
+  }
+  .center-h-container{
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+  }
+</style>
+<body>
+    <div class="form-unconfirmed">
+        <form action="{{ url_for('animalDetail') }}" method="POST">
+          <div class="center-h-container">
+            <h1 class="font-weight-normal"> <b>Animal Detail </b></h1>
+          </div>
+          <div class="form-group row">
+            <label class="row-label col-lg-3 col-form-label"><b>Name: </b></label>
+            <div class="col-lg-9">
+              <label class="form-control-plaintext"> Nemo </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="row-label col-lg-3 col-form-label"><b>Species: </b></label>
+            <div class="col-lg-9">
+              <label class="form-control-plaintext"> Clownfish </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="row-label col-lg-3 col-form-label"> <b>Age:</b></label>
+            <div class="col-lg-9">
+              <label class="form-control-plaintext"> 1 month </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="row-label col-lg-3 col-form-label"><b>Exhibit: </b></label>
+            <div class="col-lg-9">
+              <label class="form-control-plaintext"> Pacific </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="row-label col-lg-3 col-form-label"><b>Type: </b></label>
+            <div class="col-lg-9">
+              <label class="form-control-plaintext"> Fish</label>
+            </div>
+          </div>
+        </form>
+        <div class="btn-container">
+            <form action="{{ url_for('animalDetail') }}" method="POST">
+                <button type="button" class="btn btn-lg btn-secondary btn-block"> Back</button>
+            </form>
         </div>
-      </div>
-      <div class="form-group row">
-        <label class="row-label col-lg-3 col-form-label"><b>Species: </b></label>
-        <div class="col-lg-9">
-          <label class="form-control-plaintext"> Clownfish </label>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="row-label col-lg-3 col-form-label"> <b>Age:</b></label>
-        <div class="col-lg-9">
-          <label class="form-control-plaintext"> 1 month </label>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="row-label col-lg-3 col-form-label"><b>Exhibit: </b></label>
-        <div class="col-lg-9">
-          <label class="form-control-plaintext"> Pacific </label>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="row-label col-lg-3 col-form-label"><b>Type: </b></label>
-        <div class="col-lg-9">
-          <label class="form-control-plaintext"> Fish</label>
-        </div>
-      </div>
 
-      <div class="btn-container">
-        <button type="button" class="btn btn-lg btn-secondary btn-block"> Back</button>
-      </div>
-
-    </form>
-
-
-
-  </body>
-
-
-
-  <style>
-      .hidden {
-        display: none
-      }
-
-      .last {
-        margin-bottom: 60px !important;
-
-      }
-      /* .col-form-label{
-        padding: 0;
-        height: 20px;
-      } */
-
-      .col-form-label {
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-
-      .form-control-plaintext {
-        padding-top: 0;
-        padding-bottom: 0;
-        width: 80%;
-        padding-left: 20px;
-        border: 0;
-      }
-      .row-label{
-        /* padding-right: 25px: */
-      }
-      .form-group {
-        margin: 2;
-      }
-
-      .vertical-container{
-        display: -ms-flexbox;
-        display: -webkit-box;
-        display: flex;
-        -ms-flex-align: center;
-        -ms-flex-pack: center;
-        -webkit-box-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        justify-content: center;
-        flex-direction: column;
-      }
-      body {
-        display: -ms-flexbox;
-        display: -webkit-box;
-        display: flex;
-        -ms-flex-align: center;
-        -ms-flex-pack: center;
-        -webkit-box-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        justify-content: center;
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #e6e6e6;
-      }
-      .center-h-container{
-        display: -ms-flexbox;
-        display: -webkit-box;
-        display: flex;
-        -ms-flex-align: center;
-        -ms-flex-pack: center;
-        -webkit-box-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        justify-content: center;
-        text-align: center;
-      }
-  </style>
-
+    </div>
+</body>
 </html>
 
 <script>
