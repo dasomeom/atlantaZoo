@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 from flaskext.mysql import MySQL
-
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
