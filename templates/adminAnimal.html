@@ -10,6 +10,11 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- datetime CSS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 <html>
 <style media="screen">
@@ -17,7 +22,6 @@ html,
 body {
     height: 100%;
 }
-
 body {
     display: -ms-flexbox;
     display: -webkit-box;
@@ -26,17 +30,14 @@ body {
     padding-bottom: 40px;
     background-color: #e6e6e6;
 }
-
 .form-unconfirmed {
     width: 100%;
     padding: 50px;
     margin: 0 auto;
 }
-
 .form-unconfirmed .checkbox {
     font-weight: 400;
 }
-
 .form-unconfirmed .form-control {
     position: relative;
     box-sizing: border-box;
@@ -44,66 +45,69 @@ body {
     padding: 10px;
     font-size: 16px;
 }
-
-.form-signin .form-control:
-	focus {
-    z-index: 2;
-}
-
+/*    	#subtitle {
+    		margin-left: 100px;
+    		margin-top: 50px;
+    	}*/
 #title {
     margin-top: -50px;
 }
-
-#dropdownMenuButton, #dropdownMenuButton2 {
+#dropdownMenuButton {
     margin-top: 10px;
 }
-
-
 th>.dropdown-toggle {
     background-color: transparent;
 }
-
 th>.dropdown-toggle:focus,
 th>.dropdown-toggle:active {
     outline: none !important;
     box-shadow: none;
 }
-
 .table tbody tr.highlight td {
     background-color: #ddd;
+}
+.hiddenField {
+    display: none;
 }
 .selected {
     background-color: #D3D3D3;
     color: #696969;
 }
-
-.hiddenField {
-    display: none;
-}
 </style>
-
 <body>
     <div class="form-unconfirmed">
-        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Animals</b></h1>
-        <div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
-        		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
-	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-				<form action="{{ url_for('adminViewAnimals') }}" method="POST">
-                    <button type="submit" id="delBut" value="" class="btn btn-secondary" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;" name="delete">Remove Animal</button>
-                </form>
-	      	</div>
-	    </div>
-        <form action="{{ url_for('adminViewAnimals') }}" method="POST">
+        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Shows</b></h1>
+        <form action="{{ url_for('adminViewShows') }}" method="POST">
             <fieldset>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between"style="margin-bottom: 20px;">
                     <div class="d-flex justify-content-between flex-direction: flex-column">
-                        <input name="searchname" type="text" class="form-control" id="searchName" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px; margin-bottom: 5px;">
+                        <h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
                     </div>
                     <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                        <select name="exhopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
-                            <option value="anyExh">Any Exhibit</option>
+                        <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;" name="search">Search</button>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <input type="text" class="form-control" name="searchname" value="" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 10px; margin-bottom: 5px;">
+                    </div>
+                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                        <form action="{{ url_for('adminViewShows') }}" method="POST">
+                            <div class="form-group">
+                                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                    <input type="text" name="datetime" value="" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <select name="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                            <option value="any">Any Exhibit</option>
                             <option value="birds">Birds</option>
                             <option value="jungle">Jungle</option>
                             <option value="mountainous">Mountainous</option>
@@ -111,131 +115,106 @@ th>.dropdown-toggle:active {
                             <option value="sahara">Sahara</option>
                         </select>
                     </div>
-                </div>
-                <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
-                    <div class="d-flex justify-content-between flex-direction: flex-column">
-                        <input name="searchspec" type="text" class="form-control" id="searchSpecies" placeholder="Species" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
-                    </div>
                     <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                        <select name="typeopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
-                            <option value="anyType">Any Type</option>
-                            <option value="amp">Amphibian</option>
-                            <option value="bird">Bird</option>
-                            <option value="fish">Fish</option>
-                            <option value="inv">Invertebrate</option>
-                            <option value="mammal">Mammal</option>
-                            <option value="rep">Reptile</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
-                    <div class="d-flex justify-content-between flex-direction: flex-column">
-                        <input name="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;">
-                    </div>
-                    <div class="col-lg-6"></div>
-                    <div class="col-lg-1">
-                    <p>Age (Year)</p>
-                    </div>
-                    <div class="col-lg-1"><p>MIN</p>
-                        <select name='min' class="1-100" style="width: 70px; height: 35px;"></select>
-                    </div>
-                    <div class="col-lg-1"><p>MAX</p>
-                        <select name='max' class="1-100" style="width: 70px; height: 35px;"></select>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex justify-content-between flex-direction: flex-column">
-                    </div>
-                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                        <form action="{{ url_for('adminViewShows') }}" method="POST">
+                            <button type="submit" id="delBut" name="delete" class="btn btn-sm btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; ">Remove Show</button>
+                        </form>
                     </div>
                 </div>
             </fieldset>
         </form>
-        <form class="form-unconfirmed" action="{{ url_for('adminViewAnimals') }}" method="POST">
-            <table class="table table-bordered table-hover" id="aniTb">
+        <form action="{{ url_for('adminViewShows') }}" method="POST">
+            <table id="showTb" class="table table-bordered table-hover">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
-                        <th scope="col">Species<button name="sortSpecies" class="btn dropdown-toggle float-right"></button></th>
-                        <th scope="col">Exhibit<button name="sortExhibit" class="btn dropdown-toggle float-right"></button></th>
-                        <th scope="col">Age<button name="sortAge" class="btn dropdown-toggle float-right"></button></th>
-                        <th scope="col">Type<button name="sortType" class="btn dropdown-toggle float-right"></button></th>
+                      <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
+                      <th scope="col">Exhibit<button name="sortExhibit" class="btn dropdown-toggle float-right"></button></th>
+                      <th scope="col">Time<button name="sortTime" class="btn dropdown-toggle float-right"></button></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in data %}
                     <tr>
                         <td scope="row">{{item[0]}}</td>
-                        <td>{{item[1]}}</td>
                         <td>{{item[2]}}</td>
-                        <td>{{item[3]}}</td>
-                        <td>{{item[4]}}</td>
+                        <td>{{item[1]}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </form>
-		<div class="d-flex justify-content-between">
-			<div class="d-flex justify-content-between flex-direction: flex-column">
-				<form action="{{ url_for('adminViewAnimals') }}" method="POST">
-					<button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
-				</form>
-			</div>
-			<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-				<form action="{{ url_for('adminViewAnimals') }}" method="POST">
-					<button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
-				</form>
-			</div>
-		</div>
-	</div>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between flex-direction: flex-column">
+                <form action="{{ url_for('adminViewShows') }}" method="POST">
+                    <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+                </form>
+            </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <form action="{{ url_for('adminViewShows') }}" method="POST">
+                    <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
-
 <script type="text/javascript">
-	$(function(){
-    var $select = $(".1-100");
-    for (i=0;i<=100;i++){
-        $select.append($('<option></option>').val(i).html(i))
-    }
-	});
-
-	$("#aniTb tr").click(function(){
+$(function () {
+   var bindDatePicker = function() {
+		$(".date").datetimepicker({
+        format:'YYYY-MM-DD',
+			icons: {
+				time: "fa fa-clock-o",
+				date: "fa fa-calendar",
+				up: "fa fa-arrow-up",
+				down: "fa fa-arrow-down"
+			}
+		}).find('input:first').on("blur",function () {
+			// check if the date is correct. We can accept dd-mm-yyyy and yyyy-mm-dd.
+			// update the format if it's yyyy-mm-dd
+			var date = parseDate($(this).val());
+			if (! isValidDate(date)) {
+				//create date based on momentjs (we have that)
+				date = moment().format('YYYY-MM-DD');
+			}
+			$(this).val(date);
+		});
+	}
+   var isValidDate = function(value, format) {
+		format = format || false;
+		// lets parse the date to the best of our knowledge
+		if (format) {
+			value = parseDate(value);
+		}
+		var timestamp = Date.parse(value);
+		return isNaN(timestamp) == false;
+   }
+   var parseDate = function(value) {
+		var m = value.match(/^(\d{1,2})(\/|-)?(\d{1,2})(\/|-)?(\d{4})$/);
+		if (m)
+			value = m[5] + '-' + ("00" + m[3]).slice(-2) + '-' + ("00" + m[1]).slice(-2);
+		return value;
+   }
+   bindDatePicker();
+ });
+    $("#showTb tr").click(function(){
         $(this).addClass('selected').siblings().removeClass('selected');
         var n = {}
         n.name = $(this).find('td:first').text();
-        n.species = $(this).find('td:nth-child(2)').text();
-        n.exhibit = $(this).find('td:nth-child(3)').text();
-        n.age = parseInt($(this).find('td:nth-child(4)').text());
-        n.type = $(this).find('td:nth-child(5)').text();
+        n.exhibit = $(this).find('td:nth-child(2)').text();
+        n.date = $(this).find('td:nth-child(3)').text();
             document.getElementById('delBut').value = JSON.stringify(n)
     });
-
+	$(function(){
+    var $select = $(".1-100");
+    for (i=1;i<=10000;i++){
+        $select.append($('<option></option>').val(i).html(i))
+    }
+	});
 	$('.dropdown-item').click(function() {
-		var str = this.id;
-		if (str == 'jungle') {
-			$('#dropdownMenuButton1').text('Exhibit: Jungle');
-		} else if (str == 'sahara') {
-			$('#dropdownMenuButton1').text('Exhibit: Sahara');
-		} else if (str == 'birds') {
-			$('#dropdownMenuButton1').text('Exhibit: Birds');
-		} else if (str == 'pacific') {
-			$('#dropdownMenuButton1').text('Exhibit: Pacific');
-		} else if (str == 'amphibian') {
-			$('#dropdownMenuButton2').text('Type: Amphibian');
-		} else if (str == 'anthropod') {
-			$('#dropdownMenuButton2').text('Type: Anthropod');
-		} else if (str == 'bird') {
-			$('#dropdownMenuButton2').text('Type: Bird');
-		} else if (str == 'mammal') {
-			$('#dropdownMenuButton2').text('Type: Mammal');
-		} else if (str == 'reptile') {
-			$('#dropdownMenuButton2').text('Type: Reptile');
-		}
-		
+		$('#dropdownMenuButton').text('Exhibit: ' + $(this).text());
 	});
 	$('th>.dropdown-toggle').on('click', onClick);
-
-
 	$("tbody tr").click(function() {
 		$(this).addClass('highlight').siblings().removeClass('highlight');
 		var cells = this.cells; //cells collection
@@ -244,30 +223,14 @@ th>.dropdown-toggle:active {
 		$('#idSelector').val(id);
 		// $(this).addClass('bg-info').siblings().removeClass('bg-info');
 	});
-
-	function onClick(e) {
-		var th = $(e.target).parent();
-		var col = th.text();
-		var table = $(th).parents('table').eq(0);
-    	var rows = table.find('tr:gt(0)').toArray().sort(compare($(th).index()));
-    	this.asc = !this.asc;
-		if (!this.asc) {
-			rows = rows.reverse();
-		}
-    	for (var i = 0; i < rows.length; i++) {
-    		table.append(rows[i]);
-    	}
-	}
-
 	function compare(index) {
 	    return function(a, b) {
-	        var valA = getCellValue(a, index); 
+	        var valA = getCellValue(a, index);
 	        var valB = getCellValue(b, index);
 	        return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB);
 	    }
 	}
-
-	function getCellValue(row, index){ 
-		return $(row).children('td').eq(index).text(); 
+	function getCellValue(row, index){
+		return $(row).children('td').eq(index).text();
 	}
 </script>

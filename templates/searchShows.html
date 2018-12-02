@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,7 +22,6 @@ html,
 body {
     height: 100%;
 }
-
 body {
     display: -ms-flexbox;
     display: -webkit-box;
@@ -30,17 +30,14 @@ body {
     padding-bottom: 40px;
     background-color: #e6e6e6;
 }
-
 .form-unconfirmed {
     width: 100%;
     padding: 50px;
     margin: 0 auto;
 }
-
 .form-unconfirmed .checkbox {
     font-weight: 400;
 }
-
 .form-unconfirmed .form-control {
     position: relative;
     box-sizing: border-box;
@@ -48,152 +45,187 @@ body {
     padding: 10px;
     font-size: 16px;
 }
-
-.form-signin .form-control:
-	focus {
-    z-index: 2;
-}
-
-
 /*    	#subtitle {
     		margin-left: 100px;
     		margin-top: 50px;
     	}*/
-
 #title {
     margin-top: -50px;
 }
-
 #dropdownMenuButton {
     margin-top: 10px;
 }
-
 th>.dropdown-toggle {
     background-color: transparent;
 }
-
 th>.dropdown-toggle:focus,
 th>.dropdown-toggle:active {
     outline: none !important;
     box-shadow: none;
 }
-
 .table tbody tr.highlight td {
     background-color: #ddd;
 }
-
 .hiddenField {
     display: none;
 }
+.selected {
+    background-color: #D3D3D3;
+    color: #696969;
+}
 </style>
-
 <body>
     <div class="form-unconfirmed">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Shows</b></h1>
+        <form action="{{ url_for('searchShows') }}" method="POST">
+            <fieldset>
+                <div class="d-flex justify-content-between"style="margin-bottom: 20px;">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
+                    </div>
+                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                        <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;" name="search">Search</button>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <input type="text" class="form-control" name="searchname" value="" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 10px; margin-bottom: 5px;">
+                    </div>
+                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                        <form action="{{ url_for('searchShows') }}" method="POST">
+                            <div class="form-group">
+                                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                    <input type="text" name="datetime" value="" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <select name="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                            <option value="any">Any Exhibit</option>
+                            <option value="birds">Birds</option>
+                            <option value="jungle">Jungle</option>
+                            <option value="mountainous">Mountainous</option>
+                            <option value="pacific">Pacific</option>
+                            <option value="sahara">Sahara</option>
+                        </select>
+                    </div>
 
-        <div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
-        		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
-	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">	
-	      	<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 10px;"> 
-	      	</div>
-	    </div>  
-
-		<div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
-        		<input type="text" class="form-control" id="searchName" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 10px; margin-bottom: 5px;">
-	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-	      		<div class="form-group">
-	                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-	                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-	                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-	                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-	                    </div>
-	                </div>
-	            </div>
-	            <script type="text/javascript">
-	                $(function () {
-	                    $('#datetimepicker1').datetimepicker();
-	                });
-	            </script>
-	      	</div> 
-    </div>
-
-
-		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
-	      	<div class="d-flex justify-content-between flex-direction: flex-column"> 
-	      		<div class="dropdown">  
-	      	  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-	      	    Exhibit
-	      	  </button>
-	      	  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-	      	  	<button id="yes" class="dropdown-item" type="button">Pacific</button>
-	      	  	<button id="no" class="dropdown-item" type="button">Jungle</button>
-	      	  	<button id="no" class="dropdown-item" type="button">Sahara</button>
-	      	  	<button id="no" class="dropdown-item" type="button">Birds</button>
-	      	  	</div>
-	      	</div>
-	    </div>
-		<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-			<button type="button" class="btn btn-sm btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; ">Log Visit</button>
-        </div>
-	</div>
-
-		<table class="table table-bordered table-hover">
-	            <table class="table table-bordered table-hover">
+                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                        <form action="{{ url_for('searchShows') }}" method="POST">
+                            <button type="submit" id="delBut" name="delete" class="btn btn-sm btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; ">Log Visit</button>
+                        </form>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        <form action="{{ url_for('searchShows') }}" method="POST">
+            <table id="showTb" class="table table-bordered table-hover">
                 <thead class="thead-light">
                     <tr>
-                        <!-- onclick="sort(document.getElementById('sortName').value) -->
-                      <th scope="col">Name<button id="sortName" class="btn dropdown-toggle float-right" type="button" ></button></th>
-                      <th scope="col">Exhibit<button id="sortExhibit" class="btn dropdown-toggle float-right" type="button"></button></th>
-                      <th scope="col">Time<button id="sortTime" class="btn dropdown-toggle float-right" type="button"></button></th>
+                      <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
+                      <th scope="col">Exhibit<button name="sortExhibit" class="btn dropdown-toggle float-right"></button></th>
+                      <th scope="col">Time<button name="sortTime" class="btn dropdown-toggle float-right"></button></th>
                     </tr>
                 </thead>
-                  <tr>
-                    <td scope="row">Feed the Fish</td>
-                    <td>Pacific</td>
-                    <td>9/29/18 3:00PM</td>
-                  </tr>
-                  <tr>
-                    <td scope="row"></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td scope="row"></td>
-                    <td></td>
-                    <td></td>
-                  </tr>               
+                <tbody>
+                    {% for item in data %}
+                    <tr>
+                        <td scope="row">{{item[0]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[1]}}</td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
-	<div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column">
-            <a id="logout" class="btn btn-secondary" href="./Login.html"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Back</a>
+        </form>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between flex-direction: flex-column">
+                <form action="{{ url_for('searchShows') }}" method="POST">
+                    <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+                </form>
+            </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <form action="{{ url_for('searchShows') }}" method="POST">
+                    <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
+                </form>
+            </div>
         </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-            <a id="logout" class="btn btn-light" href="./Login.html"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Logout</a>
-        </div>
-  	</div>	
-
-    </body>
+    </div>
+</body>
 </html>
-
 <script type="text/javascript">
+$(function () {
+   var bindDatePicker = function() {
+		$(".date").datetimepicker({
+        format:'YYYY-MM-DD',
+			icons: {
+				time: "fa fa-clock-o",
+				date: "fa fa-calendar",
+				up: "fa fa-arrow-up",
+				down: "fa fa-arrow-down"
+			}
+		}).find('input:first').on("blur",function () {
+			// check if the date is correct. We can accept dd-mm-yyyy and yyyy-mm-dd.
+			// update the format if it's yyyy-mm-dd
+			var date = parseDate($(this).val());
+
+			if (! isValidDate(date)) {
+				//create date based on momentjs (we have that)
+				date = moment().format('YYYY-MM-DD');
+			}
+
+			$(this).val(date);
+		});
+	}
+
+   var isValidDate = function(value, format) {
+		format = format || false;
+		// lets parse the date to the best of our knowledge
+		if (format) {
+			value = parseDate(value);
+		}
+
+		var timestamp = Date.parse(value);
+
+		return isNaN(timestamp) == false;
+   }
+
+   var parseDate = function(value) {
+		var m = value.match(/^(\d{1,2})(\/|-)?(\d{1,2})(\/|-)?(\d{4})$/);
+		if (m)
+			value = m[5] + '-' + ("00" + m[3]).slice(-2) + '-' + ("00" + m[1]).slice(-2);
+
+		return value;
+   }
+
+   bindDatePicker();
+ });
+
+    $("#showTb tr").click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+        var n = {}
+        n.name = $(this).find('td:first').text();
+        n.exhibit = $(this).find('td:nth-child(2)').text();
+        n.date = $(this).find('td:nth-child(3)').text();
+            document.getElementById('delBut').value = JSON.stringify(n)
+    });
+
 	$(function(){
     var $select = $(".1-100");
     for (i=1;i<=10000;i++){
         $select.append($('<option></option>').val(i).html(i))
     }
 	});
-
 	$('.dropdown-item').click(function() {
-		$('#dropdownMenuButton').text('Water Feature: ' + $(this).text());
+		$('#dropdownMenuButton').text('Exhibit: ' + $(this).text());
 	});
-
 	$('th>.dropdown-toggle').on('click', onClick);
-
 	$("tbody tr").click(function() {
 		$(this).addClass('highlight').siblings().removeClass('highlight');
 		var cells = this.cells; //cells collection
@@ -202,31 +234,15 @@ th>.dropdown-toggle:active {
 		$('#idSelector').val(id);
 		// $(this).addClass('bg-info').siblings().removeClass('bg-info');
 	});
-
-	function onClick(e) {
-		var th = $(e.target).parent();
-		var col = th.text();
-		var table = $(th).parents('table').eq(0);
-    	var rows = table.find('tr:gt(0)').toArray().sort(compare($(th).index()));
-    	this.asc = !this.asc;
-		if (!this.asc) {
-			rows = rows.reverse();
-		}
-    	for (var i = 0; i < rows.length; i++) {
-    		table.append(rows[i]);
-    	}
-	}
-
 	function compare(index) {
 	    return function(a, b) {
-	        var valA = getCellValue(a, index); 
+	        var valA = getCellValue(a, index);
 	        var valB = getCellValue(b, index);
 	        return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB);
 	    }
 	}
-
-	function getCellValue(row, index){ 
-		return $(row).children('td').eq(index).text(); 
+	function getCellValue(row, index){
+		return $(row).children('td').eq(index).text();
 	}
 
 </script>
