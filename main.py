@@ -490,6 +490,33 @@ def adminAddAnimals():
 def adminAddShow():
     return render_template('addShow.html')
 
+
+
+"""
+Staff page starts here
+"""
+@app.route('/staffhome', methods=['GET', 'POST'])
+def staffHome():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    staff_name = session['username']
+    cursor.execute("SELECT Username FROM STAFF WHERE Username = %s", (staff_name))
+    isStaff = len(cursor.fetchone()) > 0
+    cursor.close()
+    if not isStaff:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        if 'staffShow' in request.form:
+            return redirect(url_for('staffshow'))
+        elif 'staffAnimals' in request.form:
+            return redirect(url_for('staffAnimals'))
+        elif 'logOut' in request.form:
+            return redirect(url_for('logout'))
+    return render_template('staffhome.html')
+
+
+
+
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('username', None)
