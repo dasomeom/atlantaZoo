@@ -551,7 +551,7 @@ def staffHome():
         return redirect(url_for('login'))
     if request.method == 'POST':
         if 'staffShow' in request.form:
-            return redirect(url_for('staffshow'))
+            return redirect(url_for('staffShow'))
         elif 'staffAnimals' in request.form:
             return redirect(url_for('staffAnimals'))
         elif 'logOut' in request.form:
@@ -559,6 +559,52 @@ def staffHome():
     return render_template('staffhome.html')
 
 
+"""
+Staff Show page starts here
+"""
+@app.route('/staffshow', methods=['GET', 'POST'])
+def staffShow():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    staff_name = session['username']
+    cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows WHERE Host = %s", (staff_name))
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'sortName' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Name")
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Name DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('staffshow.html', data=data)
+        elif 'sortExhibit' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Located_at")
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Located_at DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('staffshow.html', data=data)
+        elif 'sortTime' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Date_and_time")
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Date_and_time DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('staffshow.html', data=data)
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('staffHome'))
+        elif 'logout' in request.form:
+            cursor.close()
+            return logout()
+    cursor.close()
+    return render_template('staffshow.html', data=data)
 
 """
 Visitor page starts here
