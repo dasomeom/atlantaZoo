@@ -815,12 +815,14 @@ def visitorHome():
             elif 'viewShHis' in request.form:
                 return redirect(url_for('adminViewAnimals'))
             elif 'searchAnimal' in request.form:
-                return redirect(url_for('adminAddAnimals'))
+                return redirect(url_for('searchAnimals'))
             elif 'logOut' in request.form:
                 return redirect(url_for('logout'))
     return render_template('visitorHome.html')
 
-
+"""
+Visitor search exhibit page starts here
+"""
 @app.route('/visistorsearchexhibit', methods=['GET', 'POST'])
 def visitorSearchExh():
     conn = mysql.connect()
@@ -951,6 +953,7 @@ def visitorSearchExh():
     return render_template('searchExhibit.html', data=data, exhdata=exhdata)
 
 
+<<<<<<< HEAD
 @app.route('/searchShows', methods=['GET', 'POST'])
 def searchShows():
     conn = mysql.connect()
@@ -1043,11 +1046,120 @@ def searchShows():
     return render_template('searchShows.html', data=data)
 
 
+=======
+>>>>>>> 1934d29b44b6fcc1100c1d9e49f1d3033b4b0c43
 @app.route('/showhistory', methods=['GET', 'POST'])
 def showHistory():
 
     return render_template('showHistory.html')
 
+
+"""
+Visitor search animal page starts here
+"""
+@app.route('/searchAnimals', methods=['GET', 'POST'])
+def searchAnimals():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal")
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'sortName' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Name")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Name DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchAnimals.html', data=data)
+        elif 'sortSpecies' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Species")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Species DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchAnimals.html', data=data)
+        elif 'sortExhibit' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Exhibit")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Exhibit DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchAnimals.html', data=data)
+        elif 'sortAge' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Age")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Age DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchAnimals.html', data=data)
+        elif 'sortType' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Type")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Type DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchAnimals.html', data=data)
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('visitorHome'))
+        elif 'search' in request.form:
+            exh_option = request.form['exhopt']
+            type_option = request.form['typeopt']
+            search_name = request.form['searchname']
+            search_spec = request.form['searchspec']
+            max_age = int(request.form['max'])
+            min_age = int(request.form['min'])
+            if exh_option == 'anyExh':
+                exh_option = None
+            if type_option == 'anyType':
+                type_option = None
+            if search_name == '':
+                search_name = None
+            else:
+                search_name = "%" + search_name + "%"
+            if search_spec == '':
+                search_spec = None
+            else:
+                search_spec = "%" + search_spec + "%"
+            if max_age == 0 and min_age == 0:
+                max_age = None
+                min_age = None
+            elif max_age == 0 and min_age > 0:
+                max_age = None
+            elif max_age > 0 and min_age == 0:
+                min_age = None
+            cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal WHERE"
+                           + " (%s IS NULL OR Name LIKE %s) AND (%s IS NULL OR Species LIKE %s) "
+                           + "AND (%s IS NULL OR Exhibit = %s) AND (%s IS NULL OR Age >= %s) "
+                           + "AND (%s IS NULL OR Age <= %s) AND (%s IS NULL OR Type = %s)",
+                           (search_name, search_name, search_spec, search_spec, exh_option, exh_option, min_age, min_age, max_age, max_age, type_option, type_option))
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchAnimals.html', data=data)
+        elif 'logout' in request.form:
+            cursor.close()
+            return logout()
+    cursor.close()
+    return render_template('searchAnimals.html', data=data)
+
+"""
+Logout page starts here
+"""
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('username', None)
