@@ -145,8 +145,8 @@ th>.dropdown-toggle:active {
 	    	</div>
 	    </div>
 		</form>
-        <form class="form-unconfirmed" action="{{ url_for('searchAnimals') }}" method="POST">
-            <table class="table table-bordered table-hover" id="visTb">
+       <form class="form-unconfirmed" action="{{ url_for('staffAnimals') }}" method="POST">
+            <table class="table table-bordered table-hover" id="aniTb">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
@@ -188,10 +188,20 @@ th>.dropdown-toggle:active {
 <script type="text/javascript">
 	$(function(){
     var $select = $(".1-100");
-    for (i=1;i<=100;i++){
+    for (i=0;i<=100;i++){
         $select.append($('<option></option>').val(i).html(i))
     }
 	});
+	$("#aniTb tr").click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+        var n = {}
+        n.name = $(this).find('td:first').text();
+        n.species = $(this).find('td:nth-child(2)').text();
+        n.exhibit = $(this).find('td:nth-child(3)').text();
+        n.age = parseInt($(this).find('td:nth-child(4)').text());
+        n.type = $(this).find('td:nth-child(5)').text();
+            document.getElementById('delBut').value = JSON.stringify(n)
+    });
 
 	$('.dropdown-item').click(function() {
 		$('#dropdownMenuButton').text('Water Feature: ' + $(this).text());
@@ -221,15 +231,6 @@ th>.dropdown-toggle:active {
     		table.append(rows[i]);
     	}
 	}
-
-	function compare(index) {
-	    return function(a, b) {
-	        var valA = getCellValue(a, index); 
-	        var valB = getCellValue(b, index);
-	        return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB);
-	    }
-	}
-
 	function getCellValue(row, index){ 
 		return $(row).children('td').eq(index).text(); 
 	}
