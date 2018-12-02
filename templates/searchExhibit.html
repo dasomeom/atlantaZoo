@@ -86,83 +86,91 @@ th>.dropdown-toggle:active {
     <div class="form-unconfirmed">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Exhibits</b></h1>
 		<form action="{{ url_for('visitorSearchExh') }}" method="POST">
-			<div class="d-flex justify-content-between">
-				<div class="d-flex justify-content-between flex-direction: flex-column">
-					<h3 class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
-				</div>
-				<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-				<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-bottom: 20px;">
-				</div>
-			</div>
+            <fieldset>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <h3 class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
+                    </div>
+                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                        <input name="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-bottom: 20px;">
+                    </div>
+                </div>
 
-			<div class="d-flex justify-content-between">
-				<div class="d-flex justify-content-between flex-direction: flex-column">
-					<input type="text" class="form-control" id="searchText" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
-				</div>
-				<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                    <select name="waterFeature" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
-                        <option value="any">Any Water Feature</option>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-				</div>
-			</div>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <select name="aniexh" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                            <option value="any">Any Exhibit</option>
+                            {% for x in exhdata %}
+                                <option value="{{ x[0] }}">{{ x[0] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                        <select name="waterFeature" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                            <option value="noUse">Water Feature</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
 
-			<div class="d-flex justify-content-between" style="margin-bottom: 20px; margin-top: 20px;">
-				<div class="d-flex justify-content-between flex-direction: flex-column">
-					<p>Size:</p>
-				</div>
-                <div class="input-group mb-2" style="width: 100px; height: 35px;">
-                    <div class="input-group-addon">
-                        <span class="input-group-text" style="width: 50px;">MIN </span>
+                <div class="d-flex justify-content-between" style="margin-bottom: 20px; margin-top: 20px;">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <p>Size:</p>
                     </div>
-                    <input type="text" class="form-control" placeholder="#" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
-                </div>
-                <div class="input-group mb-2" style="width: 100px; height: 35px;">
-                    <div class="input-group-addon">
-                        <span class="input-group-text"style="width: 50px;">MAX </span>
+                    <div class="input-group mb-2" style="width: 100px; height: 35px;">
+                        <div class="input-group-addon">
+                            <span class="input-group-text" style="width: 50px;">MIN </span>
+                        </div>
+                        <input name="min_size" type="text" class="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
                     </div>
-                    <input type="text" class="form-control" placeholder="#" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
-                </div>
-					<div class="col-lg-5"></div>
-					<div class="col-lg-2">
-					<p>Number of Animals:</p>
-					</div>
-                <div class="input-group mb-2" style="width: 100px; height: 35px;">
-                    <div class="input-group-addon">
-                        <span class="input-group-text" style="width: 50px;">MIN </span>
+                    <div class="input-group mb-2" style="width: 100px; height: 35px;">
+                        <div class="input-group-addon">
+                            <span class="input-group-text"style="width: 50px;">MAX </span>
+                        </div>
+                        <input name="max_size" type="text" class="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
                     </div>
-                    <input type="text" class="form-control" placeholder="#" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
-                </div>
-                <div class="input-group mb-2" style="width: 100px; height: 35px;">
-                    <div class="input-group-addon">
-                        <span class="input-group-text"style="width: 50px;">MAX </span>
+                        <div class="col-lg-5"></div>
+                        <div class="col-lg-2">
+                        <p>Number of Animals:</p>
+                        </div>
+                    <div class="input-group mb-2" style="width: 100px; height: 35px;">
+                        <div class="input-group-addon">
+                            <span class="input-group-text" style="width: 50px;">MIN </span>
+                        </div>
+                        <input name="min_num" type="text" class="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
                     </div>
-                    <input type="text" class="form-control" placeholder="#" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
+                    <div class="input-group mb-2" style="width: 100px; height: 35px;">
+                        <div class="input-group-addon">
+                            <span class="input-group-text"style="width: 50px;">MAX </span>
+                        </div>
+                        <input name="max_num" type="text" class="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
+                    </div>
                 </div>
-            </div>
+            </fieldset>
 		</form>
 		<form action="{{ url_for('visitorSearchExh') }}" method="POST">
-		<table class="table table-bordered table-hover">
-	            <thead class="thead-light">
-	                <tr>
-                        <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right" type="button" ></button></th>
-                        <th scope="col">Size<button name="sortSize" class="btn dropdown-toggle float-right" type="button"></button></th>
-                        <th scope="col">Number of Animals<button name="sortNumber" class="btn dropdown-toggle float-right" type="button"></button></th>
-                        <th scope="col">Water Feature<button name="sortWater" class="btn dropdown-toggle float-right" type="button"></button></th>
-	                </tr>
-	            </thead>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Size<button name="sortSize" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Number of Animals<button name="sortNumber" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Water Feature<button name="sortWater" class="btn dropdown-toggle float-right"></button></th>
+                    </tr>
+                </thead>
+                <tbody>
                     {% for item in data %}
+
                     <tr>
                         <td scope="row">{{item[2]}}</td>
                         <td>{{item[0]}}</td>
-                        <td></td>
+                        <td>{{item[3]}}</td>
                         <td>{{item[1]}}</td>
                     </tr>
                     {% endfor %}
-	           
-	            </tbody>
-	        </table>
+                </tbody>
+            </table>
         </form>
         <div class="d-flex justify-content-between">
             <div class="d-flex justify-content-between flex-direction: flex-column">

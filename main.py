@@ -640,45 +640,130 @@ def visitorHome():
 def visitorSearchExh():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit")
+    cursor.execute("SELECT Name FROM exhibit")
+    exhdata = cursor.fetchall()
+    cursor.execute("SELECT exhibit.*, COUNT(animal.Exhibit) "
+                   "FROM exhibit "
+                   "LEFT JOIN animal "
+                   "ON exhibit.Name = animal.Exhibit "
+                   "GROUP BY exhibit.Name")
     data = cursor.fetchall()
     if request.method == 'POST':
         if 'sortName' in request.form:
             if session['coin']:
-                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Name")
+                cursor.execute("SELECT exhibit.*, COUNT(animal.Exhibit) "
+                               "FROM exhibit LEFT JOIN animal "
+                               "ON exhibit.Name = animal.Exhibit "
+                               "GROUP BY exhibit.Name "
+                               "ORDER BY exhibit.Name")
             elif not session['coin']:
-                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Name DESC")
+                cursor.execute("SELECT exhibit.*, COUNT(animal.Exhibit) "
+                               "FROM exhibit LEFT JOIN animal "
+                               "ON exhibit.Name = animal.Exhibit "
+                               "GROUP BY exhibit.Name "
+                               "ORDER BY exhibit.Name DESC")
             session['coin'] = not session['coin']
             data = cursor.fetchall()
             cursor.close()
-            return render_template('searchExhibit.html', data=data)
+            return render_template('searchExhibit.html', data=data, exhdata=exhdata)
         elif 'sortSize' in request.form:
             if session['coin']:
-                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Size")
+                cursor.execute("SELECT exhibit.*, COUNT(animal.Exhibit) "
+                               "FROM exhibit LEFT JOIN animal "
+                               "ON exhibit.Name = animal.Exhibit "
+                               "GROUP BY exhibit.Name "
+                               "ORDER BY exhibit.Size")
             elif not session['coin']:
-                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Size DESC")
+                cursor.execute("SELECT exhibit.*, COUNT(animal.Exhibit) "
+                               "FROM exhibit LEFT JOIN animal "
+                               "ON exhibit.Name = animal.Exhibit "
+                               "GROUP BY exhibit.Name "
+                               "ORDER BY exhibit.Size DESC")
             session['coin'] = not session['coin']
             data = cursor.fetchall()
             cursor.close()
-            return render_template('searchExhibit.html', data=data)
+            return render_template('searchExhibit.html', data=data, exhdata=exhdata)
         elif 'sortNumber' in request.form:
-            a=3
+            if session['coin']:
+                cursor.execute("SELECT exhibit.*, COUNT(animal.Exhibit) "
+                               "FROM exhibit LEFT JOIN animal "
+                               "ON exhibit.Name = animal.Exhibit "
+                               "GROUP BY exhibit.Name "
+                               "ORDER BY COUNT(animal.Exhibit)")
+            elif not session['coin']:
+                cursor.execute(
+                    "SELECT exhibit.*, COUNT(animal.Exhibit) "
+                    "FROM exhibit LEFT JOIN animal "
+                    "ON exhibit.Name = animal.Exhibit "
+                    "GROUP BY exhibit.Name "
+                    "ORDER BY COUNT(animal.Exhibit) DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchExhibit.html', data=data, exhdata=exhdata)
         elif 'sortWater' in request.form:
             if session['coin']:
-                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Water_Feature")
+                cursor.execute("SELECT exhibit.*, COUNT(animal.Exhibit) "
+                               "FROM exhibit LEFT JOIN animal "
+                               "ON exhibit.Name = animal.Exhibit "
+                               "GROUP BY exhibit.Name "
+                               "ORDER BY exhibit.Water_Feature")
             elif not session['coin']:
-                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Water_Feature DESC")
+                cursor.execute("SELECT exhibit.*, COUNT(animal.Exhibit) "
+                               "FROM exhibit LEFT JOIN animal "
+                               "ON exhibit.Name = animal.Exhibit "
+                               "GROUP BY exhibit.Name "
+                               "ORDER BY exhibit.Water_Feature DESC")
             session['coin'] = not session['coin']
             data = cursor.fetchall()
             cursor.close()
-            return render_template('searchExhibit.html', data=data)
+            return render_template('searchExhibit.html', data=data, exhdata=exhdata)
+        elif 'search' in request.form:
+            searchkey = request.form['aniexh']
+            hasWater = request.form['waterFeature']
+            max_size = request.form['max_size']
+            min_size = request.form['min_size']
+            max_num = request.form['max_num']
+            min_num = request.form['min_num']
+            if searchkey == 'any':
+                searchkey = None
+            if hasWater == 'noUse':
+                hasWater = None
+            elif hasWater == 'yes':
+                hasWater = 1
+            elif hasWater == 'no':
+                hasWater = 0
+            if max_size == '' and min_size == '':
+                max_size = None
+                min_size = None
+            elif max_size == '' and min_size > 0:
+                max_size = None
+            elif max_size > 0 and min_size == '':
+                min_size = None
+            if max_num == '' and min_num == '':
+                max_num = None
+                min_num = None
+            elif max_num == '' and min_num > 0:
+                max_num = None
+            elif max_num > 0 and min_num == '':
+                min_num = None
 
+            cursor.execute("SELECT Size, Water_Feature, Name, num FROM "
+                           "(SELECT exhibit.*, COUNT(animal.Exhibit) as num "
+                           "FROM exhibit LEFT JOIN animal ON exhibit.Name = animal.Exhibit "
+                           "GROUP BY exhibit.Name) as foo "
+                           "WHERE (%s IS NULL OR Name = %s) and (%s IS NULL OR Water_Feature = %s) "
+                           "AND (%s IS NULL OR Size >= %s) AND (%s IS NULL OR Size <= %s) "
+                           "AND (%s IS NULL OR num >= %s) AND (%s IS NULL OR num <= %s)",
+                           (searchkey, searchkey, hasWater, hasWater, min_size, min_size, max_size, max_size, min_num, min_num, max_num, max_num))
+            data = cursor.fetchall()
+            return render_template('searchExhibit.html', data=data, exhdata=exhdata)
         elif 'back' in request.form:
             cursor.close()
             return redirect(url_for('visitorHome'))
         elif 'logout' in request.form:
             return redirect(url_for('logout'))
-    return render_template('searchExhibit.html', data=data)
+    return render_template('searchExhibit.html', data=data, exhdata=exhdata)
 
 
 
