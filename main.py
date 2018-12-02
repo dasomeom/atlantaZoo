@@ -317,7 +317,77 @@ def adminViewShows():
 
 @app.route('/adminviewanimals', methods=['GET', 'POST'])
 def adminViewAnimals():
-    return render_template('adminAnimal.html')
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal")
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'sortName' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Name")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Name DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminAnimal.html', data=data)
+        elif 'sortSpecies' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Species")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Species DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminAnimal.html', data=data)
+        elif 'sortExhibit' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Exhibit")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Exhibit DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminAnimal.html', data=data)
+        elif 'sortAge' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Age")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Age DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminAnimal.html', data=data)
+        elif 'sortType' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Type")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Type DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminAnimal.html', data=data)
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('adminHome'))
+        elif 'delete' in request.form:
+            stf_name = str(request.form['delete'])
+            cursor.execute("DELETE FROM staff WHERE Username = %s", (stf_name))
+            conn.commit()
+            cursor.execute("SELECT Username, Email FROM staff")
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminAnimal.html', data=data)
+        elif 'logout' in request.form:
+            cursor.close()
+            return logout()
+    cursor.close()
+    return render_template('adminAnimal.html', data=data)
 
 @app.route('/adminaddanimals', methods=['GET', 'POST'])
 def adminAddAnimals():
