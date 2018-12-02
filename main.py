@@ -813,7 +813,7 @@ def visitorHome():
             elif 'viewExHis' in request.form:
                 return redirect(url_for('adminViewShows'))
             elif 'viewShHis' in request.form:
-                return redirect(url_for('adminViewAnimals'))
+                return redirect(url_for('showHistory'))
             elif 'searchAnimal' in request.form:
                 return redirect(url_for('searchAnimals'))
             elif 'logOut' in request.form:
@@ -953,7 +953,6 @@ def visitorSearchExh():
     return render_template('searchExhibit.html', data=data, exhdata=exhdata)
 
 
-<<<<<<< HEAD
 @app.route('/searchShows', methods=['GET', 'POST'])
 def searchShows():
     conn = mysql.connect()
@@ -1045,9 +1044,6 @@ def searchShows():
     cursor.close()
     return render_template('searchShows.html', data=data)
 
-
-=======
->>>>>>> 1934d29b44b6fcc1100c1d9e49f1d3033b4b0c43
 @app.route('/showhistory', methods=['GET', 'POST'])
 def showHistory():
 
