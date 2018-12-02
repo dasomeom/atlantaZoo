@@ -82,7 +82,7 @@ th>.dropdown-toggle:active {
 	      	</div>
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
                 <form action="{{ url_for('adminViewShows') }}" method="POST">
-                    <button type="submit" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="search">Search</button>
+                    <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;" name="search">Search</button>
                 </form>
             </div>
 	    </div>
@@ -100,41 +100,17 @@ th>.dropdown-toggle:active {
                             </div>
                         </div>
                     </div>
-	            <script type="text/javascript">
-	                $(function () {
-	                    $('#datetimepicker1').datetimepicker();
-	                });
-	            </script>
             </form>
 	      	</div>
         </div>
         <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
 	      	<div class="d-flex justify-content-between flex-direction: flex-column">
-	      		<div class="dropdown">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-                        Any Exhibit
-                    </button>
-                    <fieldset>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <select name="searchopt">
-                                <option value="Username">Any Exhibit</option>
-                                <option value="Email">Pacific</option>
-                                <option value="Email">Jungle</option>
-                                <option value="Email">Sahara</option>
-                                <option value="Email">Birds</option>
-                            </select>
-                            <input type="text" class="form-control" name="searchkey" value="" id="search-input" placeholder="Type in Here" aria-label="...">
-                            <button type="submit" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="search">Search</button>
-                        </div>
-                    </fieldset>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button id="yes" class="dropdown-item" type="button">Any Exhibit</button>
-                        <button id="yes" class="dropdown-item" type="button">Pacific</button>
-                        <button id="no" class="dropdown-item" type="button">Jungle</button>
-                        <button id="no" class="dropdown-item" type="button">Sahara</button>
-                        <button id="no" class="dropdown-item" type="button">Birds</button>
-                    </div>
-	      	    </div>
+                    <select Exhibit="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                        <option value="pacific">Pacific</option>
+                        <option value="Email">Jungle</option>
+                        <option value="Email">Sahara</option>
+                        <option value="Email">Birds</option>
+                    </select>
             </div>
 		    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
 			    <button type="button" class="btn btn-sm btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; ">Remove Show</button>
@@ -176,6 +152,9 @@ th>.dropdown-toggle:active {
 </body>
 </html>
 <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
     $("#visTb tr").click(function(){
                 $(this).addClass('selected').siblings().removeClass('selected');
                 document.getElementById('delBut').value = $(this).find('td:first').text()
