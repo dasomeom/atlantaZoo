@@ -81,6 +81,7 @@ body {
                   <th scope="col">Username<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
                   <th scope="col">Email<button name="sortEmail" class="btn dropdown-toggle float-right"></button></th>
                 </tr>
+<<<<<<< HEAD
             </thead>
             <tbody>
             {% for item in data %}
@@ -104,6 +105,24 @@ body {
                             </select>
                             <input type="text" class="form-control" name="searchkey" value="" id="search-input" placeholder="Type in Here" aria-label="...">
                             <button type="submit" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="search">Search</button>
+=======
+                {% endfor %}
+                </tbody>
+            </table>
+    <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between flex-direction: flex-column">
+        </div>
+        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100px; height: 35px;>Option
+                        <span class="><span>Option</span></button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button id="None" class="dropdown-item" type="button"></button>
+                        <button id="username" class="dropdown-item" type="button">Username</button>
+                        <button id="email" class="dropdown-item" type="button">Email</button>
+>>>>>>> a95ac9abb70223131238365b0ba4fd875d4095d0
                         </div>
                         <!-- /btn-group -->
 
@@ -120,7 +139,6 @@ body {
             </div>
         </div>
     </form>
-
 </body>
 
 </html>

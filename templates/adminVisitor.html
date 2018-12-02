@@ -35,7 +35,7 @@ body {
 .form-unconfirmed {
     width: 100%;
     padding: 50px;
-    margin: 1 auto;
+    margin: 0 auto;
 }
 
 .form-unconfirmed .checkbox {
@@ -50,9 +50,6 @@ body {
     font-size: 16px;
 }
 
-.form-signin .form-control:focus {
-    z-index: 2;
-}
 
 .selected {
     background-color: #D3D3D3;
@@ -69,27 +66,31 @@ body {
   width: 200px;
   height: 35px;
 }
+
 </style>
+
 <body>
-    <form class="form-unconfirmed" method="POST">
+    <div class="form-unconfirmed">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><strong>View Visitor</strong></h1>
-            <table class="table table-bordered table-hover" id="visTb">
-                <thead class="thead-light">
+            <form class="form-adminvisitor" action="{{ url_for('adminVisitor') }}" method="POST">
+                <table class="table table-bordered table-hover" id="visTb">
+                    <thead class="thead-light">
+                        <tr>
+                            <!-- onclick="sort(document.getElementById('sortName').value) -->
+                            <th scope="col">Username<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
+                            <th scope="col">Email<button name="sortEmail" class="btn dropdown-toggle float-right"></button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in data %}
                     <tr>
-                        <!-- onclick="sort(document.getElementById('sortName').value) -->
-                        <th scope="col">Username<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
-                        <th scope="col">Email<button name="sortEmail" class="btn dropdown-toggle float-right"></button></th>
+                        <td scope="row">{{item[0]}}</td>
+                        <td>{{item[1]}}</td>
                     </tr>
-                </thead>
-                <tbody>
-                {% for item in data %}
-                <tr>
-                    <td scope="row">{{item[0]}}</td>
-                    <td>{{item[1]}}</td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </form>
 
     <div class="d-flex justify-content-between">
         <div class="d-flex justify-content-between flex-direction: flex-column">
@@ -99,7 +100,7 @@ body {
                 <div class="input-group-btn">
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100px; height: 35px;>Option
-                        <span class="caret"></span></button>
+                        <span class="><span>Option</span></button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <button id="None" class="dropdown-item" type="button"></button>
                         <button id="username" class="dropdown-item" type="button">Username</button>
@@ -108,22 +109,27 @@ body {
                     </div>
                  </div><!-- /btn-group -->
                 <input type="text" class="form-control" id="search-input" placeholder="Type in Here" aria-label="...">
+<<<<<<< HEAD
                 <button type="submit" value="" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="delete">Search</button>
+=======
+                <button type="submit" id="search" value="" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="search">Search</button>
+>>>>>>> a95ac9abb70223131238365b0ba4fd875d4095d0
             </div><!-- /input-group -->
         </div>
-    </div>     
-
-
-    <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column">
-            <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
-        </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-            <button type="submit" id="delBut" value="" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;" name="delete">Delete Visitor</button>
+    </div>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between flex-direction: flex-column">
+                <form class="form-adminvisitor" action="{{ url_for('adminVisitor') }}" method="POST">
+                <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+                </form>
+            </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <form class="form-adminvisitor" action="{{ url_for('adminVisitor') }}" method="POST">
+                <button type="submit" id="delBut" value="" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;" name="delete">Delete Visitor</button>
+                </form>
+            </div>
         </div>
     </div>
-    </form>
-
 </body>
 
 </html>
