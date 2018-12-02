@@ -101,36 +101,28 @@ th>.dropdown-toggle:active {
         		<input type="text" class="form-control" id="searchName" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px; margin-bottom: 5px;">
 	      	</div>
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-					<div class="dropdown">
-						<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-						Exhibit
-				  		</button>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<button id="pacific" class="dropdown-item" type="button">Pacific</button>
-						<button id="jungle" class="dropdown-item" type="button">Jungle</button>
-						<button id="sahara" class="dropdown-item" type="button">Sahara</button>
-						<button id="birds" class="dropdown-item" type="button">Birds</button>
-						</div>
-	      			</div>
+                <select Exhibit="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                    <option value="any">Any Exhibit</option>
+                    <option value="pacific">Pacific</option>
+                    <option value="Email">Jungle</option>
+                    <option value="Email">Sahara</option>
+                    <option value="Email">Birds</option>
+                </select>
 	    	</div>
     	</div>
 		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
 	      	<div class="d-flex justify-content-between flex-direction: flex-column"> 
 	      		<input type="text" class="form-control" id="searchSpecies" placeholder="Species" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
 	      	</div>
-			<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-				<div class="dropdown">  
-	      	  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-	      	    Type
-	      	  </button>
-	      	  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-	      	  	<button id="amphibian" class="dropdown-item" type="button">Amphibian</button>
-	      	  	<button id="anthropod" class="dropdown-item" type="button">Anthropod</button>
-	      	  	<button id="bird" class="dropdown-item" type="button">Bird</button>
-	      	  	<button id="mammal" class="dropdown-item" type="button">Mammal</button>
-	      	  	<button id="reptile" class="dropdown-item" type="button">Reptile</button>
-	      	  	</div>
-	      	  	</div>
+			<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <select Type="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                    <option value="any">Any Type</option>
+                    <option value="pacific">Amphibian</option>
+                    <option value="Email">Anthropod</option>
+                    <option value="Email">Bird</option>
+                    <option value="Email">Mammal</option>
+                    <option value="Email">Reptile</option>
+                </select>
 	      	</div>
 		</div>
 		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
@@ -139,7 +131,7 @@ th>.dropdown-toggle:active {
 	      	</div>
 	      	<div class="col-lg-6"></div>
 			<div class="col-lg-1">
-	      	<p>Age</p>
+	      	<p>Age (Year)</p>
 	      	</div>
 	      	<div class="col-lg-1"><p>MIN</p>
 	        <select class="1-100" style="width: 70px; height: 35px;"></select> 

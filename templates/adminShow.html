@@ -103,6 +103,7 @@ th>.dropdown-toggle:active {
                             </div>
                         </form>
                     </div>
+<<<<<<< HEAD
                 </div>
                 <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
                     <div class="d-flex justify-content-between flex-direction: flex-column">
@@ -124,6 +125,29 @@ th>.dropdown-toggle:active {
             </fieldset>
         </form>
 
+=======
+                </form>
+	      	</div>
+        </div>
+        <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
+	      	<div class="d-flex justify-content-between flex-direction: flex-column">
+                <form action="{{ url_for('adminViewShows') }}" method="POST">
+                    <select Exhibit="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                        <option value="pacific">Pacific</option>
+                        <option value="Email">Jungle</option>
+                        <option value="Email">Sahara</option>
+                        <option value="Email">Birds</option>
+                    </select>
+                </form>
+
+            </div>
+		    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <form action="{{ url_for('adminViewShows') }}" method="POST">
+			        <button type="submit" id="delBut" name="delete" class="btn btn-sm btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; ">Remove Show</button>
+                </form>
+            </div>
+        </div>
+>>>>>>> 6aaa2cbb5804dc21db97a768947507fd564ecd26
         <form action="{{ url_for('adminViewShows') }}" method="POST">
             <table id="visTb" class="table table-bordered table-hover">
                 <thead class="thead-light">
