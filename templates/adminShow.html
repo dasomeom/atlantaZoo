@@ -116,12 +116,12 @@ th>.dropdown-toggle:active {
             </div>
 		    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
                 <form action="{{ url_for('adminViewShows') }}" method="POST">
-			    <button type="button" class="btn btn-sm btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; ">Remove Show</button>
+			        <button type="submit" id="delBut" name="delete" class="btn btn-sm btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; ">Remove Show</button>
                 </form>
             </div>
         </div>
         <form action="{{ url_for('adminViewShows') }}" method="POST">
-            <table class="table table-bordered table-hover">
+            <table id="visTb" class="table table-bordered table-hover">
                 <thead class="thead-light">
                     <tr>
                       <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
@@ -159,10 +159,16 @@ th>.dropdown-toggle:active {
     $(function () {
         $('#datetimepicker1').datetimepicker();
     });
+
     $("#visTb tr").click(function(){
-                $(this).addClass('selected').siblings().removeClass('selected');
-                document.getElementById('delBut').value = $(this).find('td:first').text()
-            });
+        $(this).addClass('selected').siblings().removeClass('selected');
+        var n = {}
+        n.name = $(this).find('td:first').text();
+        n.exhibit = $(this).find('td:nth-child(2)').text();
+        n.date = $(this).find('td:nth-child(3)').text();
+            document.getElementById('delBut').value = JSON.stringify(n)
+    });
+
 	$(function(){
     var $select = $(".1-100");
     for (i=1;i<=10000;i++){
@@ -191,4 +197,5 @@ th>.dropdown-toggle:active {
 	function getCellValue(row, index){
 		return $(row).children('td').eq(index).text();
 	}
+
 </script>

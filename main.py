@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, redirect, url_for, flash, session
 from flaskext.mysql import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
+import ast
+import datetime
 
 app = Flask(__name__)
 app.secret_key = b'gomtaengtang'
@@ -269,7 +271,6 @@ def adminViewShows():
     cursor = conn.cursor()
     cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows")
     data = cursor.fetchall()
-    print request.form
     if request.method == 'POST':
         if 'sortName' in request.form:
             if session['coin']:
@@ -302,10 +303,18 @@ def adminViewShows():
             cursor.close()
             return redirect(url_for('adminHome'))
         elif 'delete' in request.form:
-            stf_name = str(request.form['delete'])
-            cursor.execute("DELETE FROM staff WHERE Username = %s", (stf_name))
+            show_row = request.form['delete']
+            row = ast.literal_eval(show_row)
+            show_name = row['name']
+            show_exh = row['exhibit']
+            show_date = row['date']
+            show_datetime = datetime.datetime.strptime(show_date, '%Y-%m-%d %H:%M:%S')
+            show_datetime = show_datetime.strftime('%Y-%m-%d %H:%M:%S')
+            cursor.execute("DELETE FROM shows WHERE Name = %s AND Located_at = %s AND Date_and_time = %s", (str(show_name),
+                                                                                                    str(show_exh),
+                                                                                                    show_datetime))
             conn.commit()
-            cursor.execute("SELECT Username, Email FROM staff")
+            cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows")
             data = cursor.fetchall()
             cursor.close()
             return render_template('adminShow.html', data=data)
@@ -375,7 +384,7 @@ def adminViewAnimals():
         elif 'back' in request.form:
             cursor.close()
             return redirect(url_for('adminHome'))
-        elif 'delete' in request.form:
+        elif 'delete' in request.form: # TODO Fix DELETE
             stf_name = str(request.form['delete'])
             cursor.execute("DELETE FROM staff WHERE Username = %s", (stf_name))
             conn.commit()
