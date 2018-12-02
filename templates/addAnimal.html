@@ -80,7 +80,7 @@
     <body>
         <div class="vertical-container">
             <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Add Animal</b></h1>
-
+            <form action="{{ url_for('addAmimal') }}" method="POST">
             <div class="row" style="margin-bottom: 20px;">
                 <div class="col-lg-6">
                   <h5>Name   </h5>
@@ -147,7 +147,8 @@
               <div class="col-md-4 center-block">
                 <button type="button" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;">Add Animal</button>
               </div>  
-            </div> 
+            </div>
+            </form>
             <div class="col-md-4 center-block" style="margin-bottom: 20px;">
               <div class="col-md-4 center-block">
                 <button type="button" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;">Cancel</button>
@@ -185,9 +186,8 @@ $(document).change(function () {
 
 $(function(){
     var $select = $(".1-100");
-    for (i=1;i<=10000;i++){
+    for (i=0;i<=100;i++){
         $select.append($('<option></option>').val(i).html(i))
     }
   });
-
 </script>
