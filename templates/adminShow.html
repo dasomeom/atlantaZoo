@@ -1,7 +1,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="favicon.ico"">
     <title>Atlanta Zoo</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -21,7 +21,6 @@ html,
 body {
     height: 100%;
 }
-
 body {
     display: -ms-flexbox;
     display: -webkit-box;
@@ -30,17 +29,14 @@ body {
     padding-bottom: 40px;
     background-color: #e6e6e6;
 }
-
 .form-unconfirmed {
     width: 100%;
     padding: 50px;
     margin: 0 auto;
 }
-
 .form-unconfirmed .checkbox {
     font-weight: 400;
 }
-
 .form-unconfirmed .form-control {
     position: relative;
     box-sizing: border-box;
@@ -48,150 +44,152 @@ body {
     padding: 10px;
     font-size: 16px;
 }
-
-.form-signin .form-control:
-	focus {
-    z-index: 2;
-}
-
-
 /*    	#subtitle {
     		margin-left: 100px;
     		margin-top: 50px;
     	}*/
-
 #title {
     margin-top: -50px;
 }
-
 #dropdownMenuButton {
     margin-top: 10px;
 }
-
 th>.dropdown-toggle {
     background-color: transparent;
 }
-
 th>.dropdown-toggle:focus,
 th>.dropdown-toggle:active {
     outline: none !important;
     box-shadow: none;
 }
-
 .table tbody tr.highlight td {
     background-color: #ddd;
 }
-
 .hiddenField {
     display: none;
 }
+.selected {
+    background-color: #D3D3D3;
+    color: #696969;
+}
 </style>
-
 <body>
     <div class="form-unconfirmed">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Shows</b></h1>
-
         <div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
+        	<div class="d-flex justify-content-between flex-direction: flex-column">
         		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
 	      	</div>
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                <button type="button" class="btn btn-sm btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-bottom: 10px;">Remove Show</button>
-	      	</div>
-	    </div>  
-
+                <form action="{{ url_for('adminViewShows') }}" method="POST">
+                    <button type="submit" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="search">Search</button>
+                </form>
+            </div>
+	    </div>
 		<div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
+        	<div class="d-flex justify-content-between flex-direction: flex-column">
         		<input type="text" class="form-control" id="searchName" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 10px; margin-bottom: 5px;">
 	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-	      		<div class="form-group">
-	                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-	                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-	                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-	                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-	                    </div>
-	                </div>
-	            </div>
-	      	</div> 
-    </div>
-
-
-		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
-	      	<div class="d-flex justify-content-between flex-direction: flex-column">
-                <div class="col-lg-6">
-                    <div class=" line-spacing left-">
-                    <select class="form-control inline-input"  id="exhibit" style="width 150px";>
-                    <option></option>
-                    <option>Pacific</option>
-                    <option>Jungle</option>
-                    <option>Sahara</option>
-                    <option>Mountainous</option>
-                    <option>Birds</option>
-                    </select>
+	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <form action="{{ url_for('adminViewShows') }}" method="POST">
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+	            <script type="text/javascript">
+	                $(function () {
+	                    $('#datetimepicker1').datetimepicker();
+	                });
+	            </script>
+            </form>
 	      	</div>
-            <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                <input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 10px;">
+        </div>
+        <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
+	      	<div class="d-flex justify-content-between flex-direction: flex-column">
+	      		<div class="dropdown">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
+                        Any Exhibit
+                    </button>
+                    <fieldset>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <select name="searchopt">
+                                <option value="Username">Any Exhibit</option>
+                                <option value="Email">Pacific</option>
+                                <option value="Email">Jungle</option>
+                                <option value="Email">Sahara</option>
+                                <option value="Email">Birds</option>
+                            </select>
+                            <input type="text" class="form-control" name="searchkey" value="" id="search-input" placeholder="Type in Here" aria-label="...">
+                            <button type="submit" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="search">Search</button>
+                        </div>
+                    </fieldset>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button id="yes" class="dropdown-item" type="button">Any Exhibit</button>
+                        <button id="yes" class="dropdown-item" type="button">Pacific</button>
+                        <button id="no" class="dropdown-item" type="button">Jungle</button>
+                        <button id="no" class="dropdown-item" type="button">Sahara</button>
+                        <button id="no" class="dropdown-item" type="button">Birds</button>
+                    </div>
+	      	    </div>
+            </div>
+		    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+			    <button type="button" class="btn btn-sm btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; ">Remove Show</button>
             </div>
         </div>
-
-		<table class="table table-bordered table-hover">
-            <thead class="thead-light">
-                <tr>
-                  <th scope="col">Name<button id="sortName" class="btn dropdown-toggle float-right" type="button" ></button></th>
-                  <th scope="col">Exhibit<button id="sortExhibit" class="btn dropdown-toggle float-right" type="button"></button></th>
-                  <th scope="col">Time<button id="sortTime" class="btn dropdown-toggle float-right" type="button"></button></th>
-                </tr>
-            </thead>
-              <tr>
-                <td scope="row">Feed the Fish</td>
-                <td>Pacific</td>
-                <td>9/29/18 3:00PM</td>
-              </tr>
-              <tr>
-                <td scope="row"></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td scope="row"></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-        </table>
+        <form action="{{ url_for('adminViewShows') }}" method="POST">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
+                      <th scope="col">Exhibit<button name="sortExhibit" class="btn dropdown-toggle float-right"></button></th>
+                      <th scope="col">Time<button name="sortTime" class="btn dropdown-toggle float-right"></button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in data %}
+                    <tr>
+                        <td scope="row">{{item[0]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[1]}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
         <div class="d-flex justify-content-between">
-            <div class="d-flex justify-content-between flex-direction: flex-column">
-                <a id="back" class="btn btn-secondary" href="./Login.html"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Back</a>
-            </div>
-            <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                <a id="logout" class="btn btn-light" href="./Login.html"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Logout</a>
-            </div>
+                <div class="d-flex justify-content-between flex-direction: flex-column">
+                    <form action="{{ url_for('adminViewShows') }}" method="POST">
+                        <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+                    </form>
+                </div>
+                <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                    <form action="{{ url_for('adminViewShows') }}" method="POST">
+                        <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
+                    </form>
+                </div>
         </div>
     </div>
 </body>
-
 </html>
-
 <script type="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker();
-    });
+    $("#visTb tr").click(function(){
+                $(this).addClass('selected').siblings().removeClass('selected');
+                document.getElementById('delBut').value = $(this).find('td:first').text()
+            });
 	$(function(){
     var $select = $(".1-100");
     for (i=1;i<=10000;i++){
         $select.append($('<option></option>').val(i).html(i))
     }
 	});
-
 	$('.dropdown-item').click(function() {
-		$('#dropdownMenuButton').text('Water Feature: ' + $(this).text());
+		$('#dropdownMenuButton').text('Exhibit: ' + $(this).text());
 	});
-
 	$('th>.dropdown-toggle').on('click', onClick);
-
 	$("tbody tr").click(function() {
 		$(this).addClass('highlight').siblings().removeClass('highlight');
 		var cells = this.cells; //cells collection
@@ -200,31 +198,14 @@ th>.dropdown-toggle:active {
 		$('#idSelector').val(id);
 		// $(this).addClass('bg-info').siblings().removeClass('bg-info');
 	});
-
-	function onClick(e) {
-		var th = $(e.target).parent();
-		var col = th.text();
-		var table = $(th).parents('table').eq(0);
-    	var rows = table.find('tr:gt(0)').toArray().sort(compare($(th).index()));
-    	this.asc = !this.asc;
-		if (!this.asc) {
-			rows = rows.reverse();
-		}
-    	for (var i = 0; i < rows.length; i++) {
-    		table.append(rows[i]);
-    	}
-	}
-
 	function compare(index) {
 	    return function(a, b) {
-	        var valA = getCellValue(a, index); 
+	        var valA = getCellValue(a, index);
 	        var valB = getCellValue(b, index);
 	        return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB);
 	    }
 	}
-
-	function getCellValue(row, index){ 
-		return $(row).children('td').eq(index).text(); 
+	function getCellValue(row, index){
+		return $(row).children('td').eq(index).text();
 	}
-
 </script>
