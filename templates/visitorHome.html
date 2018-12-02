@@ -38,7 +38,6 @@
           width: 100%;
           max-width: 320px;
           padding: 15px;
-          margin: 0 auto;
         }
         .form-visitorhome .checkbox {
           font-weight: 400;
@@ -55,26 +54,35 @@
           z-index: 2;
         }
     </style>
-
-    <body>
-        <form  class = "form-visitorhome">
-            <h1 class="h4 mb-3 font-weight-normal">Atlanta Zoo</h1>
-            <p class="text-sm-left">Welcome Visitor!</p>
-
-            <a class="btn btn-lg btn-secondary btn-block" href="./searchExhibit.html">Search exhibits
-            </a>
-            <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">Search shows
-            </a>
-            <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">View exhibit history
-            </a>
-            <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">View show history
-            </a>
-            <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">Search animals
-            </a>
-            <a class="btn btn-lg btn-light btn-block" href="./Login.html">Log Out
-            </a>
+      <body>
+          <div>
+              <form class="form-visitHome" action="{{ url_for('visitHome') }}" method="POST">
+                  <H1>Atlanta Zoo</H1>
+                  <p class="text-sm-left">Welcome Visitor!</p>
+              </form>
             
-        </form>
+            <form class="form-visitHome" action="{{ url_for('visitHome') }}" method="POST">
+                <input type="submit" class="btn btn-md btn-secondary btn-block" name="searchExhibit" value="Search exhibits">
+            </form>
+            <form class="form-visitHome" action="{{ url_for('visitHome') }}" method="POST">
+                <input type="submit" class="btn btn-md btn-secondary btn-block" name="searchShow" value="Search shows">
+            </form>
+            <form class="form-visitHome" action="{{ url_for('visitHome') }}" method="POST">
+                <input type="submit" class="btn btn-md btn-secondary btn-block" name="viewExHis" value="View exhibit history">
+            </form>
+             <form class="form-visitHome" action="{{ url_for('visitHome') }}" method="POST">
+                <input type="submit" class="btn btn-md btn-secondary btn-block" name="viewShHis" value="View show history">
+            </form>
+             <form class="form-visitHome" action="{{ url_for('visitHome') }}" method="POST">
+                <input type="submit" class="btn btn-md btn-secondary btn-block" name="searchAnimal" value="Search animals">
+            </form>
+            <form class="form-visitHome" action="{{ url_for('visitHome') }}" method="POST">
+                <input type="submit" class="btn btn-md btn-secondary btn-block" name="addShow" value="Add Show">
+            </form>
+            <form class="form-visitHome" action="{{ url_for('visitHome') }}" method="POST">
+                <input type="submit" class="btn btn-lg btn-light btn-block" name="logOut" value="Log Out">
+            </form>
+        </div>
     </body>
 </html>
 

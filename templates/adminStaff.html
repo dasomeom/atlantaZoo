@@ -63,17 +63,11 @@ body {
     margin-top: -50px;
 }
 
-.vertical-container {
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-align: center;
-    -ms-flex-pack: center;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    flex-direction: column;
+
+
+#search-input{
+  width: 200px;
+  height: 35px;
 }
 </style>
 
@@ -97,38 +91,27 @@ body {
                 {% endfor %}
                 </tbody>
             </table>
-            <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column"> 
-        </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-            <label for="animalName" class="sr-only">Search</label>
-                <input id="animalName" class="form-control inline-input" placeholder="search" required autofocus> 
-        </div>
-    </div>         
     <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column"> 
-            <div class="dropdown">  
-              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-                Username
-              </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <button id="pacific" class="dropdown-item" type="button"></button>
-
-                </div>
-            </div>    
+        <div class="d-flex justify-content-between flex-direction: flex-column">
         </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-            <div class="dropdown">  
-              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-                Email
-              </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                <button id="pacific" class="dropdown-item" type="button"></button>
-
-                </div>
-            </div>    
+        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100px; height: 35px;>Option
+                        <span class="caret"></span></button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button id="None" class="dropdown-item" type="button"></button>
+                        <button id="username" class="dropdown-item" type="button">Username</button>
+                        <button id="email" class="dropdown-item" type="button">Email</button>
+                        </div>
+                    </div>
+                 </div><!-- /btn-group -->
+                <input type="text" class="form-control" id="search-input" placeholder="Type in Here" aria-label="...">
+                 <button type="submit" id="delBut" value="" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="delete">Search</button>
+            </div><!-- /input-group -->
         </div>
-    </div>                
+    </div>                   
     <div class="d-flex justify-content-between">
         <div class="d-flex justify-content-between flex-direction: flex-column">
             <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
@@ -138,12 +121,19 @@ body {
         </div>
     </div>  
     </form>
-    <script type="text/javascript">
-        $("#visTb tr").click(function(){
-            $(this).addClass('selected').siblings().removeClass('selected');
-            document.getElementById('delBut').value = $(this).find('td:first').text()
-        });
-    </script>
+
 </body>
 
 </html>
+
+<script type="text/javascript">
+    $("#visTb tr").click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+            document.getElementById('delBut').value = $(this).find('td:first').text()
+    });
+    $('.dropdown-item').click(function() {
+        $('#dropdownMenuButton').text($(this).text());
+    });
+
+    $('th>.dropdown-toggle').on('click', onClick);
+</script>    
