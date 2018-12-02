@@ -1185,36 +1185,46 @@ def showHistory():
 def exhibitHistory():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Datetime, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
-                   "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
-                   "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY count", (session['username']))
+    cursor.execute("SELECT * FROM "
+                   "(SELECT foo.Exhibit_name, foo.Datetime, boo.cc FROM atlzoo.visit_exhibit AS foo "
+                   "Left Join ( SELECT Exhibit_name, Count(*) as cc FROM atlzoo.visit_exhibit "
+                   "WHERE visit_exhibit.Visitor_username = %s GROUP BY Exhibit_name ) AS boo "
+                   "On foo.Exhibit_name = boo.Exhibit_name) as haa", (session['username']))
     data = cursor.fetchall()
     if request.method == 'POST':
         if 'sortName' in request.form:
             if session['coin']:
-                cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
-                               "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
-                               "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY Name",
+                cursor.execute("SELECT * FROM "
+                               "(SELECT foo.Exhibit_name, foo.Datetime, boo.cc FROM atlzoo.visit_exhibit AS foo "
+                               "Left Join ( SELECT Exhibit_name, Count(*) as cc FROM atlzoo.visit_exhibit "
+                               "WHERE visit_exhibit.Visitor_username = %s GROUP BY Exhibit_name ) AS boo "
+                               "On foo.Exhibit_name = boo.Exhibit_name) as haa ORDER BY haa.Exhibit_name",
                                (session['username']))
             elif not session['coin']:
-                cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
-                               "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
-                               "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY Name DESC",
+                cursor.execute("SELECT * FROM "
+                               "(SELECT foo.Exhibit_name, foo.Datetime, boo.cc FROM atlzoo.visit_exhibit AS foo "
+                               "Left Join ( SELECT Exhibit_name, Count(*) as cc FROM atlzoo.visit_exhibit "
+                               "WHERE visit_exhibit.Visitor_username = %s GROUP BY Exhibit_name ) AS boo "
+                               "On foo.Exhibit_name = boo.Exhibit_name) as haa ORDER BY haa.Exhibit_name DESC",
                                (session['username']))
             session['coin'] = not session['coin']
             data = cursor.fetchall()
             cursor.close()
             return render_template('exhibitHistory.html', data=data)
-        elif 'sortSize' in request.form:
+        elif 'sortTime' in request.form:
             if session['coin']:
-                cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
-                               "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
-                               "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY Size",
+                cursor.execute("SELECT * FROM "
+                               "(SELECT foo.Exhibit_name, foo.Datetime, boo.cc FROM atlzoo.visit_exhibit AS foo "
+                               "Left Join ( SELECT Exhibit_name, Count(*) as cc FROM atlzoo.visit_exhibit "
+                               "WHERE visit_exhibit.Visitor_username = %s GROUP BY Exhibit_name ) AS boo "
+                               "On foo.Exhibit_name = boo.Exhibit_name) as haa ORDER BY haa.Datetime",
                                (session['username']))
             elif not session['coin']:
-                cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
-                               "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
-                               "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY Size DESC",
+                cursor.execute("SELECT * FROM "
+                               "(SELECT foo.Exhibit_name, foo.Datetime, boo.cc FROM atlzoo.visit_exhibit AS foo "
+                               "Left Join ( SELECT Exhibit_name, Count(*) as cc FROM atlzoo.visit_exhibit "
+                               "WHERE visit_exhibit.Visitor_username = %s GROUP BY Exhibit_name ) AS boo "
+                               "On foo.Exhibit_name = boo.Exhibit_name) as haa ORDER BY haa.Datetime DESC",
                                (session['username']))
             session['coin'] = not session['coin']
             data = cursor.fetchall()
@@ -1222,14 +1232,18 @@ def exhibitHistory():
             return render_template('exhibitHistory.html', data=data)
         elif 'sortNumVisit' in request.form:
             if session['coin']:
-                cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
-                               "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
-                               "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY count",
+                cursor.execute("SELECT * FROM "
+                               "(SELECT foo.Exhibit_name, foo.Datetime, boo.cc FROM atlzoo.visit_exhibit AS foo "
+                               "Left Join ( SELECT Exhibit_name, Count(*) as cc FROM atlzoo.visit_exhibit "
+                               "WHERE visit_exhibit.Visitor_username = %s GROUP BY Exhibit_name ) AS boo "
+                               "On foo.Exhibit_name = boo.Exhibit_name) as haa ORDER BY haa.cc",
                                (session['username']))
             elif not session['coin']:
-                cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
-                               "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
-                               "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY count DESC",
+                cursor.execute("SELECT * FROM "
+                               "(SELECT foo.Exhibit_name, foo.Datetime, boo.cc FROM atlzoo.visit_exhibit AS foo "
+                               "Left Join ( SELECT Exhibit_name, Count(*) as cc FROM atlzoo.visit_exhibit "
+                               "WHERE visit_exhibit.Visitor_username = %s GROUP BY Exhibit_name ) AS boo "
+                               "On foo.Exhibit_name = boo.Exhibit_name) as haa ORDER BY haa.cc DESC",
                                (session['username']))
             session['coin'] = not session['coin']
             data = cursor.fetchall()
@@ -1258,13 +1272,14 @@ def exhibitHistory():
             elif max_num > 0 and min_num == '':
                 min_num = None
 
-            cursor.execute("SELECT Name, Size, count FROM (SELECT Name, Size, COUNT(*) as count "
-                           "FROM (SELECT exhibit.Name, exhibit.Size "
-                           "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
-                           "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name) as boo "
-                           "WHERE (%s IS NULL OR NAME = %s) AND (%s IS NULL OR Size >= %s) AND (%s IS NULL OR Size <= %s) "
-                           "AND (%s IS NULL OR count >= %s) AND (%s IS NULL OR count <= %s)",
-                           (session['username'], search_exh, search_exh, min_size, min_size, max_size, max_size, min_num, min_num, max_num, max_num))
+            cursor.execute("SELECT * FROM "
+                           "(SELECT foo.Exhibit_name, foo.Datetime, boo.cc FROM atlzoo.visit_exhibit AS foo "
+                           "Left Join ( SELECT Exhibit_name, Count(*) as cc FROM atlzoo.visit_exhibit "
+                           "WHERE visit_exhibit.Visitor_username = %s GROUP BY Exhibit_name ) AS boo "
+                           "On foo.Exhibit_name = boo.Exhibit_name) as haa "
+                           "WHERE (%s IS NULL OR haa.Exhibit_name = %s) AND (%s IS NULL OR haa.Datetime >= %s) "
+                           "AND (%s IS NULL OR haa.cc >= %s) AND (%s IS NULL OR haa.cc <= %s)",
+                           (session['username'], search_exh, search_exh, max_size, max_size, min_num, min_num, max_num, max_num))
             data = cursor.fetchall()
             cursor.close()
             return render_template('exhibitHistory.html', data=data)
