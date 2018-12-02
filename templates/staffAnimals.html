@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,7 +17,6 @@ html,
 body {
     height: 100%;
 }
-
 body {
     display: -ms-flexbox;
     display: -webkit-box;
@@ -25,17 +25,14 @@ body {
     padding-bottom: 40px;
     background-color: #e6e6e6;
 }
-
 .form-unconfirmed {
     width: 100%;
     padding: 50px;
     margin: 0 auto;
 }
-
 .form-unconfirmed .checkbox {
     font-weight: 400;
 }
-
 .form-unconfirmed .form-control {
     position: relative;
     box-sizing: border-box;
@@ -43,34 +40,31 @@ body {
     padding: 10px;
     font-size: 16px;
 }
-
-.form-signin .form-control:focus {
+.form-signin .form-control:
+	focus {
     z-index: 2;
 }
-
 #title {
     margin-top: -50px;
 }
-
 #dropdownMenuButton, #dropdownMenuButton2 {
     margin-top: 10px;
 }
-
-
 th>.dropdown-toggle {
     background-color: transparent;
 }
-
 th>.dropdown-toggle:focus,
 th>.dropdown-toggle:active {
     outline: none !important;
     box-shadow: none;
 }
-
 .table tbody tr.highlight td {
     background-color: #ddd;
 }
-
+.selected {
+    background-color: #D3D3D3;
+    color: #696969;
+}
 .hiddenField {
     display: none;
 }
@@ -78,68 +72,74 @@ th>.dropdown-toggle:active {
 
 <body>
     <div class="form-unconfirmed">
-        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Staff Animals</b></h1>
+        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Animals</b></h1>
         <div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
+        	<div class="d-flex justify-content-between flex-direction: flex-column">
         		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
 	      	</div>
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+				<form action="{{ url_for('staffAnimals') }}" method="POST">
+                </form>
 	      	</div>
 	    </div>
         <form action="{{ url_for('staffAnimals') }}" method="POST">
-		<div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column">
-        		<input type="text" class="form-control" id="searchName" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                <select Exhibit="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-bottom: 5px">
-                    <option value="any">Any Exhibit</option>
-                    <option value="pacific">Pacific</option>
-                    <option value="Email">Jungle</option>
-                    <option value="Email">Sahara</option>
-                    <option value="Email">Birds</option>
-                </select>
-	    	</div>
-    	</div>
-		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
-	      	<div class="d-flex justify-content-between flex-direction: flex-column">
-	      		<input type="text" class="form-control" id="searchSpecies" placeholder="Species" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
-	      	</div>
-			<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                <select Type="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
-                    <option value="any">Any Type</option>
-                    <option value="pacific">Amphibian</option>
-                    <option value="Email">Anthropod</option>
-                    <option value="Email">Bird</option>
-                    <option value="Email">Mammal</option>
-                    <option value="Email">Reptile</option>
-                </select>
-	      	</div>
-		</div>
-		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
-	      	<div class="d-flex justify-content-between flex-direction: flex-column">
-	      		<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;">
-	      	</div>
-	      	<div class="col-lg-6"></div>
-			<div class="col-lg-1">
-	      	<p>Age (Year)</p>
-	      	</div>
-	      	<div class="col-lg-1"><p>MIN</p>
-	        <select class="1-100" style="width: 70px; height: 35px;"></select>
-	    	</div>
-	        <div class="col-lg-1"><p>MAX</p>
-			<select class="1-100" style="width: 70px; height: 35px;"></select>
-	      	</div>
-		</div>
-		<div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column">
-	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-	    	</div>
-	    </div>
-		</form>
+            <fieldset>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <input name="searchname" type="text" class="form-control" id="searchName" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px; margin-bottom: 5px;">
+                    </div>
+                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                        <select name="exhopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                            <option value="anyExh">Any Exhibit</option>
+                            <option value="birds">Birds</option>
+                            <option value="jungle">Jungle</option>
+                            <option value="mountainous">Mountainous</option>
+                            <option value="pacific">Pacific</option>
+                            <option value="sahara">Sahara</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <input name="searchspec" type="text" class="form-control" id="searchSpecies" placeholder="Species" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
+                    </div>
+                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                        <select name="typeopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                            <option value="anyType">Any Type</option>
+                            <option value="amp">Amphibian</option>
+                            <option value="bird">Bird</option>
+                            <option value="fish">Fish</option>
+                            <option value="inv">Invertebrate</option>
+                            <option value="mammal">Mammal</option>
+                            <option value="rep">Reptile</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                        <input name="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;">
+                    </div>
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-1">
+                    <p>Age (Year)</p>
+                    </div>
+                    <div class="col-lg-1"><p>MIN</p>
+                        <select name='min' class="1-100" style="width: 70px; height: 35px;"></select>
+                    </div>
+                    <div class="col-lg-1"><p>MAX</p>
+                        <select name='max' class="1-100" style="width: 70px; height: 35px;"></select>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between flex-direction: flex-column">
+                    </div>
+                    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                    </div>
+                </div>
+            </fieldset>
+        </form>
         <form class="form-unconfirmed" action="{{ url_for('staffAnimals') }}" method="POST">
-            <table class="table table-bordered table-hover" id="visTb">
+            <table class="table table-bordered table-hover" id="aniTb">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
@@ -162,20 +162,20 @@ th>.dropdown-toggle:active {
                 </tbody>
             </table>
         </form>
-        <div class="d-flex justify-content-between">
-            <div class="d-flex justify-content-between flex-direction: flex-column">
-                <form action="{{ url_for('staffAnimals') }}" method="POST">
-                    <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
-                </form>
-            </div>
-            <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                <form action="{{ url_for('staffAnimals') }}" method="POST">
-                    <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
-                </form>
-            </div>
-        </div>
-  	</div>
-    </body>
+		<div class="d-flex justify-content-between">
+			<div class="d-flex justify-content-between flex-direction: flex-column">
+				<form action="{{ url_for('staffAnimals') }}" method="POST">
+					<button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+				</form>
+			</div>
+			<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+				<form action="{{ url_for('staffAnimals') }}" method="POST">
+					<button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
 </html>
 
 <script type="text/javascript">
@@ -185,7 +185,16 @@ th>.dropdown-toggle:active {
         $select.append($('<option></option>').val(i).html(i))
     }
 	});
-
+	$("#aniTb tr").click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+        var n = {}
+        n.name = $(this).find('td:first').text();
+        n.species = $(this).find('td:nth-child(2)').text();
+        n.exhibit = $(this).find('td:nth-child(3)').text();
+        n.age = parseInt($(this).find('td:nth-child(4)').text());
+        n.type = $(this).find('td:nth-child(5)').text();
+            document.getElementById('delBut').value = JSON.stringify(n)
+    });
 	$('.dropdown-item').click(function() {
 		var str = this.id;
 		if (str == 'jungle') {
@@ -207,11 +216,8 @@ th>.dropdown-toggle:active {
 		} else if (str == 'reptile') {
 			$('#dropdownMenuButton2').text('Type: Reptile');
 		}
-		
 	});
 	$('th>.dropdown-toggle').on('click', onClick);
-
-
 	$("tbody tr").click(function() {
 		$(this).addClass('highlight').siblings().removeClass('highlight');
 		var cells = this.cells; //cells collection
@@ -220,7 +226,6 @@ th>.dropdown-toggle:active {
 		$('#idSelector').val(id);
 		// $(this).addClass('bg-info').siblings().removeClass('bg-info');
 	});
-
 	function onClick(e) {
 		var th = $(e.target).parent();
 		var col = th.text();
@@ -235,8 +240,7 @@ th>.dropdown-toggle:active {
     	}
 	}
 
-	function getCellValue(row, index){ 
-		return $(row).children('td').eq(index).text(); 
+	function getCellValue(row, index){
+		return $(row).children('td').eq(index).text();
 	}
-
 </script>
