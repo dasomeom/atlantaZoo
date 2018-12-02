@@ -79,7 +79,6 @@ th>.dropdown-toggle:active {
 <body>
     <div class="form-unconfirmed">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Animals</b></h1>
-
         <div class="d-flex justify-content-between">
         	<div class="d-flex justify-content-between flex-direction: flex-column"> 
         		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
@@ -168,16 +167,16 @@ th>.dropdown-toggle:active {
             </table>
         </form>
         <div class="d-flex justify-content-between">
-                <div class="d-flex justify-content-between flex-direction: flex-column">
-                    <form action="{{ url_for('staffAnimals') }}" method="POST">
-                        <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
-                    </form>
-                </div>
-                <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                    <form action="{{ url_for('staffAnimals') }}" method="POST">
-                        <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
-                    </form>
-                </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column">
+                <form action="{{ url_for('staffAnimals') }}" method="POST">
+                    <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+                </form>
+            </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <form action="{{ url_for('staffAnimals') }}" method="POST">
+                    <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
+                </form>
+            </div>
         </div>
   	</div>
     </body>

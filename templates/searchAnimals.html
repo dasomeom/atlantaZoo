@@ -131,45 +131,44 @@ th>.dropdown-toggle:active {
 	      	</div>
 		</div>
 
-		<table class="table table-bordered table-hover">
-	            <thead class="thead-light">
-	                <tr>
-	                	<!-- onclick="sort(document.getElementById('sortName').value) -->
-	                  <th scope="col">Name<button id="sortName" class="btn dropdown-toggle float-right" type="button" ></button></th>
-	                  <th scope="col">Species<button id="sortSpecies" class="btn dropdown-toggle float-right" type="button"></button></th>
-	                  <th scope="col">Exhibit<button id="sortExhibit" class="btn dropdown-toggle float-right" type="button"></button></th>
-	                  <th scope="col">Age<button id="sortAge" class="btn dropdown-toggle float-right" type="button"></button></th>
-	                  <th scope="col">Type<button id="sortType" class="btn dropdown-toggle float-right" type="button"></button></th>
-	                
-	                </tr>
-	            </thead>
-	              <tr>
-	                <td scope="row">Nemo</td>
-	                <td>Clownfish</td>
-	                <td>Pacific</td>
-	                <td>1</td>
-	                <td>Fish</td>
-	              </tr>
-	              <tr>
-	                <td scope="row">Jungle</td>
-	                <td>Goldfish</td>
-	                <td>Pacific</td>
-	                <td>2</td>
-	                <td>Fish</td>
-	              </tr>
-	           
-	            </tbody>
-	        </table>
-	<div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column">
-            <a id="logout" class="btn btn-secondary" href="./Login.html"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Back</a>
+		<form class="form-unconfirmed" action="{{ url_for('searchAnimals') }}" method="POST">
+            <table class="table table-bordered table-hover" id="visTb">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Species<button name="sortSpecies" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Exhibit<button name="sortExhibit" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Age<button name="sortAge" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Type<button name="sortType" class="btn dropdown-toggle float-right"></button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in data %}
+                    <tr>
+                        <td scope="row">{{item[0]}}</td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                        <td>{{item[4]}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between flex-direction: flex-column">
+                <form action="{{ url_for('searchAnimals') }}" method="POST">
+                    <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+                </form>
+            </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <form action="{{ url_for('searchAnimals') }}" method="POST">
+                    <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
+                </form>
+            </div>
         </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-            <a id="logout" class="btn btn-light" href="./Login.html"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Logout</a>
-        </div>
-  	</div>	
-
-    </body>
+	</div>
+</body>
 </html>
 
 <script type="text/javascript">
