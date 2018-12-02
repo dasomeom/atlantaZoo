@@ -309,18 +309,17 @@ def adminViewShows():
             name = request.form['searchname']
             if name == '':
                 name = None
+            else:
+                name = "%" + name + "%"
             searchTime = request.form['datetime']
             if searchTime == '':
                 searchTime = None
             else:
-                searchTime = datetime.datetime.strptime(searchTime, '%m/%d/%Y %I:%M %p')
-                searchTime = datetime.datetime(searchTime.year, searchTime.month, searchTime.day, searchTime.hour, 0, 0)
-                searchTime = searchTime.strftime('%Y-%m-%d %H:%M:%S')
-            print option, name, searchTime
+                searchTime = datetime.datetime.strptime(searchTime, '%Y-%m-%d')
             if name == "" and option == 'any' and searchTime == "":
                 cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows")
             else:
-                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows WHERE (%s IS NULL OR Name LIKE %s) AND (%s IS NULL OR Date_and_time = %s) AND (%s IS NULL OR Located_at = %s)", (name, "%" + name + "%", searchTime, searchTime, option, option))
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows WHERE (%s IS NULL OR Name LIKE %s) AND (%s IS NULL OR DATE(Date_and_time) = %s) AND (%s IS NULL OR Located_at = %s)", (name, name, searchTime, searchTime, option, option))
             data = cursor.fetchall()
             cursor.close()
             return render_template('adminShow.html', data=data)
