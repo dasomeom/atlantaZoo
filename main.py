@@ -15,6 +15,7 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return redirect(url_for('login'))
@@ -37,7 +38,6 @@ def login():
     else:
         return render_template('Login.html')
 
-
 def loginHelper(list):
     input_email = str(list['email'])
     input_password = str(list['password'])
@@ -56,8 +56,7 @@ def loginHelper(list):
                 exception_password = ['password1', 'password2', 'password3']
             else:
                 exception_password = ['adminpassword']
-            if check_password_hash(password, input_password) or (
-                    password in exception_password and password == input_password):
+            if check_password_hash(password, input_password) or (password in exception_password and password == input_password):
                 session['username'] = username
                 session['coin'] = True
                 if db == 'visitors':
@@ -74,8 +73,6 @@ def loginHelper(list):
 """
 Register page starts here
 """
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -93,7 +90,6 @@ def register():
         else:
             return redirect(url_for('register'))
     return render_template('Register.html')
-
 
 def RegisterUser(list, db_name):
     if len(list) == 5:
@@ -126,8 +122,7 @@ def RegisterUser(list, db_name):
             notHaveEmail = cursor.fetchone() == None and notHaveName
 
             if notHaveName and notHaveEmail:
-                cursor.execute("INSERT INTO " + db_name + " (Username, Password, Email) VALUES(%s, %s, %s)",
-                               (username, password, email))
+                cursor.execute("INSERT INTO " + db_name + " (Username, Password, Email) VALUES(%s, %s, %s)", (username, password, email))
                 conn.commit()
                 move_to_login = True
             else:
@@ -141,8 +136,6 @@ def RegisterUser(list, db_name):
 """
 Admin page starts here
 """
-
-
 @app.route('/adminhome', methods=['GET', 'POST'])
 def adminHome():
     conn = mysql.connect()
@@ -170,8 +163,7 @@ def adminHome():
             return redirect(url_for('logout'))
     return render_template('adminhome.html')
 
-
-# TODO: Search option
+#TODO: Search option
 @app.route('/adminviewvisitors', methods=['GET', 'POST'])
 def adminViewVisitors():
     conn = mysql.connect()
@@ -203,8 +195,7 @@ def adminViewVisitors():
             if key == "":
                 cursor.execute("SELECT Username, Email FROM visitors")
             else:
-                cursor.execute("SELECT Username, Email FROM visitors WHERE " + str(option) + " LIKE %s",
-                               "%" + str(key) + "%")
+                cursor.execute("SELECT Username, Email FROM visitors WHERE " + str(option) + " LIKE %s", "%" + str(key) + "%")
             data = cursor.fetchall()
             cursor.close()
             return render_template('adminVisitor.html', data=data)
@@ -227,8 +218,7 @@ def adminViewVisitors():
     cursor.close()
     return render_template('adminVisitor.html', data=data)
 
-
-# TODO: Search option
+#TODO: Search option
 @app.route('/adminviewstaffs', methods=['GET', 'POST'])
 def adminViewStaffs():
     conn = mysql.connect()
@@ -260,8 +250,7 @@ def adminViewStaffs():
             if key == "":
                 cursor.execute("SELECT Username, Email FROM staff")
             else:
-                cursor.execute("SELECT Username, Email FROM staff WHERE " + str(option) + " LIKE %s",
-                               "%" + str(key) + "%")
+                cursor.execute("SELECT Username, Email FROM staff WHERE " + str(option) + " LIKE %s", "%" + str(key) + "%")
             data = cursor.fetchall()
             cursor.close()
             return render_template('adminStaff.html', data=data)
@@ -283,7 +272,6 @@ def adminViewStaffs():
             return render_template('adminStaff.html', data=data)
     cursor.close()
     return render_template('adminStaff.html', data=data)
-
 
 @app.route('/adminviewshows', methods=['GET', 'POST'])
 def adminViewShows():
@@ -339,9 +327,7 @@ def adminViewShows():
             if name == "" and option == 'any' and searchTime == "":
                 cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows")
             else:
-                cursor.execute(
-                    "SELECT Name, Date_and_time, Located_at FROM shows WHERE (%s IS NULL OR Name LIKE %s) AND (%s IS NULL OR DATE(Date_and_time) = %s) AND (%s IS NULL OR Located_at = %s)",
-                    (name, name, searchTime, searchTime, option, option))
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows WHERE (%s IS NULL OR Name LIKE %s) AND (%s IS NULL OR DATE(Date_and_time) = %s) AND (%s IS NULL OR Located_at = %s)", (name, name, searchTime, searchTime, option, option))
             data = cursor.fetchall()
             cursor.close()
             return render_template('adminShow.html', data=data)
@@ -358,10 +344,9 @@ def adminViewShows():
             show_date = row['date']
             show_datetime = datetime.datetime.strptime(show_date, '%Y-%m-%d %H:%M:%S')
             show_datetime = show_datetime.strftime('%Y-%m-%d %H:%M:%S')
-            cursor.execute("DELETE FROM shows WHERE Name = %s AND Located_at = %s AND Date_and_time = %s",
-                           (str(show_name),
-                            str(show_exh),
-                            show_datetime))
+            cursor.execute("DELETE FROM shows WHERE Name = %s AND Located_at = %s AND Date_and_time = %s", (str(show_name),
+                                                                                                    str(show_exh),
+                                                                                                    show_datetime))
             conn.commit()
             cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows")
             data = cursor.fetchall()
@@ -372,7 +357,6 @@ def adminViewShows():
             return logout()
     cursor.close()
     return render_template('adminShow.html', data=data)
-
 
 @app.route('/adminviewanimals', methods=['GET', 'POST'])
 def adminViewAnimals():
@@ -464,13 +448,11 @@ def adminViewAnimals():
                            + " (%s IS NULL OR Name LIKE %s) AND (%s IS NULL OR Species LIKE %s) "
                            + "AND (%s IS NULL OR Exhibit = %s) AND (%s IS NULL OR Age >= %s) "
                            + "AND (%s IS NULL OR Age <= %s) AND (%s IS NULL OR Type = %s)",
-                           (
-                           search_name, search_name, search_spec, search_spec, exh_option, exh_option, min_age, min_age,
-                           max_age, max_age, type_option, type_option))
+                           (search_name, search_name, search_spec, search_spec, exh_option, exh_option, min_age, min_age, max_age, max_age, type_option, type_option))
             data = cursor.fetchall()
             cursor.close()
             return render_template('adminAnimal.html', data=data)
-        elif 'delete' in request.form:  # TODO Fix DELETE
+        elif 'delete' in request.form: # TODO Fix DELETE
             ani_row = request.form['delete']
             if ani_row == '':
                 cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal")
@@ -483,9 +465,7 @@ def adminViewAnimals():
             exhibit = row['exhibit']
             age = row['age']
             ani_type = row['type']
-            cursor.execute(
-                "DELETE FROM animal WHERE Age = %s AND Type = %s AND Species = %s AND Name = %s AND Exhibit = %s",
-                (age, ani_type, species, name, exhibit))
+            cursor.execute("DELETE FROM animal WHERE Age = %s AND Type = %s AND Species = %s AND Name = %s AND Exhibit = %s", (age, ani_type, species, name, exhibit))
             conn.commit()
             cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal")
             data = cursor.fetchall()
@@ -496,7 +476,6 @@ def adminViewAnimals():
             return logout()
     cursor.close()
     return render_template('adminAnimal.html', data=data)
-
 
 @app.route('/adminaddanimals', methods=['GET', 'POST'])
 def adminAddAnimals():
@@ -514,8 +493,7 @@ def adminAddAnimals():
             cursor.execute("SELECT Name, Species FROM animal WHERE Name = %s AND Species = %s", (name, spec))
             notHave = cursor.fetchone() == None
             if notHave:
-                cursor.execute("INSERT INTO animal (Age, Type, Species, Name, Exhibit) VALUES(%s, %s, %s, %s, %s)",
-                               (age, anitype, spec, name, exh))
+                cursor.execute("INSERT INTO animal (Age, Type, Species, Name, Exhibit) VALUES(%s, %s, %s, %s, %s)", (age, anitype, spec, name, exh))
                 conn.commit()
                 cursor.close()
             return redirect(url_for('adminAddAnimals'))
@@ -524,7 +502,6 @@ def adminAddAnimals():
             return redirect(url_for('adminHome'))
     cursor.close()
     return render_template('addAnimal.html', data=data)
-
 
 @app.route('/adminaddshow', methods=['GET', 'POST'])
 def adminAddShow():
@@ -543,8 +520,7 @@ def adminAddShow():
             date = request.form['date']
             show_datetime = datetime.datetime.strptime(date, '%d/%m/%Y %I:%M %p')
             show_datetime = show_datetime.strftime('%Y-%m-%d %H:%M:%S')
-            cursor.execute("SELECT Name, Date_and_time FROM shows WHERE Name = %s AND Date_and_time = %s",
-                           (name, show_datetime))
+            cursor.execute("SELECT Name, Date_and_time FROM shows WHERE Name = %s AND Date_and_time = %s", (name, show_datetime))
             notHave = cursor.fetchone() == None
             if notHave:
                 cursor.execute("INSERT INTO shows (Name, Date_and_time, Located_at, Host) VALUES(%s, %s, %s, %s)",
@@ -559,11 +535,10 @@ def adminAddShow():
     return render_template('addShow.html', exhdata=exhdata, stafdata=stafdata)
 
 
+
 """
 Staff page starts here
 """
-
-
 @app.route('/staffhome', methods=['GET', 'POST'])
 def staffHome():
     conn = mysql.connect()
@@ -587,8 +562,6 @@ def staffHome():
 """
 Staff Show page starts here
 """
-
-
 @app.route('/staffshow', methods=['GET', 'POST'])
 def staffShow():
     conn = mysql.connect()
@@ -637,7 +610,6 @@ def staffShow():
 """
 Staff Animal page starts here
 """
-
 
 @app.route('/staffAnimals', methods=['GET', 'POST'])
 def staffAnimals():
@@ -729,9 +701,7 @@ def staffAnimals():
                            + " (%s IS NULL OR Name LIKE %s) AND (%s IS NULL OR Species LIKE %s) "
                            + "AND (%s IS NULL OR Exhibit = %s) AND (%s IS NULL OR Age >= %s) "
                            + "AND (%s IS NULL OR Age <= %s) AND (%s IS NULL OR Type = %s)",
-                           (
-                           search_name, search_name, search_spec, search_spec, exh_option, exh_option, min_age, min_age,
-                           max_age, max_age, type_option, type_option))
+                           (search_name, search_name, search_spec, search_spec, exh_option, exh_option, min_age, min_age, max_age, max_age, type_option, type_option))
             data = cursor.fetchall()
             cursor.close()
             return render_template('staffAnimals.html', data=data)
@@ -751,12 +721,9 @@ def staffAnimals():
         cursor.close()
     return render_template('staffAnimals.html', data=data)
 
-
 """
 Staff-- Animal Care page starts here
 """
-
-
 @app.route('/animalCare', methods=['GET', 'POST'])
 def animalCare():
     conn = mysql.connect()
@@ -766,75 +733,12 @@ def animalCare():
     flash(message)
     cursor.execute("SELECT Username, Text, Time FROM NOTE")
     data = cursor.fetchall()
-    if request.method == 'POST':
-        if 'sortStaff' in request.form:
-            if session['coin']:
-                cursor.execute("SELECT Username, Text, Time FROM NOTE ORDER BY Name")
-            elif not session['coin']:
-                cursor.execute("SELECT Username, Text, Time FROM NOTE ORDER BY Name DESC")
-            session['coin'] = not session['coin']
-            data = cursor.fetchall()
-            cursor.close()
-            return render_template('animalCare.html', data=data)
-        elif 'sortNote' in request.form:
-            if session['coin']:
-                cursor.execute("SELECT Username, Text, Time FROM NOTE ORDER BY Text")
-            elif not session['coin']:
-                cursor.execute("SELECT Username, Text, Time FROM NOTE ORDER BY Text DESC")
-            session['coin'] = not session['coin']
-            data = cursor.fetchall()
-            cursor.close()
-            return render_template('animalCare.html', data=data)
-        elif 'sortTime' in request.form:
-            if session['coin']:
-                cursor.execute("SELECT Username, Text, Time FROM NOTE ORDER BY Time")
-            elif not session['coin']:
-                cursor.execute("SELECT Username, Text, Time FROM NOTE ORDER BY Time DESC")
-            session['coin'] = not session['coin']
-            data = cursor.fetchall()
-            cursor.close()
-            return render_template('animalCare.html', data=data)
-        elif 'lognote' in request.form:
-            print request.form
-            print session['username']
-            note_text = request.form['thisnote']
-
-            row = ast.literal_eval(notenote)
-            print row
-            note_name = row['name']
-            note_exh = row['exhibit']
-            note_date = datetime.datetime.now()
-            note_now = note_date.strftime('%Y-%m-%d %H:%M:%S')
-            note_species = row['species']
-            note_age = row['age']
-            note_host = session['username']
-            cursor.execute("SELECT Email FROM staff WHERE Username = %s", (note_host))
-            note_email = cursor.fetchone()[0]
-
-            cursor.execute(
-                "SELECT Name, Species FROM NOTE WHERE Name = %s AND Species = %s AND Time = %s AND Username = %s",
-                (note_name, note_species, note_now, note_host))
-            noteHave = len(cursor.fetchall()) == 0
-            if noteHave:
-                cursor.execute(
-                    "INSERT INTO NOTE (Time, Text, Username, Name, Species, Staff_email) VALUES(%s, %s, %s, %s, %s, %s)",
-                    (note_now, note_text, note_host, note_name, note_species, note_email))
-                conn.commit()
-                cursor.close()
-            return redirect(url_for('animalCare'))
-        elif 'back' in request.form:
-            cursor.close()
-            return redirect(url_for('staffAnimals'))
-        elif 'logout' in request.form:
-            return redirect(url_for('logout'))
     return render_template('animalCare.html', data=data)
 
 
 """
 Visitor page starts here
 """
-
-
 @app.route('/visitorhome', methods=['GET', 'POST'])
 def visitorHome():
     conn = mysql.connect()
@@ -850,7 +754,7 @@ def visitorHome():
             if 'searchExhibit' in request.form:
                 return redirect(url_for('visitorSearchExh'))
             elif 'searchShow' in request.form:
-                return redirect(url_for('adminViewStaffs'))
+                return redirect(url_for('searchShows'))
             elif 'viewExHis' in request.form:
                 return redirect(url_for('adminViewShows'))
             elif 'viewShHis' in request.form:
@@ -981,8 +885,7 @@ def visitorSearchExh():
                            "WHERE (%s IS NULL OR Name = %s) and (%s IS NULL OR Water_Feature = %s) "
                            "AND (%s IS NULL OR Size >= %s) AND (%s IS NULL OR Size <= %s) "
                            "AND (%s IS NULL OR num >= %s) AND (%s IS NULL OR num <= %s)",
-                           (searchkey, searchkey, hasWater, hasWater, min_size, min_size, max_size, max_size, min_num,
-                            min_num, max_num, max_num))
+                           (searchkey, searchkey, hasWater, hasWater, min_size, min_size, max_size, max_size, min_num, min_num, max_num, max_num))
             data = cursor.fetchall()
             return render_template('searchExhibit.html', data=data, exhdata=exhdata)
         elif 'back' in request.form:
@@ -992,6 +895,10 @@ def visitorSearchExh():
             return redirect(url_for('logout'))
     return render_template('searchExhibit.html', data=data, exhdata=exhdata)
 
+@app.route('/showhistory', methods=['GET', 'POST'])
+def showHistory():
+
+    return render_template('showHistory.html')
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -1002,6 +909,7 @@ def logout():
 
     return render_template('logout.html')
 
-
 if __name__ == '__main__':
     app.run()
+
+
