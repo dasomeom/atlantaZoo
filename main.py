@@ -28,9 +28,9 @@ def login():
     elif request.method == 'POST' and 'login' in request.form:
         validated = loginHelper(request.form)
         if validated == 0:
-            return render_template('visitorHomes.html')
+            return redirect(url_for('visitorHome'))
         elif validated == 1:
-            return render_template('staffhome.html')
+            return redirect(url_for('staffHome'))
         elif validated == 2:
             return redirect(url_for('adminHome'))
         else:
@@ -142,7 +142,7 @@ def adminHome():
     cursor = conn.cursor()
     admin_name = session['username']
     cursor.execute("SELECT Username FROM admins WHERE Username = %s", (admin_name))
-    isAdmin = len(cursor.fetchone()) > 0
+    isAdmin = cursor.fetchone()
     cursor.close()
     if not isAdmin:
         return redirect(url_for('login'))
@@ -215,8 +215,6 @@ def adminViewVisitors():
             data = cursor.fetchall()
             cursor.close()
             return render_template('adminVisitor.html', data=data)
-        elif 'logOut' in request.form:
-            return redirect(url_for('logout'))
     cursor.close()
     return render_template('adminVisitor.html', data=data)
 
@@ -481,14 +479,208 @@ def adminViewAnimals():
 
 @app.route('/adminaddanimals', methods=['GET', 'POST'])
 def adminAddAnimals():
-    print request.form
-    if request.method == 'POST' and 'addani' in request.form:
-        print request.form
-    return render_template('addAnimal.html')
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name FROM exhibit")
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'addani' in request.form:
+            name = request.form['aniname']
+            exh = request.form['aniexh']
+            anitype = request.form['anitype']
+            spec = request.form['anispec']
+            age = int(request.form['aniage'])
+            cursor.execute("SELECT Name, Species FROM animal WHERE Name = %s AND Species = %s", (name, spec))
+            notHave = cursor.fetchone() == None
+            if notHave:
+                cursor.execute("INSERT INTO animal (Age, Type, Species, Name, Exhibit) VALUES(%s, %s, %s, %s, %s)", (age, anitype, spec, name, exh))
+                conn.commit()
+                cursor.close()
+            return redirect(url_for('adminAddAnimals'))
+        elif 'cancel' in request.form:
+            cursor.close()
+            return redirect(url_for('adminHome'))
+    cursor.close()
+    return render_template('addAnimal.html', data=data)
 
 @app.route('/adminaddshow', methods=['GET', 'POST'])
 def adminAddShow():
-    return render_template('addShow.html')
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Username FROM staff")
+    stafdata = cursor.fetchall()
+    cursor.execute("SELECT Name FROM exhibit")
+    exhdata = cursor.fetchall()
+    if request.method == 'POST':
+        if 'addshow' in request.form:
+            print request.form
+            name = request.form['showname']
+            aniexh = request.form['aniexh']
+            staff = request.form['staff']
+            date = request.form['date']
+            show_datetime = datetime.datetime.strptime(date, '%d/%m/%Y %I:%M %p')
+            show_datetime = show_datetime.strftime('%Y-%m-%d %H:%M:%S')
+            cursor.execute("SELECT Name, Date_and_time FROM shows WHERE Name = %s AND Date_and_time = %s", (name, show_datetime))
+            notHave = cursor.fetchone() == None
+            if notHave:
+                cursor.execute("INSERT INTO shows (Name, Date_and_time, Located_at, Host) VALUES(%s, %s, %s, %s)",
+                               (name, show_datetime, aniexh, staff))
+                conn.commit()
+                cursor.close()
+            return redirect(url_for('adminAddAnimals'))
+        elif 'cancel' in request.form:
+            cursor.close()
+            return redirect(url_for('adminHome'))
+    cursor.close()
+    return render_template('addShow.html', exhdata=exhdata, stafdata=stafdata)
+
+
+
+"""
+Staff page starts here
+"""
+@app.route('/staffhome', methods=['GET', 'POST'])
+def staffHome():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    staff_name = session['username']
+    cursor.execute("SELECT Username FROM STAFF WHERE Username = %s", (staff_name))
+    isStaff = len(cursor.fetchone()) > 0
+    cursor.close()
+    if not isStaff:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        if 'staffShow' in request.form:
+            return redirect(url_for('staffShow'))
+        elif 'staffAnimals' in request.form:
+            return redirect(url_for('staffAnimals'))
+        elif 'logOut' in request.form:
+            return redirect(url_for('logout'))
+    return render_template('staffhome.html')
+
+
+"""
+Staff Show page starts here
+"""
+@app.route('/staffshow', methods=['GET', 'POST'])
+def staffShow():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    staff_name = session['username']
+    cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows WHERE Host = %s", (staff_name))
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'sortName' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Name")
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Name DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('staffshow.html', data=data)
+        elif 'sortExhibit' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Located_at")
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Located_at DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('staffshow.html', data=data)
+        elif 'sortTime' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Date_and_time")
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Date_and_time DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('staffshow.html', data=data)
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('staffHome'))
+        elif 'logout' in request.form:
+            cursor.close()
+            return logout()
+    cursor.close()
+    return render_template('staffshow.html', data=data)
+
+"""
+Visitor page starts here
+"""
+@app.route('/visitorhome', methods=['GET', 'POST'])
+def visitorHome():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    visitor_name = session['username']
+    cursor.execute("SELECT Username FROM visitors WHERE Username = %s", (visitor_name))
+    isVisitor = cursor.fetchone()
+    cursor.close()
+    if not isVisitor:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        if request.method == 'POST':
+            if 'searchExhibit' in request.form:
+                return redirect(url_for('visitorSearchExh'))
+            elif 'searchShow' in request.form:
+                return redirect(url_for('adminViewStaffs'))
+            elif 'viewExHis' in request.form:
+                return redirect(url_for('adminViewShows'))
+            elif 'viewShHis' in request.form:
+                return redirect(url_for('adminViewAnimals'))
+            elif 'searchAnimal' in request.form:
+                return redirect(url_for('adminAddAnimals'))
+            elif 'logOut' in request.form:
+                return redirect(url_for('logout'))
+    return render_template('visitorHome.html')
+
+
+@app.route('/visistorsearchexhibit', methods=['GET', 'POST'])
+def visitorSearchExh():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit")
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'sortName' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Name")
+            elif not session['coin']:
+                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Name DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchExhibit.html', data=data)
+        elif 'sortSize' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Size")
+            elif not session['coin']:
+                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Size DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchExhibit.html', data=data)
+        elif 'sortNumber' in request.form:
+            a=3
+        elif 'sortWater' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Water_Feature")
+            elif not session['coin']:
+                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Water_Feature DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchExhibit.html', data=data)
+
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('visitorHome'))
+        elif 'logout' in request.form:
+            return redirect(url_for('logout'))
+    return render_template('searchExhibit.html', data=data)
+
+
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -496,7 +688,10 @@ def logout():
     session.clear()
     if request.method == 'POST' and 'toLog' in request.form:
         return redirect(url_for('login'))
+
     return render_template('logout.html')
 
 if __name__ == '__main__':
     app.run()
+
+

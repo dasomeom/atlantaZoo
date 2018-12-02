@@ -119,16 +119,22 @@ th>.dropdown-toggle:active {
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6"></div>
-                    <div class="col-lg-1">
-                        <p>Number of Visits</p>
+					<div class="col-lg-6"></div>
+					<div class="col-lg-1">
+					<p>Number of Visits:</p>
+					</div>
+                <div class="input-group mb-2" style="width: 100px; height: 35px;">
+                    <div class="input-group-addon">
+                        <span class="input-group-text" style="width: 50px;">MIN </span>
                     </div>
-                    <div class="col-lg-1"><p>MIN</p>
-                        <select class="1-100" style="width: 70px; height: 35px;"></select>
+                    <input type="text" class="form-control" placeholder="#" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
+                </div>
+                <div class="input-group mb-2" style="width: 100px; height: 35px;">
+                    <div class="input-group-addon">
+                        <span class="input-group-text"style="width: 50px;">MAX </span>
                     </div>
-                    <div class="col-lg-1"><p>MAX</p>
-                        <select class="1-100" style="width: 70px; height: 35px;"></select>
-                    </div>
+                    <input type="text" class="form-control" placeholder="#" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
+                </div>
             </div>
         </form>
         <form action="{{ url_for('exhibitHistory') }}" method="POST">
