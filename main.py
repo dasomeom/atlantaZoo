@@ -950,6 +950,99 @@ def visitorSearchExh():
             return redirect(url_for('logout'))
     return render_template('searchExhibit.html', data=data, exhdata=exhdata)
 
+
+@app.route('/searchShows', methods=['GET', 'POST'])
+def searchShows():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows")
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'sortName' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Name")
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Name DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchShows.html', data=data)
+        elif 'sortExhibit' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Located_at")
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Located_at DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchShows.html', data=data)
+        elif 'sortTime' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Date_and_time")
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Date_and_time DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchShows.html', data=data)
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('visitorHome'))
+        elif 'search' in request.form:
+            option = request.form['searchopt']
+            if option == 'any':
+                option = None
+            name = request.form['searchname']
+            if name == '':
+                name = None
+            else:
+                name = "%" + name + "%"
+            searchTime = request.form['datetime']
+            if searchTime == '':
+                searchTime = None
+            else:
+                searchTime = datetime.datetime.strptime(searchTime, '%Y-%m-%d')
+            if name == "" and option == 'any' and searchTime == "":
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows")
+            else:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows WHERE (%s IS NULL OR Name LIKE %s) AND (%s IS NULL OR DATE(Date_and_time) = %s) AND (%s IS NULL OR Located_at = %s)", (name, name, searchTime, searchTime, option, option))
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchShows.html', data=data)
+        elif 'logvisit' in request.form:
+            show_row = request.form['logvisit']
+            if len(show_row) == 0:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows")
+                data = cursor.fetchall()
+                cursor.close()
+                return render_template('searchShows.html', data=data)
+            row = ast.literal_eval(show_row)
+            show_name = row['name']
+            show_exh = row['exhibit']
+            show_date = row['date']
+            show_datetime = datetime.datetime.strptime(show_date, '%Y-%m-%d %H:%M:%S')
+            show_datetime = show_datetime.strftime('%Y-%m-%d %H:%M:%S')
+            user_name = session['username']
+            cursor.execute("SELECT Email FROM visitors WHERE Username = %s", (user_name))
+            user_email = cursor.fetchone()
+            user_email = user_email[0]
+
+            cursor.execute(
+                "SELECT Shows_name, Visitor_username, Time FROM visit_show WHERE Shows_name = %s AND Visitor_username = %s AND Time = %s",
+                (show_name, user_name, show_datetime))
+            noteHave = len(cursor.fetchall()) == 0
+            if noteHave:
+                cursor.execute("INSERT INTO visit_show (Shows_name, Visitor_username, Visitor_Email, Time) VALUES(%s, %s, %s, %s)", (show_name, user_name, user_email, show_datetime))
+                conn.commit()
+                cursor.close()
+            return render_template('searchShows.html', data=data)
+        elif 'logout' in request.form:
+            cursor.close()
+            return logout()
+    cursor.close()
+    return render_template('searchShows.html', data=data)
+
+
 @app.route('/showhistory', methods=['GET', 'POST'])
 def showHistory():
 
