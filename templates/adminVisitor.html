@@ -70,7 +70,7 @@ body {
 </style>
 
 <body>
-    <div class="form-unconfirmed">
+    <form class="form-unconfirmed" action="{{ url_for('adminViewStaffs') }}" method="POST">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><strong>View Visitor</strong></h1>
             <form class="form-adminvisitor" action="{{ url_for('adminVisitor') }}" method="POST">
                 <table class="table table-bordered table-hover" id="visTb">
@@ -109,11 +109,8 @@ body {
                     </div>
                  </div><!-- /btn-group -->
                 <input type="text" class="form-control" id="search-input" placeholder="Type in Here" aria-label="...">
-<<<<<<< HEAD
                 <button type="submit" value="" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="delete">Search</button>
-=======
                 <button type="submit" id="search" value="" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="search">Search</button>
->>>>>>> a95ac9abb70223131238365b0ba4fd875d4095d0
             </div><!-- /input-group -->
         </div>
     </div>
@@ -129,7 +126,7 @@ body {
                 </form>
             </div>
         </div>
-    </div>
+    </form>
 </body>
 
 </html>
