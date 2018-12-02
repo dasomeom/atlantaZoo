@@ -1180,7 +1180,7 @@ def animalDetail():
     if request.method == 'POST':
         if 'back' in request.form:
             cursor.close()
-            return redirect(url_for('visitorHome'))
+            return redirect(url_for('searchAnimals'))
         elif 'logout' in request.form:
             return redirect(url_for('logout'))
     return render_template('animalDetail.html', data=data)
