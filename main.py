@@ -1046,6 +1046,11 @@ def searchShows():
 
 @app.route('/showhistory', methods=['GET', 'POST'])
 def showHistory():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Shows_name, Time FROM visit_show WHERE Visitor_username = %s", (session['username']))
+    data = cursor.fetchall()
+    print data
 
     return render_template('showHistory.html')
 
