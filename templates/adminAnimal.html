@@ -129,8 +129,10 @@ th>.dropdown-toggle:active {
 	      	</div>
 		</div>
 		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
-	      	<div class="d-flex justify-content-between flex-direction: flex-column"> 
-	      		<input id="search" class="btn btn-secondary" type="submit" value="Remove Animal" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;"> 
+	      	<div class="d-flex justify-content-between flex-direction: flex-column">
+                <form action="{{ url_for('adminViewAnimals') }}" method="POST">
+                    <button type="submit" id="delBut" value="" class="btn btn-secondary" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;" name="delete">Remove Animal</button>
+                </form>
 	      	</div>
 	      	<div class="col-lg-6"></div>
 			<div class="col-lg-1">
@@ -152,7 +154,7 @@ th>.dropdown-toggle:active {
 	    	</div> 
 	    </div>
         <form class="form-unconfirmed" action="{{ url_for('adminViewAnimals') }}" method="POST">
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" id="visTb">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
@@ -258,5 +260,15 @@ th>.dropdown-toggle:active {
 	function getCellValue(row, index){ 
 		return $(row).children('td').eq(index).text(); 
 	}
+
+	$("#visTb tr").click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+            document.getElementById('delBut').value = $(this).find('td:first').text()
+    });
+    $('.dropdown-item').click(function() {
+        $('#dropdownMenuButton').text($(this).text());
+        document.getElementById('userSearch').value = $(this).find('userS')
+    });
+    $('th>.dropdown-toggle').on('click', onClick);
 
 </script>
