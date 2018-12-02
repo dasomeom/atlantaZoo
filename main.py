@@ -408,10 +408,13 @@ def adminViewAnimals():
             return redirect(url_for('adminHome'))
         elif 'delete' in request.form: # TODO Fix DELETE
             stf_name = str(request.form['delete'])
+            print request.form
+            """
             cursor.execute("DELETE FROM staff WHERE Username = %s", (stf_name))
             conn.commit()
             cursor.execute("SELECT Username, Email FROM staff")
             data = cursor.fetchall()
+            """
             cursor.close()
             return render_template('adminAnimal.html', data=data)
         elif 'logout' in request.form:
