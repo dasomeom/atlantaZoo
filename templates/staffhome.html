@@ -4,12 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="../../../../favicon.ico">
-
+    <link rel="icon" href="favicon.ico">
     <title>Atlanta Zoo</title>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
+
 </head>
 
 
@@ -34,16 +32,20 @@
           background-color: #e6e6e6;
         }
 
-        .form-staffhome {
+        div {
+            width: 100%
+        }
+
+        .form-staffHome {
           width: 100%;
           max-width: 320px;
-          padding: 15px;
+          padding: 5px;
           margin: 0 auto;
         }
-        .form-staffhome .checkbox {
+        .form-staffHome .checkbox {
           font-weight: 400;
         }
-        .form-staffhome .form-control {
+        .form-staffHome .form-control {
           position: relative;
           box-sizing: border-box;
           height: auto;
@@ -51,23 +53,29 @@
           font-size: 16px;
         }
 
-        .form-staffhome .form-control:focus {
+        .form-staffHome .form-control:focus {
           z-index: 2;
-        }
+        }}
     </style>
 
     <body>
-        <form  class = "form-staffhome">
-            <h1 class="h4 mb-3 font-weight-normal">Atlanta Zoo</h1>
-            <p class="text-sm-left">Staff homepage</p>
-            <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">View assigned shows
-            </a>
-            <a class="btn btn-lg btn-secondary btn-block" href="./Register.html">Search Animals
-            </a>
-            <a class="btn btn-lg btn-light btn-block" href="./Login.html">Log Out
-            </a>
-            
-        </form>
+        <div>
+            <form class="form-staffHome" action="{{ url_for('staffHome') }}" method="POST">
+                <h1 class="h4 mb-3 font-weight-normal">Atlanta Zoo</h1>
+            </form>
+            <form class="form-staffHome" action="{{ url_for('staffHome') }}" method="POST">
+                <p class="text-sm-left">Staff homepage</p>
+            </form>
+            <form class="form-staffHome" action="{{ url_for('staffHome') }}" method="POST">
+                <input type="submit" class="btn btn-md btn-secondary btn-block" name="staffShow" value="View assigned shows">
+            </form>
+            <form class="form-staffHome" action="{{ url_for('staffHome') }}" method="POST">
+                <input type="submit" class="btn btn-md btn-secondary btn-block" name="staffAnimals" value="Search Animals">
+            </form>
+            <form class="form-staffHome" action="{{ url_for('staffHome') }}" method="POST">
+                <input type="submit" class="btn btn-md btn-secondary btn-block" name="staffLogout" value="Log Out">
+            </form>
+        </div>
     </body>
 </html>
 
