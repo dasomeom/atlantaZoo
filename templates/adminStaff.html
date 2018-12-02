@@ -72,54 +72,53 @@ body {
 </style>
 
 <body>
-    <form class="form-unconfirmed" method="POST">
+    <form class="form-unconfirmed" action="{{ url_for('adminViewStaffs') }}" method="POST">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><strong>View Staff</strong></h1>
-            <table class="table table-bordered table-hover" id="visTb">
-                <thead class="thead-light">
-                    <tr>
-                        <!-- onclick="sort(document.getElementById('sortName').value) -->
-                      <th scope="col">Username<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
-                      <th scope="col">Email<button name="sortEmail" class="btn dropdown-toggle float-right"></button></th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for item in data %}
+        <table class="table table-bordered table-hover" id="visTb">
+            <thead class="thead-light">
                 <tr>
-                    <td scope="row">{{item[0]}}</td>
-                    <td>{{item[1]}}</td>
+                    <!-- onclick="sort(document.getElementById('sortName').value) -->
+                  <th scope="col">Username<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
+                  <th scope="col">Email<button name="sortEmail" class="btn dropdown-toggle float-right"></button></th>
                 </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-    <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column">
-        </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-            <div class="input-group">
-                <div class="input-group-btn">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100px; height: 35px;>Option
-                        <span class="caret"></span></button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button id="None" class="dropdown-item" type="button"></button>
-                        <button id="username" class="dropdown-item" type="button">Username</button>
-                        <button id="email" class="dropdown-item" type="button">Email</button>
+            </thead>
+            <tbody>
+            {% for item in data %}
+            <tr>
+                <td scope="row">{{item[0]}}</td>
+                <td>{{item[1]}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between flex-direction: flex-column">
+            </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <div class="input-group">
+                    <fieldset>
+                        <div class="input-group-btn">
+                            <select name="searchopt">
+                                <option value="username">Username</option>
+                                <option value="email">Email</option>
+                            </select>
+                            <input type="text" class="form-control" name="searchkey" value="" id="search-input" placeholder="Type in Here" aria-label="...">
+                            <button type="submit" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="search">Search</button>
                         </div>
-                    </div>
-                 </div><!-- /btn-group -->
-                <input type="text" class="form-control" id="search-input" placeholder="Type in Here" aria-label="...">
-                 <button type="submit" id="delBut" value="" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="delete">Search</button>
-            </div><!-- /input-group -->
+                        <!-- /btn-group -->
+
+                    </fieldset>
+                </div><!-- /input-group -->
+            </div>
         </div>
-    </div>                   
-    <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column">
-            <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between flex-direction: flex-column">
+                <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+            </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <button type="submit" id="delBut" value="" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;" name="delete">Delete Staff</button>
+            </div>
         </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-            <button type="submit" id="delBut" value="" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;" name="delete">Delete Staff</button>
-        </div>
-    </div>  
     </form>
 
 </body>
@@ -133,6 +132,7 @@ body {
     });
     $('.dropdown-item').click(function() {
         $('#dropdownMenuButton').text($(this).text());
+        document.getElementById('userSearch').value = $(this).find('userS')
     });
 
     $('th>.dropdown-toggle').on('click', onClick);

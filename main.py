@@ -211,6 +211,7 @@ def adminViewStaffs():
     cursor = conn.cursor()
     cursor.execute("SELECT Username, Email FROM staff")
     data = cursor.fetchall()
+    print request.form
     if request.method == 'POST':
         if 'sortName' in request.form:
             if session['coin']:
