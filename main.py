@@ -1163,6 +1163,22 @@ def searchAnimals():
     cursor.close()
     return render_template('searchAnimals.html', data=data)
 
+@app.route('/animalDetail', methods=['GET', 'POST'])
+def animalDetail():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    notenote = session['detanimal']
+    message = Markup(str(notenote))
+    flash(message)
+    cursor.execute("SELECT Username, Text, Time FROM NOTE")
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('visitorHome'))
+        elif 'logout' in request.form:
+            return redirect(url_for('logout'))
+    return render_template('animalDetail.html', data=data)
 """
 Logout page starts here
 """
