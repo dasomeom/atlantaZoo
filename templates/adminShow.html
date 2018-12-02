@@ -107,11 +107,12 @@ th>.dropdown-toggle:active {
                 <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
                     <div class="d-flex justify-content-between flex-direction: flex-column">
                         <select name="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
-                            <option value="any">Any Type</option>
-                            <option value="pacific">Pacific</option>
-                            <option value="jungle">Jungle</option>
-                            <option value="sahara">Sahara</option>
+                            <option value="any">Any Exhibit</option>
                             <option value="birds">Birds</option>
+                            <option value="jungle">Jungle</option>
+                            <option value="mountainous">Mountainous</option>
+                            <option value="pacific">Pacific</option>
+                            <option value="sahara">Sahara</option>
                         </select>
                     </div>
 
@@ -124,7 +125,7 @@ th>.dropdown-toggle:active {
             </fieldset>
         </form>
         <form action="{{ url_for('adminViewShows') }}" method="POST">
-            <table id="visTbsh" class="table table-bordered table-hover">
+            <table id="showTb" class="table table-bordered table-hover">
                 <thead class="thead-light">
                     <tr>
                       <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
@@ -206,7 +207,7 @@ $(function () {
    bindDatePicker();
  });
 
-    $("#visTbsh tr").click(function(){
+    $("#showTb tr").click(function(){
         $(this).addClass('selected').siblings().removeClass('selected');
         var n = {}
         n.name = $(this).find('td:first').text();

@@ -204,6 +204,11 @@ def adminViewVisitors():
             return redirect(url_for('adminHome'))
         elif 'delete' in request.form:
             vis_name = str(request.form['delete'])
+            if vis_name == '':
+                cursor.execute("SELECT Username, Email FROM visitors")
+                data = cursor.fetchall()
+                cursor.close()
+                return render_template('adminVisitor.html', data=data)
             cursor.execute("DELETE FROM visitors WHERE Username = %s", (vis_name))
             conn.commit()
             cursor.execute("SELECT Username, Email FROM visitors")
@@ -256,6 +261,11 @@ def adminViewStaffs():
             return redirect(url_for('adminHome'))
         elif 'delete' in request.form:
             stf_name = str(request.form['delete'])
+            if stf_name == '':
+                cursor.execute("SELECT Username, Email FROM staff")
+                data = cursor.fetchall()
+                cursor.close()
+                return render_template('adminStaff.html', data=data)
             cursor.execute("DELETE FROM staff WHERE Username = %s", (stf_name))
             conn.commit()
             cursor.execute("SELECT Username, Email FROM staff")
@@ -325,6 +335,11 @@ def adminViewShows():
             return render_template('adminShow.html', data=data)
         elif 'delete' in request.form:
             show_row = request.form['delete']
+            if show_row == '':
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows")
+                data = cursor.fetchall()
+                cursor.close()
+                return render_template('adminShow.html', data=data)
             row = ast.literal_eval(show_row)
             show_name = row['name']
             show_exh = row['exhibit']
@@ -405,15 +420,57 @@ def adminViewAnimals():
         elif 'back' in request.form:
             cursor.close()
             return redirect(url_for('adminHome'))
-        elif 'delete' in request.form: # TODO Fix DELETE
-            stf_name = str(request.form['delete'])
-            print request.form
-            """
-            cursor.execute("DELETE FROM staff WHERE Username = %s", (stf_name))
-            conn.commit()
-            cursor.execute("SELECT Username, Email FROM staff")
+        elif 'search' in request.form:
+            exh_option = request.form['exhopt']
+            type_option = request.form['typeopt']
+            search_name = request.form['searchname']
+            search_spec = request.form['searchspec']
+            max_age = int(request.form['max'])
+            min_age = int(request.form['min'])
+            if exh_option == 'anyExh':
+                exh_option = None
+            if type_option == 'anyType':
+                type_option = None
+            if search_name == '':
+                search_name = None
+            else:
+                search_name = "%" + search_name + "%"
+            if search_spec == '':
+                search_spec = None
+            else:
+                search_spec = "%" + search_spec + "%"
+            if max_age == 0 and min_age == 0:
+                max_age = None
+                min_age = None
+            elif max_age == 0 and min_age > 0:
+                max_age = None
+            elif max_age > 0 and min_age == 0:
+                min_age = None
+            cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal WHERE"
+                           + " (%s IS NULL OR Name LIKE %s) AND (%s IS NULL OR Species LIKE %s) "
+                           + "AND (%s IS NULL OR Exhibit = %s) AND (%s IS NULL OR Age >= %s) "
+                           + "AND (%s IS NULL OR Age <= %s) AND (%s IS NULL OR Type = %s)",
+                           (search_name, search_name, search_spec, search_spec, exh_option, exh_option, min_age, min_age, max_age, max_age, type_option, type_option))
             data = cursor.fetchall()
-            """
+            cursor.close()
+            return render_template('adminAnimal.html', data=data)
+        elif 'delete' in request.form: # TODO Fix DELETE
+            ani_row = request.form['delete']
+            if ani_row == '':
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal")
+                data = cursor.fetchall()
+                cursor.close()
+                return render_template('adminAnimal.html', data=data)
+            row = ast.literal_eval(ani_row)
+            name = row["name"]
+            species = row['species']
+            exhibit = row['exhibit']
+            age = row['age']
+            ani_type = row['type']
+            cursor.execute("DELETE FROM animal WHERE Age = %s AND Type = %s AND Species = %s AND Name = %s AND Exhibit = %s", (age, ani_type, species, name, exhibit))
+            conn.commit()
+            cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal")
+            data = cursor.fetchall()
             cursor.close()
             return render_template('adminAnimal.html', data=data)
         elif 'logout' in request.form:
@@ -424,6 +481,9 @@ def adminViewAnimals():
 
 @app.route('/adminaddanimals', methods=['GET', 'POST'])
 def adminAddAnimals():
+    print request.form
+    if request.method == 'POST' and 'addani' in request.form:
+        print request.form
     return render_template('addAnimal.html')
 
 @app.route('/adminaddshow', methods=['GET', 'POST'])
