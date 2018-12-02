@@ -9,7 +9,7 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="icon" href="favicon.ico">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
@@ -85,7 +85,7 @@
     <body>
         <div class="vertical-container">
             <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Add Show</b></h1>
-
+            <form action="{{ url_for('addShow') }}" method="POST">
             <div class="row" style="margin-bottom: 20px;">
                 <div class="col-lg-6">
                   <h5>Name</h5>
@@ -138,11 +138,6 @@
 	                    </div>
 	                </div>
 	            </div>
-	            <script type="text/javascript">
-	                $(function () {
-	                    $('#datetimepicker1').datetimepicker();
-	                });
-	            </script>
 	        </div>
 	      	</div>
             </div>
@@ -150,7 +145,8 @@
               <div class="col-md-4 center-block">
                 <button type="button" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;">Add Show</button>
               </div>  
-            </div> 
+            </div>
+            </form>
             <div class="col-md-4 center-block" style="margin-bottom: 20px;">
               <div class="col-md-4 center-block">
                 <button type="button" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;">Cancel</button>
@@ -163,6 +159,10 @@
 </html>
 
 <script>
+
+$(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
 
 $(document).ready(function () {
 
