@@ -196,28 +196,7 @@ th>.dropdown-toggle:active {
         n.type = $(this).find('td:nth-child(5)').text();
             document.getElementById('delBut').value = JSON.stringify(n)
     });
-	$('.dropdown-item').click(function() {
-		var str = this.id;
-		if (str == 'jungle') {
-			$('#dropdownMenuButton1').text('Exhibit: Jungle');
-		} else if (str == 'sahara') {
-			$('#dropdownMenuButton1').text('Exhibit: Sahara');
-		} else if (str == 'birds') {
-			$('#dropdownMenuButton1').text('Exhibit: Birds');
-		} else if (str == 'pacific') {
-			$('#dropdownMenuButton1').text('Exhibit: Pacific');
-		} else if (str == 'amphibian') {
-			$('#dropdownMenuButton2').text('Type: Amphibian');
-		} else if (str == 'anthropod') {
-			$('#dropdownMenuButton2').text('Type: Anthropod');
-		} else if (str == 'bird') {
-			$('#dropdownMenuButton2').text('Type: Bird');
-		} else if (str == 'mammal') {
-			$('#dropdownMenuButton2').text('Type: Mammal');
-		} else if (str == 'reptile') {
-			$('#dropdownMenuButton2').text('Type: Reptile');
-		}
-	});
+
 	$('th>.dropdown-toggle').on('click', onClick);
 	$("tbody tr").click(function() {
 		$(this).addClass('highlight').siblings().removeClass('highlight');
@@ -227,8 +206,6 @@ th>.dropdown-toggle:active {
 		$('#idSelector').val(id);
 		// $(this).addClass('bg-info').siblings().removeClass('bg-info');
 	});
-<<<<<<< HEAD
-=======
 	function onClick(e) {
 		var th = $(e.target).parent();
 		var col = th.text();
@@ -242,7 +219,6 @@ th>.dropdown-toggle:active {
     		table.append(rows[i]);
     	}
 	}
->>>>>>> ce731281451efd767f10516ed2399d1270c59e5e
 
 	function getCellValue(row, index){
 		return $(row).children('td').eq(index).text();
