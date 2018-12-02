@@ -211,7 +211,6 @@ def adminViewStaffs():
     cursor = conn.cursor()
     cursor.execute("SELECT Username, Email FROM staff")
     data = cursor.fetchall()
-    print request.form
     if request.method == 'POST':
         if 'sortName' in request.form:
             if session['coin']:
@@ -228,6 +227,16 @@ def adminViewStaffs():
             elif not session['coin']:
                 cursor.execute("SELECT Username, Email FROM staff ORDER BY Email DESC")
             session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminStaff.html', data=data)
+        elif 'search' in request.form:
+            option = request.form['searchopt']
+            key = request.form['searchkey']
+            if key == "":
+                cursor.execute("SELECT Username, Email FROM staff")
+            else:
+                cursor.execute("SELECT Username, Email FROM staff WHERE " + str(option) + " LIKE %s", "%" + str(key) + "%")
             data = cursor.fetchall()
             cursor.close()
             return render_template('adminStaff.html', data=data)
