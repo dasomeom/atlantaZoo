@@ -13,121 +13,109 @@
 </head>
 <html>
 <style>
-  .hidden {
-    display: none
-  }
+html,
+body {
+    height: 100%;
+}
 
-  .last {
-    margin-bottom: 60px !important;
-
-  }
-  /* .col-form-label{
-    padding: 0;
-    height: 20px;
-  } */
-
-  .col-form-label {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  .form-control-plaintext {
-    padding-top: 0;
-    padding-bottom: 0;
-    width: 80%;
-    padding-left: 20px;
-    border: 0;
-  }
-  .row-label{
-    /* padding-right: 25px: */
-  }
-  .form-group {
-    margin: 2;
-  }
-
-  .vertical-container{
+body {
     display: -ms-flexbox;
     display: -webkit-box;
     display: flex;
-    -ms-flex-align: center;
-    -ms-flex-pack: center;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-  body {
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-align: center;
-    -ms-flex-pack: center;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
     padding-top: 40px;
     padding-bottom: 40px;
     background-color: #e6e6e6;
-  }
-  .center-h-container{
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-align: center;
-    -ms-flex-pack: center;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    text-align: center;
-  }
+}
+
+.form-unconfirmed {
+    width: 100%;
+    padding: 50px;
+    margin: 0 auto;
+}
+
+.form-unconfirmed .checkbox {
+    font-weight: 400;
+}
+
+.form-unconfirmed .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:
+	focus {
+    z-index: 2;
+}
+
+
+/*    	#subtitle {
+    		margin-left: 100px;
+    		margin-top: 50px;
+    	}*/
+
+#title {
+    margin-top: -50px;
+}
+
+#dropdownMenuButton {
+    margin-top: 10px;
+}
+
+th>.dropdown-toggle {
+    background-color: transparent;
+}
+
+th>.dropdown-toggle:focus,
+th>.dropdown-toggle:active {
+    outline: none !important;
+    box-shadow: none;
+}
+
+.table tbody tr.highlight td {
+    background-color: #ddd;
+}
+
+.hiddenField {
+    display: none;
+}
 </style>
 <body>
     <div class="form-unconfirmed">
-        <form action="{{ url_for('animalDetail') }}" method="POST">
-          <div class="center-h-container">
-            <h1 class="font-weight-normal"> <b>Animal Detail </b></h1>
-          </div>
-          <div class="form-group row">
-            <label class="row-label col-lg-3 col-form-label"><b>Name: </b></label>
-            <div class="col-lg-9">
-              <label class="form-control-plaintext"> Nemo </label>
+        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Animal Detail</b></h1>
+        <div class="d-flex justify-content-between">
+        	<div class="d-flex justify-content-between flex-direction: flex-column">
+        		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
+	      	</div>
+	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+	      	</div>
+	    </div>
+        <br>
+		<form action="{{ url_for('animalCare') }}" method="POST">
+	    <div class="row">
+			<div class="flashes">
+              {% for message in get_flashed_messages() %}
+                {{ message }}
+              {% endfor %}
             </div>
-          </div>
-          <div class="form-group row">
-            <label class="row-label col-lg-3 col-form-label"><b>Species: </b></label>
-            <div class="col-lg-9">
-              <label class="form-control-plaintext"> Clownfish </label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="row-label col-lg-3 col-form-label"> <b>Age:</b></label>
-            <div class="col-lg-9">
-              <label class="form-control-plaintext"> 1 month </label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="row-label col-lg-3 col-form-label"><b>Exhibit: </b></label>
-            <div class="col-lg-9">
-              <label class="form-control-plaintext"> Pacific </label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="row-label col-lg-3 col-form-label"><b>Type: </b></label>
-            <div class="col-lg-9">
-              <label class="form-control-plaintext"> Fish</label>
-            </div>
-          </div>
-        </form>
-        <div class="btn-container">
-            <form action="{{ url_for('animalDetail') }}" method="POST">
-                <button type="button" class="btn btn-lg btn-secondary btn-block"> Back</button>
-            </form>
         </div>
-
-    </div>
+		</form>
+        <br>
+		<div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between flex-direction: flex-column">
+                    <form action="{{ url_for('animalCare') }}" method="POST">
+                    	<button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+                    </form>
+                </div>
+                <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                    <form action="{{ url_for('animalCare') }}" method="POST">
+                    	<button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
+                    </form>
+                </div>
+  		</div>
+	</div>
 </body>
 </html>
 
