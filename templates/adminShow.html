@@ -95,9 +95,9 @@ th>.dropdown-toggle:active {
         		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
 	      	</div>
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-            <form action="{{ url_for('adminViewShows') }}" method="POST">	
-	      	<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 10px;"> 
-	      	</form>
+                <form action="{{ url_for('adminViewShows') }}" method="POST">
+                    <button type="submit" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="search">Search</button>
+                </form>
             </div>
 	    </div>  
 
@@ -107,14 +107,14 @@ th>.dropdown-toggle:active {
 	      	</div>
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
                 <form action="{{ url_for('adminViewShows') }}" method="POST">
-	      		<div class="form-group">
-	                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-	                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-	                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-	                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-	                    </div>
-	                </div>
-	            </div>
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
 	            <script type="text/javascript">
 	                $(function () {
 	                    $('#datetimepicker1').datetimepicker();
@@ -124,13 +124,26 @@ th>.dropdown-toggle:active {
 	      	</div> 
         </div>
         <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
-	      	<div class="d-flex justify-content-between flex-direction: flex-column"> 
+	      	<div class="d-flex justify-content-between flex-direction: flex-column">
 	      		<div class="dropdown">
                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-                        Exhibit
+                        Any Exhibit
                     </button>
+                    <fieldset>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <select name="searchopt">
+                                <option value="Username">Any Exhibit</option>
+                                <option value="Email">Pacific</option>
+                                <option value="Email">Jungle</option>
+                                <option value="Email">Sahara</option>
+                                <option value="Email">Birds</option>
+                            </select>
+                            <input type="text" class="form-control" name="searchkey" value="" id="search-input" placeholder="Type in Here" aria-label="...">
+                            <button type="submit" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="search">Search</button>
+                        </div>
+                    </fieldset>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button id="yes" class="dropdown-item" type="button">Any</button>
+                        <button id="yes" class="dropdown-item" type="button">Any Exhibit</button>
                         <button id="yes" class="dropdown-item" type="button">Pacific</button>
                         <button id="no" class="dropdown-item" type="button">Jungle</button>
                         <button id="no" class="dropdown-item" type="button">Sahara</button>
@@ -138,7 +151,7 @@ th>.dropdown-toggle:active {
                     </div>
 	      	    </div>
             </div>
-		    <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
+		    <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
 			    <button type="button" class="btn btn-sm btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; ">Remove Show</button>
             </div>
         </div>
@@ -167,15 +180,14 @@ th>.dropdown-toggle:active {
         <div class="d-flex justify-content-between">
                 <div class="d-flex justify-content-between flex-direction: flex-column">
                     <form action="{{ url_for('adminViewShows') }}" method="POST">
-                    <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+                        <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
                     </form>
                 </div>    
                 <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
                     <form action="{{ url_for('adminViewShows') }}" method="POST">
-                    <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
+                        <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
                     </form>
                 </div>
-
         </div>
     </div>
 
