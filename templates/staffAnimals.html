@@ -78,7 +78,7 @@ th>.dropdown-toggle:active {
 
 <body>
     <div class="form-unconfirmed">
-        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Animals</b></h1>
+        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Staff Animals</b></h1>
         <div class="d-flex justify-content-between">
         	<div class="d-flex justify-content-between flex-direction: flex-column"> 
         		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
@@ -86,13 +86,13 @@ th>.dropdown-toggle:active {
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
 	      	</div>
 	    </div>
-        <form action="{{ url_for('adminViewAnimals') }}" method="POST">
+        <form action="{{ url_for('staffAnimals') }}" method="POST">
 		<div class="d-flex justify-content-between">
         	<div class="d-flex justify-content-between flex-direction: flex-column">
         		<input type="text" class="form-control" id="searchName" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px; margin-bottom: 5px;">
 	      	</div>
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                <select Exhibit="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                <select Exhibit="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-bottom: 5px">
                     <option value="any">Any Exhibit</option>
                     <option value="pacific">Pacific</option>
                     <option value="Email">Jungle</option>
@@ -122,7 +122,7 @@ th>.dropdown-toggle:active {
 	      	</div>
 	      	<div class="col-lg-6"></div>
 			<div class="col-lg-1">
-	      	<p>Age</p>
+	      	<p>Age (Year)</p>
 	      	</div>
 	      	<div class="col-lg-1"><p>MIN</p>
 	        <select class="1-100" style="width: 70px; height: 35px;"></select>

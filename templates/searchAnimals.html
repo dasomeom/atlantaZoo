@@ -81,57 +81,69 @@ th>.dropdown-toggle:active {
     display: none;
 }
 </style>
-
 <body>
     <div class="form-unconfirmed">
-        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Search for Animals</b></h1>
-
+        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Search For Animals</b></h1>
         <div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
+        	<div class="d-flex justify-content-between flex-direction: flex-column">
         		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
 	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">	
-	      	<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;"> 
+	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
 	      	</div>
-	    </div>  
-
+	    </div>
+        <form action="{{ url_for('searchAnimals') }}" method="POST">
 		<div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
+        	<div class="d-flex justify-content-between flex-direction: flex-column">
         		<input type="text" class="form-control" id="searchName" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px; margin-bottom: 5px;">
 	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-	      		<div class="dropdown">  
-	      	  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-	      	    Exhibit
-	      	  </button>
-	      	  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-	      	  	<button id="yes" class="dropdown-item" type="button">Pacific</button>
-	      	  	<button id="no" class="dropdown-item" type="button">Jungle</button>
-	      	  	<button id="no" class="dropdown-item" type="button">Sahara</button>
-	      	  	<button id="no" class="dropdown-item" type="button">Birds</button>
-	      	  	</div>
-	      	</div>
-	    </div> 
-    </div>
-
-
+	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <select Exhibit="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-bottom: 5px">
+                    <option value="any">Any Exhibit</option>
+                    <option value="pacific">Pacific</option>
+                    <option value="Email">Jungle</option>
+                    <option value="Email">Sahara</option>
+                    <option value="Email">Birds</option>
+                </select>
+	    	</div>
+    	</div>
 		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
-	      	<div class="d-flex justify-content-between flex-direction: flex-column"> 
+	      	<div class="d-flex justify-content-between flex-direction: flex-column">
 	      		<input type="text" class="form-control" id="searchSpecies" placeholder="Species" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
+	      	</div>
+			<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <select Type="searchopt" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px;">
+                    <option value="any">Any Type</option>
+                    <option value="pacific">Amphibian</option>
+                    <option value="Email">Anthropod</option>
+                    <option value="Email">Bird</option>
+                    <option value="Email">Mammal</option>
+                    <option value="Email">Reptile</option>
+                </select>
+	      	</div>
+		</div>
+		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
+	      	<div class="d-flex justify-content-between flex-direction: flex-column">
+	      		<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;">
 	      	</div>
 	      	<div class="col-lg-6"></div>
 			<div class="col-lg-1">
-	      	<p>Age</p>
+	      	<p>Age (Year)</p>
 	      	</div>
 	      	<div class="col-lg-1"><p>MIN</p>
-	        <select class="1-100" style="width: 70px; height: 35px;"></select> 
+	        <select class="1-100" style="width: 70px; height: 35px;"></select>
 	    	</div>
 	        <div class="col-lg-1"><p>MAX</p>
 			<select class="1-100" style="width: 70px; height: 35px;"></select>
 	      	</div>
 		</div>
-
-		<form class="form-unconfirmed" action="{{ url_for('searchAnimals') }}" method="POST">
+		<div class="d-flex justify-content-between">
+        	<div class="d-flex justify-content-between flex-direction: flex-column">
+	      	</div>
+	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+	    	</div>
+	    </div>
+		</form>
+        <form class="form-unconfirmed" action="{{ url_for('searchAnimals') }}" method="POST">
             <table class="table table-bordered table-hover" id="visTb">
                 <thead class="thead-light">
                     <tr>
@@ -167,14 +179,14 @@ th>.dropdown-toggle:active {
                 </form>
             </div>
         </div>
-	</div>
-</body>
+  	</div>
+    </body>
 </html>
 
 <script type="text/javascript">
 	$(function(){
     var $select = $(".1-100");
-    for (i=1;i<=10000;i++){
+    for (i=1;i<=100;i++){
         $select.append($('<option></option>').val(i).html(i))
     }
 	});
