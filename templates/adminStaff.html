@@ -1,7 +1,7 @@
 <head xmlns="http://www.w3.org/1999/html">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="favicon.ico">
     <title>Atlanta Zoo</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -15,14 +15,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
-
 <html>
 <style media="screen">
 html,
 body {
     height: 100%;
 }
-
 body {
     display: -ms-flexbox;
     display: -webkit-box;
@@ -31,17 +29,14 @@ body {
     padding-bottom: 40px;
     background-color: #e6e6e6;
 }
-
 .form-unconfirmed {
     width: 100%;
     padding: 50px;
     margin: 1 auto;
 }
-
 .form-unconfirmed .checkbox {
     font-weight: 400;
 }
-
 .form-unconfirmed .form-control {
     position: relative;
     box-sizing: border-box;
@@ -49,37 +44,25 @@ body {
     padding: 10px;
     font-size: 16px;
 }
-
 .form-signin .form-control:focus {
     z-index: 2;
 }
-
 .selected {
     background-color: #D3D3D3;
     color: #696969;
 }
-
 #title {
     margin-top: -50px;
 }
-
-.vertical-container {
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-align: center;
-    -ms-flex-pack: center;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    flex-direction: column;
+#search-input{
+  width: 200px;
+  height: 35px;
 }
 </style>
-
 <body>
-    <form class="form-unconfirmed" method="POST">
-        <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><strong>View Staff</strong></h1>
+    <div class = "form-unconfirmed">
+        <form class="form-unconfirmed" action="{{ url_for('adminViewStaffs') }}" method="POST">
+            <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><strong>View Staff</strong></h1>
             <table class="table table-bordered table-hover" id="visTb">
                 <thead class="thead-light">
                     <tr>
@@ -97,53 +80,48 @@ body {
                 {% endfor %}
                 </tbody>
             </table>
+
             <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column"> 
-        </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-            <label for="animalName" class="sr-only">Search</label>
-                <input id="animalName" class="form-control inline-input" placeholder="search" required autofocus> 
-        </div>
-    </div>         
-    <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column"> 
-            <div class="dropdown">  
-              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-                Username
-              </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <button id="pacific" class="dropdown-item" type="button"></button>
-
+                <div class="d-flex justify-content-between flex-direction: flex-column">
                 </div>
-            </div>    
-        </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-            <div class="dropdown">  
-              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-                Email
-              </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                <button id="pacific" class="dropdown-item" type="button"></button>
-
+                <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                        <select name="searchopt" class="btn btn-secondary btn-block">
+                            <option value="Username">Username</option>
+                            <option value="Email">Email</option>
+                        </select>
+                        </div>
+                        <input type="text" class="form-control" name="searchkey" value="" id="search-input" placeholder="Type in Here" aria-label="..." style="height: 40px;">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-secondary btn-block"  name="search">Search</button>
+                        </div>
+                    </div>
                 </div>
-            </div>    
-        </div>
-    </div>                
-    <div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column">
-            <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
-        </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-            <button type="submit" id="delBut" value="" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;" name="delete">Delete Staff</button>
-        </div>
-    </div>  
-    </form>
-    <script type="text/javascript">
-        $("#visTb tr").click(function(){
-            $(this).addClass('selected').siblings().removeClass('selected');
-            document.getElementById('delBut').value = $(this).find('td:first').text()
-        });
-    </script>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between flex-direction: flex-column">
+                    <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+                </div>
+                <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                    <button type="submit" id="delBut" value="" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-left: 20px;" name="delete">Delete Staff</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </body>
 
 </html>
+
+<script type="text/javascript">
+    $("#visTb tr").click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+            document.getElementById('delBut').value = $(this).find('td:first').text()
+    });
+    $('.dropdown-item').click(function() {
+        $('#dropdownMenuButton').text($(this).text());
+        document.getElementById('userSearch').value = $(this).find('userS')
+    });
+    $('th>.dropdown-toggle').on('click', onClick);
+</script>
