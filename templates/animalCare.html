@@ -77,6 +77,7 @@ th>.dropdown-toggle:active {
 }
 </style>
 
+
 <body>
     <div class="form-unconfirmed">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Animal Care</b></h1>
@@ -98,11 +99,10 @@ th>.dropdown-toggle:active {
 
 		<div class="d-flex justify-content-between">
         	<div class="d-flex justify-content-between flex-direction: flex-column"> 
-        		<input type="text" class="form-control" id="note" placeholder="Write Your Note Here" style="width: 500px; text-align: center; height: 200px; margin-top: 20px; margin-bottom: 20px;">
+        		<input type="text" class="form-control" name="thisnote" value="" placeholder="Write Your Note Here" style="width: 500px; text-align: center; height: 200px; margin-top: 20px; margin-bottom: 20px;">
 	      	</div>
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-	      		<button type="button" class="btn btn-secondary btn-block" style="width: 200px; height: 35px; text-align: center; margin-bottom: 50px;">Log Notes</button>
-
+	      		<button type="submit" class="btn btn-secondary btn-block" name="lognote" style="width: 200px; height: 35px; text-align: center; margin-bottom: 50px;">Log Notes</button>
 		    </div> 
 	    </div>
 		</form>
@@ -144,7 +144,6 @@ th>.dropdown-toggle:active {
 
 <script type="text/javascript">
 	$('th>.dropdown-toggle').on('click', onClick);
-
 
 	$("tbody tr").click(function() {
 		$(this).addClass('highlight').siblings().removeClass('highlight');

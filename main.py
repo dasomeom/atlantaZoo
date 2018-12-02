@@ -733,9 +733,64 @@ def animalCare():
     flash(message)
     cursor.execute("SELECT Username, Text, Time FROM NOTE")
     data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'sortStaff' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Username, Text, Time FROM NOTE ORDER BY Name")
+            elif not session['coin']:
+                cursor.execute("SELECT Username, Text, Time FROM NOTE ORDER BY Name DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('animalCare.html', data=data)
+        elif 'sortNote' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Username, Text, Time FROM NOTE ORDER BY Text")
+            elif not session['coin']:
+                cursor.execute("SELECT Username, Text, Time FROM NOTE ORDER BY Text DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('animalCare.html', data=data)
+        elif 'sortTime' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Username, Text, Time FROM NOTE ORDER BY Time")
+            elif not session['coin']:
+                cursor.execute("SELECT Username, Text, Time FROM NOTE ORDER BY Time DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('animalCare.html', data=data)
+        elif 'lognote' in request.form:
+            print request.form
+            print session['username']
+            note_text = request.form['thisnote']
+
+            row = ast.literal_eval(notenote)
+            print row
+            note_name = row['name']
+            note_exh = row['exhibit']
+            note_date = datetime.datetime.now()
+            note_now = note_date.strftime('%Y-%m-%d %H:%M:%S')
+            note_species = row['species']
+            note_age = row['age']
+            note_host = session['username']
+            cursor.execute("SELECT Email FROM staff WHERE Username = %s", (note_host))
+            note_email = cursor.fetchone()[0]
+
+            cursor.execute("SELECT Name, Species FROM NOTE WHERE Name = %s AND Species = %s AND Time = %s AND Username = %s", (note_name, note_species, note_now, note_host))
+            noteHave = len(cursor.fetchall()) == 0
+            if noteHave:
+                cursor.execute("INSERT INTO NOTE (Time, Text, Username, Name, Species, Staff_email) VALUES(%s, %s, %s, %s, %s, %s)", (note_now, note_text, note_host, note_name, note_species, note_email))
+                conn.commit()
+                cursor.close()
+            return redirect(url_for('animalCare'))
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('staffAnimals'))
+        elif 'logout' in request.form:
+            return redirect(url_for('logout'))
     return render_template('animalCare.html', data=data)
-
-
 """
 Visitor page starts here
 """
