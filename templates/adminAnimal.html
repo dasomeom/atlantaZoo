@@ -84,35 +84,35 @@ th>.dropdown-toggle:active {
 <body>
     <div class="form-unconfirmed">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Animals</b></h1>
-
         <div class="d-flex justify-content-between">
         	<div class="d-flex justify-content-between flex-direction: flex-column"> 
         		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
 	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">	
-	      	<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;"> 
+	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+				<form action="{{ url_for('adminViewAnimals') }}" method="POST">
+                    <button type="submit" id="delBut" value="" class="btn btn-secondary" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;" name="delete">Remove Animal</button>
+                </form>
 	      	</div>
-	    </div>  
-
+	    </div>
+        <form action="{{ url_for('adminViewAnimals') }}" method="POST">
 		<div class="d-flex justify-content-between">
         	<div class="d-flex justify-content-between flex-direction: flex-column"> 
         		<input type="text" class="form-control" id="searchName" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px; margin-bottom: 5px;">
 	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-	      		<div class="dropdown">  
-	      	  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-	      	    Exhibit
-	      	  </button>
-	      	  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-	      	  	<button id="pacific" class="dropdown-item" type="button">Pacific</button>
-	      	  	<button id="jungle" class="dropdown-item" type="button">Jungle</button>
-	      	  	<button id="sahara" class="dropdown-item" type="button">Sahara</button>
-	      	  	<button id="birds" class="dropdown-item" type="button">Birds</button>
-	      	  	</div>
-	      	</div>
-	    </div> 
-
-    </div>
+	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+					<div class="dropdown">
+						<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
+						Exhibit
+				  		</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+						<button id="pacific" class="dropdown-item" type="button">Pacific</button>
+						<button id="jungle" class="dropdown-item" type="button">Jungle</button>
+						<button id="sahara" class="dropdown-item" type="button">Sahara</button>
+						<button id="birds" class="dropdown-item" type="button">Birds</button>
+						</div>
+	      			</div>
+	    	</div>
+    	</div>
 		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
 	      	<div class="d-flex justify-content-between flex-direction: flex-column"> 
 	      		<input type="text" class="form-control" id="searchSpecies" placeholder="Species" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
@@ -134,9 +134,7 @@ th>.dropdown-toggle:active {
 		</div>
 		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
 	      	<div class="d-flex justify-content-between flex-direction: flex-column">
-                <form action="{{ url_for('adminViewAnimals') }}" method="POST">
-                    <button type="submit" id="delBut" value="" class="btn btn-secondary" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;" name="delete">Remove Animal</button>
-                </form>
+	      		<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;">
 	      	</div>
 	      	<div class="col-lg-6"></div>
 			<div class="col-lg-1">
@@ -150,13 +148,12 @@ th>.dropdown-toggle:active {
 	      	</div>
 		</div>
 		<div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
+        	<div class="d-flex justify-content-between flex-direction: flex-column">
 	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-	      		
-
+	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
 	    	</div> 
 	    </div>
+        </form>
         <form class="form-unconfirmed" action="{{ url_for('adminViewAnimals') }}" method="POST">
             <table class="table table-bordered table-hover" id="visTb">
                 <thead class="thead-light">
@@ -181,19 +178,20 @@ th>.dropdown-toggle:active {
                 </tbody>
             </table>
         </form>
-	<div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column">
-            <form action="{{ url_for('adminViewAnimals') }}" method="POST">
-                <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
-            </form>
-        </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-            <form action="{{ url_for('adminViewAnimals') }}" method="POST">
-                <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
-            </form>
-  	    </div>
-
-    </body>
+		<div class="d-flex justify-content-between">
+			<div class="d-flex justify-content-between flex-direction: flex-column">
+				<form action="{{ url_for('adminViewAnimals') }}" method="POST">
+					<button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+				</form>
+			</div>
+			<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+				<form action="{{ url_for('adminViewAnimals') }}" method="POST">
+					<button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
 </html>
 
 <script type="text/javascript">
