@@ -811,7 +811,7 @@ def visitorHome():
             elif 'searchShow' in request.form:
                 return redirect(url_for('searchShows'))
             elif 'viewExHis' in request.form:
-                return redirect(url_for('adminViewShows'))
+                return redirect(url_for('exhibitHistory'))
             elif 'viewShHis' in request.form:
                 return redirect(url_for('showHistory'))
             elif 'searchAnimal' in request.form:
@@ -1048,11 +1048,91 @@ def searchShows():
 def showHistory():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT Shows_name, Time FROM visit_show WHERE Visitor_username = %s", (session['username']))
+    cursor.execute("SELECT shows.Name, shows.Located_at, shows.Date_and_time "
+                   "FROM (SELECT Shows_name, Time FROM visit_show WHERE visit_show.Visitor_username = %s) as foo "
+                   "JOIN shows ON shows.Name = foo.Shows_name AND shows.Date_and_time = foo.Time;", (session['username']))
     data = cursor.fetchall()
-    print data
+    if request.method == 'POST':
+        if 'sortName' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT shows.Name, shows.Located_at, shows.Date_and_time "
+                               "FROM (SELECT Shows_name, Time FROM visit_show WHERE visit_show.Visitor_username = %s) as foo "
+                               "JOIN shows ON shows.Name = foo.Shows_name AND shows.Date_and_time = foo.Time "
+                               "ORDER BY shows.Name;",(session['username']))
+            elif not session['coin']:
+                cursor.execute("SELECT shows.Name, shows.Located_at, shows.Date_and_time "
+                               "FROM (SELECT Shows_name, Time FROM visit_show WHERE visit_show.Visitor_username = %s) as foo "
+                               "JOIN shows ON shows.Name = foo.Shows_name AND shows.Date_and_time = foo.Time "
+                               "ORDER BY shows.Name DESC;", (session['username']))
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('showHistory.html', data=data)
+        elif 'sortExhibit' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT shows.Name, shows.Located_at, shows.Date_and_time "
+                               "FROM (SELECT Shows_name, Time FROM visit_show WHERE visit_show.Visitor_username = %s) as foo "
+                               "JOIN shows ON shows.Name = foo.Shows_name AND shows.Date_and_time = foo.Time "
+                               "ORDER BY shows.Located_at;",(session['username']))
+            elif not session['coin']:
+                cursor.execute("SELECT shows.Name, shows.Located_at, shows.Date_and_time "
+                               "FROM (SELECT Shows_name, Time FROM visit_show WHERE visit_show.Visitor_username = %s) as foo "
+                               "JOIN shows ON shows.Name = foo.Shows_name AND shows.Date_and_time = foo.Time "
+                               "ORDER BY shows.Located_at DESC;", (session['username']))
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('showHistory.html', data=data)
+        elif 'sortTime' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT shows.Name, shows.Located_at, shows.Date_and_time "
+                               "FROM (SELECT Shows_name, Time FROM visit_show WHERE visit_show.Visitor_username = %s) as foo "
+                               "JOIN shows ON shows.Name = foo.Shows_name AND shows.Date_and_time = foo.Time "
+                               "ORDER BY shows.Date_and_time;", (session['username']))
+            elif not session['coin']:
+                cursor.execute("SELECT shows.Name, shows.Located_at, shows.Date_and_time "
+                               "FROM (SELECT Shows_name, Time FROM visit_show WHERE visit_show.Visitor_username = %s) as foo "
+                               "JOIN shows ON shows.Name = foo.Shows_name AND shows.Date_and_time = foo.Time "
+                               "ORDER BY shows.Date_and_time DESC;", (session['username']))
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('showHistory.html', data=data)
+        elif 'search' in request.form:
+            exh_option = request.form['searchopt']
+            search_name = request.form['searchname']
+            show_date = request.form['datetime']
+            if exh_option == 'any':
+                exh_option = None
+            if search_name == '':
+                search_name = None
+            else:
+                search_name = "%" + search_name + "%"
+            if show_date == '':
+                show_date = None
+            else:
+                show_date = datetime.datetime.strptime(show_date, '%Y-%m-%d')
+            cursor.execute("SELECT * FROM "
+                           "(SELECT shows.Name, shows.Located_at, shows.Date_and_time "
+                           "FROM (SELECT Shows_name, Time FROM visit_show "
+                           "WHERE visit_show.Visitor_username = %s) as foo "
+                           "JOIN shows ON shows.Name = foo.Shows_name AND shows.Date_and_time = foo.Time) as boo "
+                           "WHERE (%s IS NULL OR Name LIKE %s) AND (%s IS NULL OR Located_at = %s) "
+                           "AND (%s IS NULL OR DATE(Date_and_time) = %s)", (session['username'], search_name, search_name, exh_option, exh_option, show_date, show_date))
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('showHistory.html', data=data)
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('visitorHome'))
+        elif 'logout' in request.form:
+            return redirect(url_for('logout'))
+    return render_template('showHistory.html', data=data)
 
-    return render_template('showHistory.html')
+@app.route('/exhibithistory', methods=['GET', 'POST'])
+def exhibitHistory():
+
+    return render_template('exhibitHistory.html')
 
 
 """
