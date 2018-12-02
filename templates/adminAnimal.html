@@ -217,7 +217,6 @@ th>.dropdown-toggle:active {
 		} else if (str == 'reptile') {
 			$('#dropdownMenuButton2').text('Type: Reptile');
 		}
-
 	});
 	$('th>.dropdown-toggle').on('click', onClick);
 	$("tbody tr").click(function() {
@@ -228,6 +227,22 @@ th>.dropdown-toggle:active {
 		$('#idSelector').val(id);
 		// $(this).addClass('bg-info').siblings().removeClass('bg-info');
 	});
+<<<<<<< HEAD
+=======
+	function onClick(e) {
+		var th = $(e.target).parent();
+		var col = th.text();
+		var table = $(th).parents('table').eq(0);
+    	var rows = table.find('tr:gt(0)').toArray().sort(compare($(th).index()));
+    	this.asc = !this.asc;
+		if (!this.asc) {
+			rows = rows.reverse();
+		}
+    	for (var i = 0; i < rows.length; i++) {
+    		table.append(rows[i]);
+    	}
+	}
+>>>>>>> ce731281451efd767f10516ed2399d1270c59e5e
 
 	function getCellValue(row, index){
 		return $(row).children('td').eq(index).text();

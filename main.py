@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash, session
+from flask import Flask, request, render_template, redirect, url_for, flash, session, Markup
 from flaskext.mysql import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 import ast
@@ -605,6 +605,136 @@ def staffShow():
             return logout()
     cursor.close()
     return render_template('staffshow.html', data=data)
+
+
+"""
+Staff Animal page starts here
+"""
+
+@app.route('/staffAnimals', methods=['GET', 'POST'])
+def staffAnimals():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal")
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'sortName' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Name")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Name DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('staffAnimals.html', data=data)
+        elif 'sortSpecies' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Species")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Species DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('staffAnimals.html', data=data)
+        elif 'sortExhibit' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Exhibit")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Exhibit DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('staffAnimals.html', data=data)
+        elif 'sortAge' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Age")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Age DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('staffAnimals.html', data=data)
+        elif 'sortType' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Type")
+                session['coin'] = False
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal ORDER BY Type DESC")
+                session['coin'] = True
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('staffAnimals.html', data=data)
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('staffHome'))
+        elif 'search' in request.form:
+            exh_option = request.form['exhopt']
+            type_option = request.form['typeopt']
+            search_name = request.form['searchname']
+            search_spec = request.form['searchspec']
+            max_age = int(request.form['max'])
+            min_age = int(request.form['min'])
+            if exh_option == 'anyExh':
+                exh_option = None
+            if type_option == 'anyType':
+                type_option = None
+            if search_name == '':
+                search_name = None
+            else:
+                search_name = "%" + search_name + "%"
+            if search_spec == '':
+                search_spec = None
+            else:
+                search_spec = "%" + search_spec + "%"
+            if max_age == 0 and min_age == 0:
+                max_age = None
+                min_age = None
+            elif max_age == 0 and min_age > 0:
+                max_age = None
+            elif max_age > 0 and min_age == 0:
+                min_age = None
+            cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal WHERE"
+                           + " (%s IS NULL OR Name LIKE %s) AND (%s IS NULL OR Species LIKE %s) "
+                           + "AND (%s IS NULL OR Exhibit = %s) AND (%s IS NULL OR Age >= %s) "
+                           + "AND (%s IS NULL OR Age <= %s) AND (%s IS NULL OR Type = %s)",
+                           (search_name, search_name, search_spec, search_spec, exh_option, exh_option, min_age, min_age, max_age, max_age, type_option, type_option))
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('staffAnimals.html', data=data)
+        elif 'takenote' in request.form:
+            ani_row = request.form['takenote']
+            if ani_row == '':
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal")
+                data = cursor.fetchall()
+                cursor.close()
+                return render_template('staffAnimals.html', data=data)
+            else:
+                session['notenote'] = ani_row
+                return redirect(url_for('animalCare'))
+        elif 'logout' in request.form:
+            cursor.close()
+            return logout()
+        cursor.close()
+    return render_template('staffAnimals.html', data=data)
+
+"""
+Staff-- Animal Care page starts here
+"""
+@app.route('/animalCare', methods=['GET', 'POST'])
+def animalCare():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    notenote = session['notenote']
+    message = Markup(str(notenote))
+    flash(message)
+    cursor.execute("SELECT Username, Text, Time FROM NOTE")
+    data = cursor.fetchall()
+    return render_template('animalCare.html', data=data)
+
 
 """
 Visitor page starts here
