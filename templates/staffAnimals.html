@@ -1,7 +1,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="favicon.ico"">
+    <link rel="icon" href="favicon.ico">
     <title>Atlanta Zoo</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -84,11 +84,10 @@ th>.dropdown-toggle:active {
         	<div class="d-flex justify-content-between flex-direction: flex-column"> 
         		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
 	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">	
-	      	<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;"> 
+	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
 	      	</div>
 	    </div>  
-
+        <form action="{{ url_for('staffAnimals') }}" method="POST">
 		<div class="d-flex justify-content-between">
         	<div class="d-flex justify-content-between flex-direction: flex-column"> 
         		<input type="text" class="form-control" id="searchName" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px; margin-bottom: 5px;">
@@ -128,52 +127,66 @@ th>.dropdown-toggle:active {
 	      	  	</div>
 	      	</div>
 		</div>
-
-		<table class="table table-bordered table-hover">
-	            <thead class="thead-light">
-	                <tr>
-	                	<!-- onclick="sort(document.getElementById('sortName').value) -->
-	                  <th scope="col">Name<button id="sortName" class="btn dropdown-toggle float-right" type="button" ></button></th>
-	                  <th scope="col">Species<button id="sortSpecies" class="btn dropdown-toggle float-right" type="button"></button></th>
-	                  <th scope="col">Exhibit<button id="sortExhibit" class="btn dropdown-toggle float-right" type="button"></button></th>
-	                  <th scope="col">Age<button id="sortAge" class="btn dropdown-toggle float-right" type="button"></button></th>
-	                  <th scope="col">Type<button id="sortType" class="btn dropdown-toggle float-right" type="button"></button></th>
-	                
-	                </tr>
-	            </thead>
-	              <tr>
-	                <td scope="row">Nemo</td>
-	                <td>Clownfish</td>
-	                <td>Pacific</td>
-	                <td>1</td>
-	                <td>Fish</td>
-	              </tr>
-	              <tr>
-	                <td scope="row">Jungle</td>
-	                <td>Goldfish</td>
-	                <td>Pacific</td>
-	                <td>2</td>
-	                <td>Fish</td>
-	              </tr>
-	           
-	            </tbody>
-	        </table>
-	<div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column">
-            <a id="logout" class="btn btn-secondary" href="./Login.html"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Back</a>
+		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
+	      	<div class="d-flex justify-content-between flex-direction: flex-column">
+	      		<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;">
+	      	</div>
+	      	<div class="col-lg-6"></div>
+			<div class="col-lg-1">
+	      	<p>Age</p>
+	      	</div>
+	      	<div class="col-lg-1"><p>MIN</p>
+	        <select class="1-100" style="width: 70px; height: 35px;"></select>
+	    	</div>
+	        <div class="col-lg-1"><p>MAX</p>
+			<select class="1-100" style="width: 70px; height: 35px;"></select>
+	      	</div>
+		</div>
+		</form>
+        <form class="form-unconfirmed" action="{{ url_for('staffAnimals') }}" method="POST">
+            <table class="table table-bordered table-hover" id="visTb">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Species<button name="sortSpecies" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Exhibit<button name="sortExhibit" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Age<button name="sortAge" class="btn dropdown-toggle float-right"></button></th>
+                        <th scope="col">Type<button name="sortType" class="btn dropdown-toggle float-right"></button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in data %}
+                    <tr>
+                        <td scope="row">{{item[0]}}</td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                        <td>{{item[4]}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+        <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between flex-direction: flex-column">
+                    <form action="{{ url_for('staffAnimals') }}" method="POST">
+                        <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+                    </form>
+                </div>
+                <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                    <form action="{{ url_for('staffAnimals') }}" method="POST">
+                        <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
+                    </form>
+                </div>
         </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-            <a id="logout" class="btn btn-light" href="./Login.html"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Logout</a>
-        </div>
-  	</div>	
-
+  	</div>
     </body>
 </html>
 
 <script type="text/javascript">
 	$(function(){
     var $select = $(".1-100");
-    for (i=1;i<=10000;i++){
+    for (i=0;i<=100;i++){
         $select.append($('<option></option>').val(i).html(i))
     }
 	});
