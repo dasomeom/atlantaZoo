@@ -71,6 +71,10 @@ th>.dropdown-toggle:active {
 .table tbody tr.highlight td {
     background-color: #ddd;
 }
+.selected {
+    background-color: #D3D3D3;
+    color: #696969;
+}
 
 .hiddenField {
     display: none;
@@ -265,10 +269,4 @@ th>.dropdown-toggle:active {
         $(this).addClass('selected').siblings().removeClass('selected');
             document.getElementById('delBut').value = $(this).find('td:first').text()
     });
-    $('.dropdown-item').click(function() {
-        $('#dropdownMenuButton').text($(this).text());
-        document.getElementById('userSearch').value = $(this).find('userS')
-    });
-    $('th>.dropdown-toggle').on('click', onClick);
-
 </script>
