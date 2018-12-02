@@ -28,9 +28,9 @@ def login():
     elif request.method == 'POST' and 'login' in request.form:
         validated = loginHelper(request.form)
         if validated == 0:
-            return render_template('visitorHomes.html')
+            return redirect(url_for('visitorHome'))
         elif validated == 1:
-            return render_template('staffhome.html')
+            return redirect(url_for('staffHome'))
         elif validated == 2:
             return redirect(url_for('adminHome'))
         else:
@@ -142,7 +142,7 @@ def adminHome():
     cursor = conn.cursor()
     admin_name = session['username']
     cursor.execute("SELECT Username FROM admins WHERE Username = %s", (admin_name))
-    isAdmin = len(cursor.fetchone()) > 0
+    isAdmin = cursor.fetchone()
     cursor.close()
     if not isAdmin:
         return redirect(url_for('login'))
@@ -215,8 +215,6 @@ def adminViewVisitors():
             data = cursor.fetchall()
             cursor.close()
             return render_template('adminVisitor.html', data=data)
-        elif 'logOut' in request.form:
-            return redirect(url_for('logout'))
     cursor.close()
     return render_template('adminVisitor.html', data=data)
 
@@ -608,6 +606,81 @@ def staffShow():
     cursor.close()
     return render_template('staffshow.html', data=data)
 
+"""
+Visitor page starts here
+"""
+@app.route('/visitorhome', methods=['GET', 'POST'])
+def visitorHome():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    visitor_name = session['username']
+    cursor.execute("SELECT Username FROM visitors WHERE Username = %s", (visitor_name))
+    isVisitor = cursor.fetchone()
+    cursor.close()
+    if not isVisitor:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        if request.method == 'POST':
+            if 'searchExhibit' in request.form:
+                return redirect(url_for('visitorSearchExh'))
+            elif 'searchShow' in request.form:
+                return redirect(url_for('adminViewStaffs'))
+            elif 'viewExHis' in request.form:
+                return redirect(url_for('adminViewShows'))
+            elif 'viewShHis' in request.form:
+                return redirect(url_for('adminViewAnimals'))
+            elif 'searchAnimal' in request.form:
+                return redirect(url_for('adminAddAnimals'))
+            elif 'logOut' in request.form:
+                return redirect(url_for('logout'))
+    return render_template('visitorHome.html')
+
+
+@app.route('/visistorsearchexhibit', methods=['GET', 'POST'])
+def visitorSearchExh():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit")
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'sortName' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Name")
+            elif not session['coin']:
+                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Name DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchExhibit.html', data=data)
+        elif 'sortSize' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Size")
+            elif not session['coin']:
+                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Size DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchExhibit.html', data=data)
+        elif 'sortNumber' in request.form:
+            a=3
+        elif 'sortWater' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Water_Feature")
+            elif not session['coin']:
+                cursor.execute("SELECT Size, Water_Feature, Name FROM exhibit ORDER BY Water_Feature DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('searchExhibit.html', data=data)
+
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('visitorHome'))
+        elif 'logout' in request.form:
+            return redirect(url_for('logout'))
+    return render_template('searchExhibit.html', data=data)
+
+
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -615,6 +688,7 @@ def logout():
     session.clear()
     if request.method == 'POST' and 'toLog' in request.form:
         return redirect(url_for('login'))
+
     return render_template('logout.html')
 
 if __name__ == '__main__':
