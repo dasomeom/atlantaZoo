@@ -15,14 +15,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
-
 <html>
 <style media="screen">
 html,
 body {
     height: 100%;
 }
-
 body {
     display: -ms-flexbox;
     display: -webkit-box;
@@ -31,17 +29,14 @@ body {
     padding-bottom: 40px;
     background-color: #e6e6e6;
 }
-
 .form-unconfirmed {
     width: 100%;
     padding: 50px;
     margin: 0 auto;
 }
-
 .form-unconfirmed .checkbox {
     font-weight: 400;
 }
-
 .form-unconfirmed .form-control {
     position: relative;
     box-sizing: border-box;
@@ -49,28 +44,20 @@ body {
     padding: 10px;
     font-size: 16px;
 }
-
-
 .selected {
     background-color: #D3D3D3;
     color: #696969;
 }
-
 #title {
     margin-top: -50px;
 }
-
-
-
 #search-input{
   width: 200px;
   height: 35px;
 }
-
 </style>
-
 <body>
-    <div class="form-unconfirmed">
+    <form class="form-unconfirmed" action="{{ url_for('adminViewStaffs') }}" method="POST">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><strong>View Visitor</strong></h1>
             <form class="form-adminvisitor" action="{{ url_for('adminVisitor') }}" method="POST">
                 <table class="table table-bordered table-hover" id="visTb">
@@ -109,11 +96,8 @@ body {
                     </div>
                  </div><!-- /btn-group -->
                 <input type="text" class="form-control" id="search-input" placeholder="Type in Here" aria-label="...">
-<<<<<<< HEAD
                 <button type="submit" value="" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="delete">Search</button>
-=======
                 <button type="submit" id="search" value="" class="btn btn-secondary btn-block" style="width: 70px; text-align: center; height: 35px;" name="search">Search</button>
->>>>>>> a95ac9abb70223131238365b0ba4fd875d4095d0
             </div><!-- /input-group -->
         </div>
     </div>
@@ -129,7 +113,7 @@ body {
                 </form>
             </div>
         </div>
-    </div>
+    </form>
 </body>
 
 </html>
@@ -139,10 +123,8 @@ body {
         $(this).addClass('selected').siblings().removeClass('selected');
             document.getElementById('delBut').value = $(this).find('td:first').text()
     });
-
     $('.dropdown-item').click(function() {
         $('#dropdownMenuButton').text($(this).text());
     });
-
     $('th>.dropdown-toggle').on('click', onClick);
-</script>    
+</script>
