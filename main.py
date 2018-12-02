@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash, session
+from flask import Flask, request, render_template, redirect, url_for, flash, session, Markup
 from flaskext.mysql import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 import ast
@@ -670,7 +670,7 @@ def staffAnimals():
             return render_template('staffAnimals.html', data=data)
         elif 'back' in request.form:
             cursor.close()
-            return redirect(url_for('staffAnimals'))
+            return redirect(url_for('staffHome'))
         elif 'search' in request.form:
             exh_option = request.form['exhopt']
             type_option = request.form['typeopt']
@@ -705,17 +705,35 @@ def staffAnimals():
             data = cursor.fetchall()
             cursor.close()
             return render_template('staffAnimals.html', data=data)
+        elif 'takenote' in request.form:
+            ani_row = request.form['takenote']
+            if ani_row == '':
+                cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal")
+                data = cursor.fetchall()
+                cursor.close()
+                return render_template('staffAnimals.html', data=data)
+            else:
+                session['notenote'] = ani_row
+                return redirect(url_for('animalCare'))
         elif 'logout' in request.form:
             cursor.close()
             return logout()
-    cursor.close()
+        cursor.close()
     return render_template('staffAnimals.html', data=data)
 
-
-
-
-
-
+"""
+Staff-- Animal Care page starts here
+"""
+@app.route('/animalCare', methods=['GET', 'POST'])
+def animalCare():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    notenote = session['notenote']
+    message = Markup(str(notenote))
+    flash(message)
+    cursor.execute("SELECT Username, Text, Time FROM NOTE")
+    data = cursor.fetchall()
+    return render_template('animalCare.html', data=data)
 
 
 """

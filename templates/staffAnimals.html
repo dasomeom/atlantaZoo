@@ -79,6 +79,7 @@ th>.dropdown-toggle:active {
 	      	</div>
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
 				<form action="{{ url_for('staffAnimals') }}" method="POST">
+                    <button type="submit" id="delBut" value="" class="btn btn-secondary" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;" name="takenote">Animal Care</button>
                 </form>
 	      	</div>
 	    </div>
@@ -195,6 +196,7 @@ th>.dropdown-toggle:active {
         n.type = $(this).find('td:nth-child(5)').text();
             document.getElementById('delBut').value = JSON.stringify(n)
     });
+
 	$('.dropdown-item').click(function() {
 		var str = this.id;
 		if (str == 'jungle') {

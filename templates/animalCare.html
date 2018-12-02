@@ -89,29 +89,12 @@ th>.dropdown-toggle:active {
 	    </div>
 		<form action="{{ url_for('animalCare') }}" method="POST">
 	    <div class="row">
-			<div class="col-1"><label class="row-label col-1 col-form-label"><b>Name: </b></label></div>
-			<div class="col-1">
-          		<label class="form-control-plaintext"> Nemo </label>
-        	</div>
-			<div class="col-1"><label class="row-label col-2 col-form-label"><b>Species: </b></label></div>
-			<div class="col-1">
-          		<label class="form-control-plaintext"> Clownfish </label>
-        	</div>
-			<div class="col-1"><label class="row-label col-2 col-form-label"><b>Age: </b></label></div>
-        	<div class="col-1-sm"><label class="row-label col-1 col-form-label"><b>1</b></label></div>
-			<div class="col-1">
-          		<label class="form-control-plaintext"> month </label>
-        	</div>
-        	<div class="col-1"><label class="row-label col-2 col-form-label"><b>Exhibit: </b></label></div>
-			<div class="col-1">
-          		<label class="form-control-plaintext">Pacific</label>
-        	</div>
-        	<div class="col-1"><label class="row-label col-2 col-form-label"><b>Type: </b></label></div>
-			<div class="col-1">
-          		<label class="form-control-plaintext">Fish</label>
-        	</div>
-
-	    </div>    
+			<div class="flashes">
+              {% for message in get_flashed_messages() %}
+                {{ message }}
+              {% endfor %}
+            </div>
+        </div>
 
 		<div class="d-flex justify-content-between">
         	<div class="d-flex justify-content-between flex-direction: flex-column"> 
