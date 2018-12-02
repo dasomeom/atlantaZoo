@@ -83,7 +83,7 @@ body {
 	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
             </div>
 	    </div>
-        <form action="{{ url_for('staffShows') }}" method="POST">
+        <form action="{{ url_for('staffShow') }}" method="POST">
             <table class="table table-bordered table-hover">
                 <thead class="thead-light">
                     <tr>
@@ -105,12 +105,12 @@ body {
         </form>
         <div class="d-flex justify-content-between">
                 <div class="d-flex justify-content-between flex-direction: flex-column">
-                    <form action="{{ url_for('adminViewShows') }}" method="POST">
+                    <form action="{{ url_for('staffShow') }}" method="POST">
                         <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
                     </form>
                 </div>
                 <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-                    <form action="{{ url_for('adminViewShows') }}" method="POST">
+                    <form action="{{ url_for('staffShow') }}" method="POST">
                         <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
                     </form>
                 </div>
@@ -121,7 +121,4 @@ body {
 
 </html>
 <script type="text/javascript">
-$('.dropdown-item').click(function() {
-    $('#dropdownMenuButton').text('Search by: ' + $(this).text());
-});
 </script>
