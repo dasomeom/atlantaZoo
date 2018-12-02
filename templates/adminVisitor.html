@@ -15,6 +15,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 
 <html>
@@ -63,19 +65,11 @@ body {
 #title {
     margin-top: -50px;
 }
-
-.vertical-container {
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-align: center;
-    -ms-flex-pack: center;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    flex-direction: column;
+#search-input{
+  width: 200px;
+  height: 35px;
 }
+
 </style>
 
 <body>
@@ -99,36 +93,29 @@ body {
                 {% endfor %}
                 </tbody>
             </table>
-        <div class="d-flex justify-content-between">
-            <div class="d-flex justify-content-between flex-direction: flex-column"> 
-            </div>
-            <div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-                <div class="dropdown">  
-              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px; margin-top: 5px; margin-bottom: 5px;">
-                Option
-              </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <button id="pacific" class="dropdown-item" type="button"></button>
-                <button id="jungle" class="dropdown-item" type="button">Username</button>
-                <button id="sahara" class="dropdown-item" type="button">Email</button>
-                </div>
-            </div>
-        </div> 
-        </div>    
-     <div class="form-group" style="display:inline;">
-          <div class="input-group"> 
-            <div class="input-group-btn">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-chevron-down"></span></button>
-              <ul class="dropdown-menu">
-                <li><a href="#"></a></li>
-                <li><a href="#">Username</a></li>
-                <li><a href="#">Email</a></li>
-              </ul>
-            </div>
-            <input type="text" class="form-control" placeholder="What are searching for?">
-            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span> </span>
-          </div>
-        </div>       
+
+    <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between flex-direction: flex-column">
+        </div>
+        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100px; height: 35px;>Option
+                        <span class="caret"></span></button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button id="None" class="dropdown-item" type="button"></button>
+                        <button id="username" class="dropdown-item" type="button">Username</button>
+                        <button id="email" class="dropdown-item" type="button">Email</button>
+                        </div>
+                    </div>
+                 </div><!-- /btn-group -->
+                <input type="text" class="form-control" id="search-input" placeholder="Search" aria-label="...">
+            </div><!-- /input-group -->
+        </div>
+    </div>     
+
+
     <div class="d-flex justify-content-between">
         <div class="d-flex justify-content-between flex-direction: flex-column">
             <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
@@ -138,13 +125,20 @@ body {
         </div>
     </div>
     </form>
-    <script type="text/javascript">
-        $("#visTb tr").click(function(){
-            $(this).addClass('selected').siblings().removeClass('selected');
-            document.getElementById('delBut').value = $(this).find('td:first').text()
-        });
-    </script>
+
 </body>
 
 </html>
 
+<script type="text/javascript">
+    $("#visTb tr").click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+            document.getElementById('delBut').value = $(this).find('td:first').text()
+    });
+
+    $('.dropdown-item').click(function() {
+        $('#dropdownMenuButton').text($(this).text());
+    });
+
+    $('th>.dropdown-toggle').on('click', onClick);
+</script>    
