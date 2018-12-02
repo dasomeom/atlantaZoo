@@ -289,20 +289,20 @@ def adminViewShows():
             data = cursor.fetchall()
             cursor.close()
             return render_template('adminShow.html', data=data)
-        elif 'sortExhibit' in request.form:
-            if session['coin']:
-                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Located_at")
-            elif not session['coin']:
-                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Located_at DESC")
-            session['coin'] = not session['coin']
-            data = cursor.fetchall()
-            cursor.close()
-            return render_template('adminShow.html', data=data)
         elif 'sortTime' in request.form:
             if session['coin']:
                 cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Date_and_time")
             elif not session['coin']:
                 cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Date_and_time DESC")
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminShow.html', data=data)
+        elif 'sortNumVisit' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Located_at")
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Located_at DESC")
             session['coin'] = not session['coin']
             data = cursor.fetchall()
             cursor.close()
@@ -1185,7 +1185,7 @@ def showHistory():
 def exhibitHistory():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
+    cursor.execute("SELECT Name, Datetime, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
                    "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
                    "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY count", (session['username']))
     data = cursor.fetchall()
