@@ -513,7 +513,6 @@ def adminAddShow():
     exhdata = cursor.fetchall()
     if request.method == 'POST':
         if 'addshow' in request.form:
-            print request.form
             name = request.form['showname']
             aniexh = request.form['aniexh']
             staff = request.form['staff']
@@ -554,7 +553,7 @@ def staffHome():
             return redirect(url_for('staffShow'))
         elif 'staffAnimals' in request.form:
             return redirect(url_for('staffAnimals'))
-        elif 'logOut' in request.form:
+        elif 'staffLogout' in request.form:
             return redirect(url_for('logout'))
     return render_template('staffhome.html')
 
@@ -572,27 +571,27 @@ def staffShow():
     if request.method == 'POST':
         if 'sortName' in request.form:
             if session['coin']:
-                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Name")
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows WHERE Host = %s ORDER BY Name", (staff_name))
             elif not session['coin']:
-                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Name DESC")
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows WHERE Host = %s ORDER BY Name DESC", (staff_name))
             session['coin'] = not session['coin']
             data = cursor.fetchall()
             cursor.close()
             return render_template('staffshow.html', data=data)
         elif 'sortExhibit' in request.form:
             if session['coin']:
-                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Located_at")
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows WHERE Host = %s ORDER BY Located_at", (staff_name))
             elif not session['coin']:
-                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Located_at DESC")
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows WHERE Host = %s ORDER BY Located_at DESC", (staff_name))
             session['coin'] = not session['coin']
             data = cursor.fetchall()
             cursor.close()
             return render_template('staffshow.html', data=data)
         elif 'sortTime' in request.form:
             if session['coin']:
-                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Date_and_time")
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows WHERE Host = %s ORDER BY Date_and_time", (staff_name))
             elif not session['coin']:
-                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows ORDER BY Date_and_time DESC")
+                cursor.execute("SELECT Name, Date_and_time, Located_at FROM shows WHERE Host = %s ORDER BY Date_and_time DESC", (staff_name))
             session['coin'] = not session['coin']
             data = cursor.fetchall()
             cursor.close()
@@ -707,7 +706,7 @@ def staffAnimals():
             return render_template('staffAnimals.html', data=data)
         elif 'takenote' in request.form:
             ani_row = request.form['takenote']
-            if ani_row == '':
+            if len(ani_row) == 0:
                 cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal")
                 data = cursor.fetchall()
                 cursor.close()
@@ -762,12 +761,9 @@ def animalCare():
             cursor.close()
             return render_template('animalCare.html', data=data)
         elif 'lognote' in request.form:
-            print request.form
-            print session['username']
             note_text = request.form['thisnote']
 
             row = ast.literal_eval(notenote)
-            print row
             note_name = row['name']
             note_exh = row['exhibit']
             note_date = datetime.datetime.now()
@@ -934,7 +930,6 @@ def visitorSearchExh():
                 max_num = None
             elif max_num > 0 and min_num == '':
                 min_num = None
-
             cursor.execute("SELECT Size, Water_Feature, Name, num FROM "
                            "(SELECT exhibit.*, COUNT(animal.Exhibit) as num "
                            "FROM exhibit LEFT JOIN animal ON exhibit.Name = animal.Exhibit "
@@ -945,12 +940,69 @@ def visitorSearchExh():
                            (searchkey, searchkey, hasWater, hasWater, min_size, min_size, max_size, max_size, min_num, min_num, max_num, max_num))
             data = cursor.fetchall()
             return render_template('searchExhibit.html', data=data, exhdata=exhdata)
+        elif 'takenote' in request.form:
+            exh_row = request.form['takenote']
+            if len(exh_row) == 0:
+                cursor.execute("SELECT exhibit.*, COUNT(animal.Exhibit) "
+                               "FROM exhibit "
+                               "LEFT JOIN animal "
+                               "ON exhibit.Name = animal.Exhibit "
+                               "GROUP BY exhibit.Name")
+                data = cursor.fetchall()
+                cursor.close()
+                return render_template('searchExhibit.html', data=data, exhdata=exhdata)
+            else:
+                session['exhnote'] = exh_row
+                return redirect(url_for('detailExhibit'))
         elif 'back' in request.form:
             cursor.close()
             return redirect(url_for('visitorHome'))
         elif 'logout' in request.form:
+            cursor.close()
             return redirect(url_for('logout'))
+    cursor.close()
     return render_template('searchExhibit.html', data=data, exhdata=exhdata)
+
+@app.route('/detailexh', methods=['GET', 'POST'])
+def detailExhibit():
+    data = session['exhnote']
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    exhdet = ast.literal_eval(data)
+    if len(exhdet) != 5:
+        cursor.close()
+        return redirect(url_for('visitorSearchExh'))
+    hasWater = exhdet['age']
+    if hasWater == 1:
+        hasWater = 'Yes'
+    elif hasWater == 0:
+        hasWater = 'No'
+    numAni = exhdet['exhibit']
+    name = exhdet['name']
+    size = exhdet['species']
+    if request.method == 'POST':
+        if 'log' in request.form:
+            note_date = datetime.datetime.now()
+            note_now = note_date.strftime('%Y-%m-%d %H:%M:%S')
+            cursor.execute("SELECT Email FROM visitors WHERE Username = %s", (session['username']))
+            email = cursor.fetchone()[0]
+
+            cursor.execute("SELECT Datetime, Exhibit_name, Visitor_username FROM visit_exhibit "
+                           "WHERE Datetime = %s AND Exhibit_name = %s AND Visitor_username = %s",
+                           (note_now, name, session['username']))
+            logexh = len(cursor.fetchall()) == 0
+            if logexh:
+                cursor.execute(
+                    "INSERT INTO visit_exhibit (Datetime, Exhibit_name, Visitor_username, Visitor_Email) VALUES(%s, %s, %s, %s)",
+                    (note_now, name, session['username'], email))
+                conn.commit()
+                cursor.close()
+            return redirect(url_for('detailExhibit'))
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('visitorSearchExh'))
+    cursor.close()
+    return render_template('exhibitDetail.html', numAni=numAni, size=size, name=name, water=hasWater)
 
 
 @app.route('/searchShows', methods=['GET', 'POST'])
@@ -1131,8 +1183,97 @@ def showHistory():
 
 @app.route('/exhibithistory', methods=['GET', 'POST'])
 def exhibitHistory():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
+                   "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
+                   "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY count", (session['username']))
+    data = cursor.fetchall()
+    if request.method == 'POST':
+        if 'sortName' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
+                               "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
+                               "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY Name",
+                               (session['username']))
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
+                               "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
+                               "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY Name DESC",
+                               (session['username']))
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('exhibitHistory.html', data=data)
+        elif 'sortSize' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
+                               "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
+                               "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY Size",
+                               (session['username']))
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
+                               "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
+                               "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY Size DESC",
+                               (session['username']))
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('exhibitHistory.html', data=data)
+        elif 'sortNumVisit' in request.form:
+            if session['coin']:
+                cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
+                               "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
+                               "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY count",
+                               (session['username']))
+            elif not session['coin']:
+                cursor.execute("SELECT Name, Size, COUNT(*) as count FROM (SELECT exhibit.Name, exhibit.Size "
+                               "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
+                               "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name ORDER BY count DESC",
+                               (session['username']))
+            session['coin'] = not session['coin']
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('exhibitHistory.html', data=data)
+        elif 'search' in request.form:
+            search_exh = request.form['exhopt']
+            max_size = request.form['max_size']
+            min_size = request.form['min_size']
+            max_num = request.form['max_num']
+            min_num = request.form['min_num']
+            if search_exh == 'anyExh':
+                search_key = None
+            if max_size == '' and min_size == '':
+                max_size = None
+                min_size = None
+            elif max_size == '' and min_size > 0:
+                max_size = None
+            elif max_size > 0 and min_size == '':
+                min_size = None
+            if max_num == '' and min_num == '':
+                max_num = None
+                min_num = None
+            elif max_num == '' and min_num > 0:
+                max_num = None
+            elif max_num > 0 and min_num == '':
+                min_num = None
 
-    return render_template('exhibitHistory.html')
+            cursor.execute("SELECT Name, Size, count FROM (SELECT Name, Size, COUNT(*) as count "
+                           "FROM (SELECT exhibit.Name, exhibit.Size "
+                           "FROM (SELECT Exhibit_name FROM visit_exhibit WHERE visit_exhibit.Visitor_username = %s) as foo "
+                           "JOIN exhibit ON exhibit.Name = foo.Exhibit_name) as boo GROUP BY Name) as boo "
+                           "WHERE (%s IS NULL OR NAME = %s) AND (%s IS NULL OR Size >= %s) AND (%s IS NULL OR Size <= %s) "
+                           "AND (%s IS NULL OR count >= %s) AND (%s IS NULL OR count <= %s)",
+                           (session['username'], search_exh, search_exh, min_size, min_size, max_size, max_size, min_num, min_num, max_num, max_num))
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('exhibitHistory.html', data=data)
+        elif 'back' in request.form:
+            cursor.close()
+            return redirect(url_for('visitorHome'))
+        elif 'logout' in request.form:
+            return redirect(url_for('logout'))
+    return render_template('exhibitHistory.html', data=data)
 
 
 """

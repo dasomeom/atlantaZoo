@@ -83,53 +83,46 @@
     justify-content: center;
     text-align: center;
   }
- </style>
+</style>
 <body>
     <div class="form-unconfirmed">
-          <div class="center-h-container" style = "margin-bottom:20px">
+                  <div class="center-h-container" style = "margin-bottom:20px">
             <h1 class="font-weight-normal"> <b>Exhibit Detail </b></h1>
           </div>
-           <form action="{{ url_for('exhibitDetail') }}" method="POST">
+           <form action="{{ url_for('detailExhibit') }}" method="POST">
           <div class="form-group row">
             <label class="row-label col-lg-4 col-form-label"><b>Name: </b></label>
             <div class="col-lg-8">
-              <label class="form-control-plaintext">Pacific</label>
+              <label class="form-control-plaintext"> {{name}}</label>
             </div>
           </div>
           <div class="form-group row">
             <label class="row-label col-lg-4 col-form-label"><b>Size: </b></label>
             <div class="col-lg-8">
-              <label class="form-control-plaintext"> 850 </label>
+              <label class="form-control-plaintext"> {{size}} </label>
             </div>
           </div>
           <div class="form-group row">
             <label class="row-label col-lg-4 col-form-label"> <b>Num Animals:</b></label>
             <div class="col-lg-8">
-              <label class="form-control-plaintext">30</label>
+              <label class="form-control-plaintext">{{numAni}}</label>
             </div>
           </div>
           <div class="form-group row">
             <label class="row-label col-lg-4 col-form-label"><b>Water Feature: </b></label>
             <div class="col-lg-8">
-              <label class="form-control-plaintext">Yes</label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="row-label col-lg-4 col-form-label"><b>Type: </b></label>
-            <div class="col-lg-8">
-              <label class="form-control-plaintext"> Fish</label>
+              <label class="form-control-plaintext">{{water}}</label>
             </div>
           </div>
           <div class="btn-container" style="margin-bottom: 20px;">
-            <button type="button" class="btn btn-lg btn-secondary btn-block" style="-bottom:20px;"> Log Visit</button>
+            <button name="log" type="submit" class="btn btn-lg btn-secondary btn-block" style="-bottom:20px;"> Log Visit</button>
           </div>
         </form>
         <div class="btn-container">
-            <form action="{{ url_for('exhibitDetail') }}" method="POST">
-                <button type="button" class="btn btn-lg btn-secondary btn-block"> Back</button>
+            <form action="{{ url_for('detailExhibit') }}" method="POST">
+                <button type="submit" class="btn btn-lg btn-secondary btn-block" name="back"> Back</button>
             </form>
         </div>
-
     </div>
 </body>
 </html>

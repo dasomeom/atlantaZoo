@@ -80,17 +80,27 @@ th>.dropdown-toggle:active {
 .hiddenField {
     display: none;
 }
+.selected {
+    background-color: #D3D3D3;
+    color: #696969;
+}
 </style>
 
 <body>
     <div class="form-unconfirmed">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Exhibits</b></h1>
+        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+            <form action="{{ url_for('visitorSearchExh') }}" method="POST">
+                <button type="submit" id="delBut" value="" class="btn btn-secondary" style="width: 200px; text-align: center; height: 35px;  margin-top: 5px; margin-bottom: 5px;" name="takenote">Exhibit Detail</button>
+            </form>
+        </div>
 		<form action="{{ url_for('visitorSearchExh') }}" method="POST">
             <fieldset>
                 <div class="d-flex justify-content-between">
                     <div class="d-flex justify-content-between flex-direction: flex-column">
                         <h3 class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
                     </div>
+
                     <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
                         <input name="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-bottom: 20px;">
                     </div>
@@ -150,7 +160,7 @@ th>.dropdown-toggle:active {
             </fieldset>
 		</form>
 		<form action="{{ url_for('visitorSearchExh') }}" method="POST">
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" id="exhTb">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Name<button name="sortName" class="btn dropdown-toggle float-right"></button></th>
@@ -194,8 +204,18 @@ th>.dropdown-toggle:active {
 		$('#dropdownMenuButton').text('Water Feature: ' + $(this).text());
 	});
 
-	$('th>.dropdown-toggle').on('click', onClick);
+	$("tbody tr").click(function() {
+        $(this).addClass('selected').siblings().removeClass('selected');
+        var n = {}
+        n.name = $(this).find('td:first').text();
+        n.species = $(this).find('td:nth-child(2)').text();
+        n.exhibit = $(this).find('td:nth-child(3)').text();
+        n.age = parseInt($(this).find('td:nth-child(4)').text());
+        n.type = $(this).find('td:nth-child(5)').text();
+            document.getElementById('delBut').value = JSON.stringify(n)
+    });
 
+	$('th>.dropdown-toggle').on('click', onClick);
 	$("tbody tr").click(function() {
 		$(this).addClass('highlight').siblings().removeClass('highlight');
 		var cells = this.cells; //cells collection
