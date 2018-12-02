@@ -188,6 +188,16 @@ def adminViewVisitors():
             data = cursor.fetchall()
             cursor.close()
             return render_template('adminVisitor.html', data=data)
+        elif 'search' in request.form:
+            option = request.form['searchopt']
+            key = request.form['searchkey']
+            if key == "":
+                cursor.execute("SELECT Username, Email FROM visitors")
+            else:
+                cursor.execute("SELECT Username, Email FROM visitors WHERE " + str(option) + " LIKE %s", "%" + str(key) + "%")
+            data = cursor.fetchall()
+            cursor.close()
+            return render_template('adminVisitor.html', data=data)
         elif 'back' in request.form:
             cursor.close()
             return redirect(url_for('adminHome'))
