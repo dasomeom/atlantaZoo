@@ -85,56 +85,68 @@ th>.dropdown-toggle:active {
 <body>
     <div class="form-unconfirmed">
         <h1 id="title" class="h3 mb-3 font-weight-normal text-center"><b>Exhibits</b></h1>
+		<form action="{{ url_for('searchExhibit') }}" method="POST">
+			<div class="d-flex justify-content-between">
+				<div class="d-flex justify-content-between flex-direction: flex-column">
+					<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
+				</div>
+				<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+				<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-bottom: 20px;">
+				</div>
+			</div>
 
-        <div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
-        		<h3 id="subtitle" class="h4 mb-2 font-weight-normal">Atlanta Zoo</h3>
-	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse">	
-	      	<input id="search" class="btn btn-secondary" type="submit" value="Search" style="width: 200px; text-align: center; height: 35px;  margin-bottom: 20px;"> 
-	      	</div>
-	    </div>  
+			<div class="d-flex justify-content-between">
+				<div class="d-flex justify-content-between flex-direction: flex-column">
+					<input type="text" class="form-control" id="searchText" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
+				</div>
+				<div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+					<div class="dropdown">
+					  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px;">
+						Water Feature
+					  </button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<button id="yes" class="dropdown-item" type="button">YES</button>
+						<button id="no" class="dropdown-item" type="button">NO</button>
+						</div>
+					</div>
+				</div>
+			</div>
 
-		<div class="d-flex justify-content-between">
-        	<div class="d-flex justify-content-between flex-direction: flex-column"> 
-        		<input type="text" class="form-control" id="searchText" placeholder="Name" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">
-	      	</div>
-	      	<div class="d-flex justify-content-between flex-direction: flex-column-reverse"> 
-	      		<div class="dropdown">  
-	      	  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 200px; height: 35px;">
-	      	    Water Feature
-	      	  </button>
-	      	  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-	      	  	<button id="yes" class="dropdown-item" type="button">YES</button>
-	      	  	<button id="no" class="dropdown-item" type="button">NO</button>
-	      	  	</div>
-	      	</div>
-	    </div> 
-    </div>
-
-
-		<div class="d-flex justify-content-between" style="margin-bottom: 20px;">
-	      	<div class="d-flex justify-content-between flex-direction: flex-column"> 
-	      		<h4 class="h4 mb-2 font-weight-normal">Size</h4>
-	      	</div>
-	      	<div class="col-lg-1"><p>MIN</p>
-	        <select class="1-100" style="width: 70px; height: 35px;"></select> 
-	    	</div>
-	        <div class="col-lg-1"><p>MAX</p>
-			<select class="1-100" style="width: 70px; height: 35px;"></select>
-	      	</div>
-	      	<div class="col-lg-5"></div>
-			<div class="col-lg-2">
-	      	<p>Number of Animals:</p>
-	      	</div>
-	      	<div class="col-lg-1"><p>MIN</p>
-	        <select class="1-100" style="width: 70px; height: 35px;"></select> 
-	    	</div>
-	        <div class="col-lg-1"><p>MAX</p>
-			<select class="1-100" style="width: 70px; height: 35px;"></select>
-	      	</div>
-		</div>
-
+			<div class="d-flex justify-content-between" style="margin-bottom: 20px; margin-top: 20px;">
+				<div class="d-flex justify-content-between flex-direction: flex-column">
+					<p>Size:</p>
+				</div>
+                <div class="input-group mb-2" style="width: 100px; height: 35px;">
+                    <div class="input-group-addon">
+                        <span class="input-group-text" style="width: 50px;">MIN </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="#" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
+                </div>
+                <div class="input-group mb-2" style="width: 100px; height: 35px;">
+                    <div class="input-group-addon">
+                        <span class="input-group-text"style="width: 50px;">MAX </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="#" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
+                </div>
+					<div class="col-lg-5"></div>
+					<div class="col-lg-2">
+					<p>Number of Animals:</p>
+					</div>
+                <div class="input-group mb-2" style="width: 100px; height: 35px;">
+                    <div class="input-group-addon">
+                        <span class="input-group-text" style="width: 50px;">MIN </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="#" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
+                </div>
+                <div class="input-group mb-2" style="width: 100px; height: 35px;">
+                    <div class="input-group-addon">
+                        <span class="input-group-text"style="width: 50px;">MAX </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="#" aria-label="Username" aria-describedby="basic-addon1" style="width: 40px; height: 38px; margin-left: -1.8px">
+                </div>
+            </div>
+		</form>
+		<form action="{{ url_for('searchExhibit') }}" method="POST">
 		<table class="table table-bordered table-hover">
 	            <thead class="thead-light">
 	                <tr>
@@ -161,16 +173,21 @@ th>.dropdown-toggle:active {
 	           
 	            </tbody>
 	        </table>
-	<div class="d-flex justify-content-between">
-        <div class="d-flex justify-content-between flex-direction: flex-column">
-            <a id="logout" class="btn btn-secondary" href="./Login.html"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Back</a>
+        </form>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between flex-direction: flex-column">
+                <form action="{{ url_for('searchExhibit') }}" method="POST">
+                    <button type="submit" class="btn btn-secondary btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="back">Back</button>
+                </form>
+            </div>
+            <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
+                <form action="{{ url_for('searchExhibit') }}" method="POST">
+                    <button type="submit" class="btn btn-light btn-block" style="width: 200px; text-align: center; height: 35px; margin-top: 5px;" name="logout">Logout</button>
+                </form>
+            </div>
         </div>
-        <div class="d-flex justify-content-between flex-direction: flex-column-reverse">
-            <a id="logout" class="btn btn-light" href="./Login.html"  style="width: 200px; text-align: center; height: 35px; margin-top: 5px;">Logout</a>
-        </div>
-  	</div>	
-
-    </body>
+    </div>
+</body>
 </html>
 
 <script type="text/javascript">
