@@ -18,6 +18,37 @@ mysql.init_app(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    admin = ['admin1']
+    visitors = ['isabella_rodriguez', 'nadias_tevens', 'robert_bernheardt', 'xavier_swenson']
+    staff = ['benjamin_rao', 'ethan_roswell', 'martha_johnson']
+    for i in admin:
+        cursor.execute("SELECT Password FROM admins WHERE Username = %s", (i))
+        password = cursor.fetchone()[0]
+        cursor.execute("""
+           UPDATE admins
+           SET Password = %s
+           WHERE Username = %s
+        """, (generate_password_hash(password), i))
+    for i in visitors:
+        cursor.execute("SELECT Password FROM visitors WHERE Username = %s", (i))
+        password = cursor.fetchone()[0]
+        cursor.execute("""
+           UPDATE visitors
+           SET Password = %s
+           WHERE Username = %s
+        """, (generate_password_hash(password), i))
+    for i in staff:
+        cursor.execute("SELECT Password FROM staff WHERE Username = %s", (i))
+        password = cursor.fetchone()[0]
+        cursor.execute("""
+           UPDATE staff
+           SET Password = %s
+           WHERE Username = %s
+        """, (generate_password_hash(password), i))
+    conn.commit()
+    cursor.close()
     return redirect(url_for('login'))
 
 
