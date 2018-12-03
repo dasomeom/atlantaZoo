@@ -10,7 +10,7 @@ CREATE TABLE `exhibit` (
 # For Water_Feature, value of zero is false, Non­zero values are considered true
 CREATE TABLE `animal` (
   `Age` int(11) NOT NULL,
-  `Type` enum('Mammal','Bird','Reptile','Amphibian','Arthropod','Fish') NOT NULL,
+  `Type` enum('Amphibian','Bird','Fish','Invertebrate','Mammal','Reptile') NOT NULL,
   `Species` varchar(20) NOT NULL,
   `Name` varchar(20) NOT NULL,
   `Exhibit` varchar(20) NOT NULL,
