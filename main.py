@@ -1349,7 +1349,7 @@ def searchAnimals():
             return render_template('searchAnimals.html', data=data)
         elif 'detail' in request.form:
             ani_row = request.form['detail']
-            if ani_row == '':
+            if len(ani_row) == 0:
                 cursor.execute("SELECT Name, Species, Exhibit, Age, Type FROM animal")
                 data = cursor.fetchall()
                 cursor.close()
@@ -1407,15 +1407,14 @@ def animalDetail():
     notenote = session['detanimal']
     message = Markup(str(notenote))
     flash(message)
-    cursor.execute("SELECT Username, Text, Time FROM NOTE")
-    data = cursor.fetchall()
     if request.method == 'POST':
         if 'back' in request.form:
             cursor.close()
+            print 'haha'
             return redirect(url_for('searchAnimals'))
         elif 'logout' in request.form:
             return redirect(url_for('logout'))
-    return render_template('animalDetail.html', data=data)
+    return render_template('animalDetail.html')
 """
 Logout page starts here
 """
