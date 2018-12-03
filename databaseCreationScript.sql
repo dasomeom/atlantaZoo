@@ -1,3 +1,5 @@
+
+/*Create Table from Phase 2 */
 USE atlzoo;
 
 CREATE TABLE `exhibit` (
@@ -89,3 +91,8 @@ CREATE TABLE `visit_exhibit` (
   CONSTRAINT `visit_exhibit_ibfk_1` FOREIGN KEY (`Exhibit_name`) REFERENCES `exhibit` (`name`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `visit_exhibit_ibfk_2` FOREIGN KEY (`Visitor_username`) REFERENCES `visitors` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+
+
