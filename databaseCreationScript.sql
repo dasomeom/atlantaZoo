@@ -1,83 +1,91 @@
 USE atlzoo;
 
-CREATE TABLE IF NOT EXISTS EXHIBIT (
-Size INT NOT NULL,
-Water_Feature TINYINT(1) NOT NULL,
-Name VARCHAR(20),
-numAnimals INT,
-PRIMARY KEY(Name));
+CREATE TABLE `exhibit` (
+  `Size` int(11) NOT NULL,
+  `Water_Feature` tinyint(1) NOT NULL,
+  `Name` varchar(20) NOT NULL,
+  PRIMARY KEY (`Name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 # Comment to grading TA
 # For Water_Feature, value of zero is false, Non­zero values are considered true
-CREATE TABLE IF NOT EXISTS ANIMAL (
-Age INT NOT NULL,
-Type ENUM('Mammal', 'Bird', 'Reptile', 'Amphibian', 'Arthropod', 'Fish') NOT NULL,
-Species VARCHAR(20) NOT NULL,
-Name VARCHAR(20) NOT NULL,
-Exhibit VARCHAR(20) NOT NULL,
-PRIMARY KEY (Name, Species),
-FOREIGN KEY (Exhibit) REFERENCES EXHIBIT(Name) ON UPDATE CASCADE ON
-DELETE RESTRICT);
+CREATE TABLE `animal` (
+  `Age` int(11) NOT NULL,
+  `Type` enum('Mammal','Bird','Reptile','Amphibian','Arthropod','Fish') NOT NULL,
+  `Species` varchar(20) NOT NULL,
+  `Name` varchar(20) NOT NULL,
+  `Exhibit` varchar(20) NOT NULL,
+  PRIMARY KEY (`Name`,`Species`),
+  KEY `Exhibit` (`Exhibit`),
+  CONSTRAINT `animal_ibfk_1` FOREIGN KEY (`Exhibit`) REFERENCES `exhibit` (`name`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-CREATE TABLE IF NOT EXISTS ADMINS (
-Username VARCHAR(20),
-Password VARCHAR(20) NOT NULL,
-Email VARCHAR(30) NOT NULL,
-PRIMARY KEY (Username) );
+CREATE TABLE `admins` (
+  `Username` varchar(20) NOT NULL,
+  `Password` varchar(100) NOT NULL,
+  `Email` varchar(30) NOT NULL,
+  PRIMARY KEY (`Username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-CREATE TABLE IF NOT EXISTS VISITORS (
-Username VARCHAR(20),
-Password VARCHAR(20) NOT NULL,
-Email VARCHAR(30) NOT NULL,
-PRIMARY KEY (Username) );
+CREATE TABLE `visitors` (
+  `Username` varchar(20) NOT NULL,
+  `Password` varchar(100) NOT NULL,
+  `Email` varchar(30) NOT NULL,
+  PRIMARY KEY (`Username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-CREATE TABLE IF NOT EXISTS STAFF (
-Username VARCHAR(20),
-Password VARCHAR(20) NOT NULL,
-Email VARCHAR(30) NOT NULL,
-PRIMARY KEY (Username) );
+CREATE TABLE `staff` (
+  `Username` varchar(20) NOT NULL,
+  `Password` varchar(100) NOT NULL,
+  `Email` varchar(30) NOT NULL,
+  PRIMARY KEY (`Username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-CREATE TABLE IF NOT EXISTS SHOWS (
-Name VARCHAR(20),
-Date_and_time DATETIME,
-Located_at VARCHAR(20) NOT NULL,
-Host VARCHAR(20) NOT NULL,
-PRIMARY KEY(Name, Date_and_time),
-FOREIGN KEY(Located_at) REFERENCES EXHIBIT(Name) ON UPDATE CASCADE
-ON DELETE RESTRICT,
-	FOREIGN KEY(Host) REFERENCES STAFF(Username) ON UPDATE CASCADE ON
-DELETE CASCADE);
+CREATE TABLE `shows` (
+  `Name` varchar(20) NOT NULL,
+  `Date_and_time` datetime NOT NULL,
+  `Located_at` varchar(20) NOT NULL,
+  `Host` varchar(20) NOT NULL,
+  PRIMARY KEY (`Name`,`Date_and_time`),
+  KEY `Located_at` (`Located_at`),
+  KEY `Host` (`Host`),
+  CONSTRAINT `shows_ibfk_1` FOREIGN KEY (`Located_at`) REFERENCES `exhibit` (`name`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `shows_ibfk_2` FOREIGN KEY (`Host`) REFERENCES `staff` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-CREATE TABLE IF NOT EXISTS NOTE (
-Time TIMESTAMP NOT NULL,
-Text TEXT,
-Username VARCHAR(20) NOT NULL,
-Name VARCHAR(20) NOT NULL,
-Species VARCHAR(20) NOT NULL,
-Staff_email VARCHAR(30) NOT NULL,
-PRIMARY KEY (Time, Username, Name, Species, Staff_email),
-FOREIGN KEY (Username) REFERENCES STAFF(Username) ON UPDATE
-CASCADE ON DELETE CASCADE,
-FOREIGN KEY (Name, Species) REFERENCES ANIMAL(Name, Species) ON UPDATE CASCADE
-ON DELETE CASCADE);
+CREATE TABLE `note` (
+  `Time` timestamp NOT NULL,
+  `Text` text,
+  `Username` varchar(20) NOT NULL,
+  `Name` varchar(20) NOT NULL,
+  `Species` varchar(20) NOT NULL,
+  `Staff_email` varchar(30) NOT NULL,
+  PRIMARY KEY (`Time`,`Username`,`Name`,`Species`,`Staff_email`),
+  KEY `Username` (`Username`),
+  KEY `Name` (`Name`,`Species`),
+  CONSTRAINT `note_ibfk_1` FOREIGN KEY (`Username`) REFERENCES `staff` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `note_ibfk_2` FOREIGN KEY (`Name`, `Species`) REFERENCES `animal` (`name`, `species`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-CREATE TABLE IF NOT EXISTS VISIT_SHOW(
-Shows_name VARCHAR(20) NOT NULL,
-Visitor_username VARCHAR(20) NOT NULL,
-Visitor_Email VARCHAR(30) NOT NULL,
-Time TIMESTAMP NOT NULL,
-PRIMARY KEY (Time, Visitor_username, Shows_name),
-FOREIGN KEY (Shows_name) REFERENCES SHOWS(Name) ON UPDATE
-CASCADE ON DELETE CASCADE,
-FOREIGN KEY (Visitor_username) REFERENCES VISITORS(Username) ON UPDATE
-CASCADE ON DELETE CASCADE);
+CREATE TABLE `visit_show` (
+  `Shows_name` varchar(20) NOT NULL,
+  `Visitor_username` varchar(20) NOT NULL,
+  `Visitor_Email` varchar(30) NOT NULL,
+  `Time` timestamp NOT NULL,
+  PRIMARY KEY (`Time`,`Visitor_username`,`Shows_name`),
+  KEY `Shows_name` (`Shows_name`),
+  KEY `Visitor_username` (`Visitor_username`),
+  CONSTRAINT `visit_show_ibfk_1` FOREIGN KEY (`Shows_name`) REFERENCES `shows` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `visit_show_ibfk_2` FOREIGN KEY (`Visitor_username`) REFERENCES `visitors` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-CREATE TABLE IF NOT EXISTS VISIT_EXHIBIT(
-Datetime TIMESTAMP NOT NULL,
-Exhibit_name VARCHAR(20) NOT NULL,
-Visitor_username VARCHAR(20) NOT NULL,
-Visitor_Email VARCHAR(30) NOT NULL,
-PRIMARY KEY(Datetime, Exhibit_name, Visitor_username),
-FOREIGN KEY (Exhibit_name) REFERENCES EXHIBIT(Name) ON UPDATE
-CASCADE ON DELETE RESTRICT,
-FOREIGN KEY (Visitor_username) REFERENCES VISITORS(Username) ON UPDATE
-CASCADE ON DELETE CASCADE);
+CREATE TABLE `visit_exhibit` (
+  `Datetime` timestamp NOT NULL,
+  `Exhibit_name` varchar(20) NOT NULL,
+  `Visitor_username` varchar(20) NOT NULL,
+  `Visitor_Email` varchar(30) NOT NULL,
+  PRIMARY KEY (`Datetime`,`Exhibit_name`,`Visitor_username`),
+  KEY `Exhibit_name` (`Exhibit_name`),
+  KEY `Visitor_username` (`Visitor_username`),
+  CONSTRAINT `visit_exhibit_ibfk_1` FOREIGN KEY (`Exhibit_name`) REFERENCES `exhibit` (`name`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `visit_exhibit_ibfk_2` FOREIGN KEY (`Visitor_username`) REFERENCES `visitors` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
