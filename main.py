@@ -1251,19 +1251,16 @@ def exhibitHistory():
             return render_template('exhibitHistory.html', data=data)
         elif 'search' in request.form:
             search_exh = request.form['exhopt']
-            max_size = request.form['max_size']
-            min_size = request.form['min_size']
+            exh_date = request.form['datetime']
             max_num = request.form['max_num']
             min_num = request.form['min_num']
+            print request.form
             if search_exh == 'anyExh':
-                search_key = None
-            if max_size == '' and min_size == '':
-                max_size = None
-                min_size = None
-            elif max_size == '' and min_size > 0:
-                max_size = None
-            elif max_size > 0 and min_size == '':
-                min_size = None
+                search_exh = None
+            if exh_date == '':
+                exh_date = None
+            else:
+                exh_date = datetime.datetime.strptime(exh_date, '%Y-%m-%d')
             if max_num == '' and min_num == '':
                 max_num = None
                 min_num = None
@@ -1271,15 +1268,14 @@ def exhibitHistory():
                 max_num = None
             elif max_num > 0 and min_num == '':
                 min_num = None
-
             cursor.execute("SELECT * FROM "
-                           "(SELECT foo.Exhibit_name, foo.Datetime, boo.cc FROM atlzoo.visit_exhibit AS foo "
-                           "Left Join ( SELECT Exhibit_name, Count(*) as cc FROM atlzoo.visit_exhibit "
-                           "WHERE visit_exhibit.Visitor_username = %s GROUP BY Exhibit_name ) AS boo "
-                           "On foo.Exhibit_name = boo.Exhibit_name) as haa "
-                           "WHERE (%s IS NULL OR haa.Exhibit_name = %s) AND (%s IS NULL OR haa.Datetime >= %s) "
-                           "AND (%s IS NULL OR haa.cc >= %s) AND (%s IS NULL OR haa.cc <= %s)",
-                           (session['username'], search_exh, search_exh, max_size, max_size, min_num, min_num, max_num, max_num))
+                       "(SELECT foo.Exhibit_name, foo.Datetime, boo.cc FROM atlzoo.visit_exhibit AS foo "
+                       "Left Join ( SELECT Exhibit_name, Count(*) as cc FROM atlzoo.visit_exhibit "
+                       "WHERE visit_exhibit.Visitor_username = %s GROUP BY Exhibit_name ) AS boo "
+                       "On foo.Exhibit_name = boo.Exhibit_name) as haa "
+                       "WHERE (%s IS NULL OR haa.Exhibit_name = %s) AND (%s IS NULL OR DATE(haa.Datetime) = %s) "
+                       "AND (%s IS NULL OR haa.cc >= %s) AND (%s IS NULL OR haa.cc <= %s)",
+                       (session['username'], search_exh, search_exh, exh_date, exh_date, min_num, min_num, max_num, max_num))
             data = cursor.fetchall()
             cursor.close()
             return render_template('exhibitHistory.html', data=data)
